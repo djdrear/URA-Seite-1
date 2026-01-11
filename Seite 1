@@ -1,0 +1,1648 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>UNDRA-ENGINE v1.5 – Seite 1 – Ursprung & Blutlinien</title>
+
+  <style>
+    :root {
+      --bg-main: #050307;
+      --bg-panel: #120814;
+      --bg-panel-alt: #1b0d24;
+      --bg-header: linear-gradient(135deg, #4a0a2f, #1a0b22);
+      --bg-header-soft: linear-gradient(135deg, #3a071f, #120614);
+      --gold: #d4af37;
+      --gold-bright: #f8e7b0;
+      --gold-soft: rgba(212, 175, 55, 0.55);
+      --gold-shadow: rgba(212, 175, 55, 0.28);
+      --accent-red: #d04646;
+      --accent-purple: #b46cff;
+      --accent-deep: #4a165a;
+      --text-main: #f5efe6;
+      --text-muted: #a6938a;
+      --danger: #ff4b5c;
+      --border-strong: rgba(255, 220, 150, 0.8);
+      --marble-overlay: radial-gradient(circle at top, rgba(120, 40, 160, 0.35), transparent 55%);
+      --font-header: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+      --font-body: "Georgia", serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background:
+        var(--marble-overlay),
+        url("dark-marmor-texture.png") center/cover fixed no-repeat,
+        radial-gradient(circle at bottom, #050307 0%, #020107 35%, #000 100%);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      min-height: 100vh;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    /* SHELL */
+    #app-shell {
+      width: 100%;
+      max-width: 950px;
+      background:
+        linear-gradient(145deg, rgba(8,2,12,0.98), rgba(4,1,7,0.98));
+      border-radius: 12px;
+      border: 2px solid var(--gold-soft);
+      box-shadow:
+        0 18px 45px rgba(0,0,0,0.9),
+        0 0 24px rgba(40,0,60,0.65);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      max-height: calc(100vh - 32px);
+    }
+
+    header {
+      padding: 14px 16px 10px;
+      background: var(--bg-header);
+      border-bottom: 1px solid var(--gold-soft);
+      position: relative;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-family: var(--font-header);
+      color: var(--gold-bright);
+      text-transform: uppercase;
+      letter-spacing: 0.32em;
+      font-size: 16px;
+    }
+
+    #sub-title {
+      margin-top: 4px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+    }
+
+    #engine-tag {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 10px;
+      color: var(--gold-bright);
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(248,231,176,0.5);
+      background: linear-gradient(135deg, rgba(40,8,40,0.9), rgba(12,3,20,0.9));
+      box-shadow: 0 0 8px rgba(120,0,160,0.6);
+    }
+
+    #page-indicator {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* CONTENT */
+    #content {
+      flex: 1;
+      padding: 10px 12px 8px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-height: 0;
+    }
+
+    .panel {
+      background:
+        linear-gradient(145deg, rgba(26,10,32,0.96), rgba(10,4,16,0.98));
+      border-radius: 10px;
+      border: 1px solid rgba(212,175,55,0.45);
+      box-shadow:
+        inset 0 0 18px rgba(0,0,0,0.7),
+        0 0 10px rgba(60,0,90,0.55);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel-header {
+      background: var(--bg-header-soft);
+      padding: 8px 12px;
+      border-bottom: 1px solid rgba(212,175,55,0.4);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .panel-title {
+      font-family: var(--font-header);
+      color: var(--gold-bright);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 11px;
+    }
+
+    .panel-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* GRID 1: Portrait + Daten + Radar */
+    .identity-grid {
+      display: grid;
+      grid-template-columns: 190px minmax(0, 1.4fr) 240px;
+      gap: 12px;
+      padding: 10px 12px 12px;
+    }
+
+    @media (max-width: 860px) {
+      .identity-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .portrait-frame {
+      width: 170px;
+      height: 220px;
+      border-radius: 10px;
+      border: 2px solid rgba(212,175,55,0.7);
+      background:
+        radial-gradient(circle at top, rgba(255,255,255,0.05), transparent 55%),
+        url("stone-noise.png");
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      box-shadow:
+        inset 0 0 30px rgba(0,0,0,0.8),
+        0 0 16px rgba(0,0,0,0.9);
+      position: relative;
+    }
+
+    .portrait-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .portrait-placeholder {
+      color: #4b374a;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+    }
+
+    #upload {
+      width: 100%;
+      margin-top: 8px;
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    .identity-main {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .name-input {
+      font-size: 18px;
+      padding: 6px 8px;
+      border-radius: 8px;
+      border: 1px solid rgba(248,231,176,0.4);
+      background: rgba(8,4,12,0.9);
+      color: var(--gold-bright);
+      width: 100%;
+      box-shadow: 0 0 10px rgba(120,0,160,0.4);
+    }
+
+    .title-input {
+      font-size: 12px;
+      padding: 5px 8px;
+      border-radius: 6px;
+      border: 1px solid rgba(212,175,55,0.35);
+      background: rgba(8,4,12,0.9);
+      color: var(--text-main);
+      width: 100%;
+    }
+
+    .name-input:focus,
+    .title-input:focus {
+      outline: none;
+      border-color: var(--accent-purple);
+      box-shadow: 0 0 12px rgba(180,108,255,0.8);
+      background: rgba(18,8,28,0.96);
+    }
+
+    .identity-summary {
+      margin-top: 10px;
+      font-size: 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(212,175,55,0.35);
+      background:
+        radial-gradient(circle at top, rgba(80,0,80,0.35), transparent 60%),
+        rgba(0,0,0,0.6);
+      padding: 8px 10px;
+    }
+
+    .identity-summary b {
+      color: var(--gold-bright);
+    }
+
+    .identity-summary-label {
+      color: var(--text-muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 4px;
+    }
+
+    .radar-box {
+      background: rgba(0,0,0,0.55);
+      border-radius: 10px;
+      border: 1px solid rgba(212,175,55,0.35);
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow:
+        inset 0 0 20px rgba(0,0,0,0.9),
+        0 0 10px rgba(100,0,140,0.6);
+    }
+
+    #radarCanvas {
+      width: 220px;
+      height: 220px;
+      display: block;
+    }
+
+    /* ATTRIBUTES PANEL */
+    .attr-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px 20px;
+      padding: 10px 12px 8px;
+    }
+
+    @media (max-width: 720px) {
+      .attr-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .attr-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) auto 40px auto;
+      gap: 6px;
+      align-items: center;
+      font-size: 12px;
+      padding: 3px 4px;
+      border-bottom: 1px solid rgba(212,175,55,0.1);
+    }
+
+    .attr-name {
+      color: var(--text-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .val-box {
+      background: #000;
+      border-radius: 4px;
+      border: 1px solid rgba(248,231,176,0.5);
+      color: var(--gold-bright);
+      font-weight: bold;
+      text-align: center;
+      padding: 3px 0;
+      font-size: 12px;
+      box-shadow: 0 0 8px rgba(255,220,150,0.4);
+    }
+
+    .btn-step {
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      border: 1px solid rgba(212,175,55,0.4);
+      background: radial-gradient(circle at 30% 0%, #5b0d2a, #120612);
+      color: var(--gold-bright);
+      font-size: 11px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: box-shadow 0.15s ease, transform 0.15s ease, background 0.15s ease, opacity 0.15s ease;
+    }
+
+    .btn-step:hover {
+      box-shadow: 0 0 10px rgba(212,175,55,0.7);
+      transform: translateY(-1px);
+      background: radial-gradient(circle at 30% 0%, #7d1638, #1a0714);
+    }
+
+    .btn-step.disabled {
+      opacity: 0.25;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .btn-plus {
+      background: radial-gradient(circle at 30% 0%, #4a165a, #14071a);
+    }
+
+    .btn-plus.glow {
+      box-shadow: 0 0 12px rgba(180,108,255,0.9);
+      border-color: rgba(248,231,176,0.8);
+    }
+
+    /* ORIGIN GRID */
+    .origin-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1.1fr 1.1fr;
+      gap: 2px;
+      background: var(--gold);
+      border-top: 1px solid var(--gold-soft);
+      border-bottom: 1px solid var(--gold-soft);
+    }
+
+    @media (max-width: 860px) {
+      .origin-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .origin-col {
+      background:
+        radial-gradient(circle at top, rgba(50,10,50,0.85), rgba(12,4,16,0.95));
+      padding: 8px 8px 6px;
+      max-height: 260px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--gold) #000;
+    }
+
+    .origin-col h4 {
+      margin: 0 0 6px;
+      font-family: var(--font-header);
+      color: var(--gold-bright);
+      font-size: 12px;
+      text-align: center;
+      border-bottom: 1px solid rgba(212,175,55,0.3);
+      padding-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    .check-item {
+      display: block;
+      padding: 4px 6px;
+      cursor: pointer;
+      border-radius: 6px;
+      border: 1px solid transparent;
+      margin-bottom: 3px;
+      font-size: 12px;
+      color: var(--text-main);
+      background: rgba(0,0,0,0.35);
+      transition: background 0.15s ease, border 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease;
+    }
+
+    .check-item:hover {
+      background: rgba(212,175,55,0.12);
+      border-color: rgba(212,175,55,0.5);
+      box-shadow: 0 0 10px rgba(180,108,255,0.5);
+      transform: translateY(-1px);
+    }
+
+    .check-item.active {
+      background: radial-gradient(circle at top, #7d1638, #180308);
+      border-color: var(--border-strong);
+      box-shadow: 0 0 12px rgba(255,215,120,0.7);
+    }
+
+    /* FOOTER BAR */
+    footer {
+      padding: 8px 10px;
+      border-top: 1px solid var(--gold-soft);
+      background: linear-gradient(180deg, rgba(10,2,14,0.9), rgba(4,0,8,0.98));
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 11px;
+    }
+
+    .footer-left,
+    .footer-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-center {
+      display: flex;
+      justify-content: center;
+      flex: 1;
+    }
+
+    .btn-main {
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(212,175,55,0.7);
+      background: linear-gradient(135deg, #4a0a2f, #1a0b22);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 0 12px rgba(180,0,60,0.7);
+      text-shadow: 0 0 6px rgba(0,0,0,0.9);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, opacity 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .btn-main:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 16px rgba(255,215,120,0.9);
+      background: linear-gradient(135deg, #7d1638, #2a1034);
+    }
+
+    .btn-main:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .btn-ghost {
+      background: linear-gradient(135deg, #241329, #100613);
+      color: var(--text-muted);
+      box-shadow: 0 0 8px rgba(0,0,0,0.8);
+    }
+
+    .btn-ghost:hover {
+      box-shadow: 0 0 12px rgba(160,100,240,0.7);
+      color: var(--gold-bright);
+    }
+
+    .footer-info {
+      color: var(--text-muted);
+    }
+
+    .footer-info span {
+      color: var(--gold-bright);
+      font-weight: 700;
+    }
+
+    /* POOL INFO */
+    .attr-footer {
+      padding: 8px 10px 10px;
+      border-top: 1px solid rgba(212,175,55,0.25);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      background: rgba(0,0,0,0.45);
+    }
+
+    .pool-label {
+      color: var(--text-muted);
+    }
+
+    .pool-value {
+      color: var(--gold-bright);
+      font-weight: bold;
+      margin-left: 4px;
+    }
+
+    .btn-roll {
+      padding: 5px 10px;
+      font-size: 11px;
+      border-radius: 999px;
+      border: 1px solid rgba(248,231,176,0.7);
+      background: radial-gradient(circle at 30% 0%, #7d1638, #26030a);
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(255,120,120,0.8);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+    }
+
+    .btn-roll:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 14px rgba(255,200,160,0.9);
+      background: radial-gradient(circle at 30% 0%, #a01d44, #3a050e);
+    }
+
+    .btn-roll:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    /* TRANSIENT MSG */
+    #transient-msg {
+      position: fixed;
+      left: 50%;
+      bottom: 20px;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, #2a102f, #130814);
+      color: var(--gold-bright);
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(212,175,55,0.6);
+      box-shadow: 0 0 18px rgba(0,0,0,0.9);
+      font-size: 11px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+      z-index: 2000;
+    }
+
+    /* MODAL: GENERIC OVERLAY */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.88);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1500;
+      backdrop-filter: blur(4px);
+    }
+
+    .modal-box {
+      width: 320px;
+      max-width: calc(100% - 40px);
+      background:
+        linear-gradient(145deg, rgba(16,6,26,0.98), rgba(6,2,12,0.98));
+      border: 2px solid rgba(212,175,55,0.7);
+      border-radius: 12px;
+      padding: 18px 18px 14px;
+      box-shadow:
+        0 18px 40px rgba(0,0,0,0.9),
+        0 0 28px rgba(160,80,240,0.8);
+      text-align: center;
+    }
+
+    .modal-title {
+      font-family: var(--font-header);
+      color: var(--gold-bright);
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      margin-bottom: 8px;
+    }
+
+    .modal-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .slot-row {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .slot-btn {
+      padding: 6px 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(212,175,55,0.6);
+      background: radial-gradient(circle at 30% 0%, #4a165a, #150714);
+      color: var(--text-main);
+      cursor: pointer;
+      font-size: 11px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-align: left;
+      transition: box-shadow 0.15s ease, transform 0.1s ease, background 0.15s ease;
+    }
+
+    .slot-btn:hover {
+      box-shadow: 0 0 14px rgba(248,231,176,0.9);
+      transform: translateY(-1px);
+      background: radial-gradient(circle at 30% 0%, #7f2a9f, #1e081f);
+    }
+
+    .slot-name {
+      font-weight: 600;
+      color: var(--gold-bright);
+    }
+
+    .slot-meta {
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .btn-small {
+      padding: 4px 10px;
+      font-size: 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(212,175,55,0.6);
+      background: linear-gradient(135deg, #221427, #0d050f);
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    .btn-small:hover {
+      color: var(--gold-bright);
+      box-shadow: 0 0 10px rgba(160,80,240,0.9);
+    }
+
+    @media (max-width: 720px) {
+      header h1 {
+        font-size: 14px;
+        letter-spacing: 0.24em;
+      }
+      #engine-tag {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+<div id="app-shell">
+  <header>
+    <div id="engine-tag">UNDRA‑ENGINE v1.5</div>
+    <h1>Ursprung & Blutlinien</h1>
+    <div id="sub-title">Genesis des Heldencharakters</div>
+    <div id="page-indicator">Seite 1 von 3</div>
+  </header>
+
+  <div id="content">
+    <!-- PANEL 1: Portrait + Basisdaten + Radar -->
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">Essenz & Antlitz</div>
+        <div class="panel-sub" id="hero-preview-sub">Noch ungeschrieben</div>
+      </div>
+      <div class="identity-grid">
+        <!-- Portrait -->
+        <div>
+          <div class="portrait-frame">
+            <img id="preview" src="" alt="" style="display:none;">
+            <div id="placeholder" class="portrait-placeholder">PORTRAIT</div>
+          </div>
+          <input type="file" id="upload" accept="image/*">
+        </div>
+
+        <!-- Name / Titel / Zusammenfassung -->
+        <div class="identity-main">
+          <input type="text" id="in-name" class="name-input" placeholder="Name des Helden">
+          <input type="text" id="in-titel" class="title-input" placeholder="Zusatz / Titel (optional)">
+          <div class="identity-summary">
+            <div class="identity-summary-label">Vorschau</div>
+            <div>
+              <b id="sum-name">Namenlos</b>
+              <span id="sum-title">ohne Titel</span>
+            </div>
+            <div style="margin-top:4px;">
+              <b>Volk:</b> <span id="s-race">–</span>
+              <span id="s-sub-wrap" style="display:none;">(<span id="s-sub"></span>)</span><br>
+              <b>Profession:</b> <span id="s-prof">–</span><br>
+              <b>Besondere Gabe:</b>
+              <span id="s-spec" style="font-style:italic; color:var(--gold-bright);">
+                Wähle Rasse & Beruf, um eine Gabe zu erhalten...
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Radar -->
+        <div class="radar-box">
+          <canvas id="radarCanvas" width="220" height="220"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL 2: Attribute -->
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">Basisattribute</div>
+        <div class="panel-sub">Punkte verteilen – Maximum 20 je Attribut</div>
+      </div>
+      <div id="attr-grid-s1" class="attr-grid"></div>
+      <div class="attr-footer">
+        <div>
+          <span class="pool-label">Punktepool:</span>
+          <span class="pool-value" id="p-total">0</span>
+          <span class="pool-label">• Verteilte Punkte:</span>
+          <span class="pool-value" id="p-used">0</span>
+          <span class="pool-label">• Rest:</span>
+          <span class="pool-value" id="p-left">0</span>
+        </div>
+        <button class="btn-roll" id="roll-btn">Punkte auswürfeln</button>
+      </div>
+    </div>
+
+    <!-- PANEL 3: Herkunft -->
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">Herkunft & Berufung</div>
+        <div class="panel-sub">Rasse • Untergruppe • Profession</div>
+      </div>
+      <div class="origin-grid">
+        <div class="origin-col">
+          <h4>Rassen</h4>
+          <div id="race-list"></div>
+        </div>
+        <div class="origin-col">
+          <h4>Untergruppen</h4>
+          <div id="sub-list"></div>
+        </div>
+        <div class="origin-col">
+          <h4>Professionen</h4>
+          <div id="prof-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-left">
+      <button class="btn-main btn-ghost" id="btn-load">Laden</button>
+    </div>
+    <div class="footer-center">
+      <div class="footer-info">
+        Attributspiegel – <span>UNDRA‑ENGINE v1.5</span>
+      </div>
+    </div>
+    <div class="footer-right">
+      <button class="btn-main btn-ghost" id="btn-save-local">Zwischenspeichern</button>
+      <button class="btn-main" id="btn-next">Weiter zu Seite 2</button>
+    </div>
+  </footer>
+
+  <!-- TRANSIENT MESSAGE -->
+  <div id="transient-msg"></div>
+
+  <!-- MODAL: LOAD SLOTS -->
+  <div id="load-modal" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-title">Charakter laden</div>
+      <div class="modal-sub">
+        Wähle einen der drei UNDRA‑Slots. Nach dem Laden gelangst du direkt zum Dashboard (Seite 3).
+      </div>
+      <div class="slot-row">
+        <button class="slot-btn" data-slot="1">
+          <div>
+            <div class="slot-name" id="slot1-name">Slot 1 – leer</div>
+            <div class="slot-meta" id="slot1-meta">Noch kein Charakter gespeichert.</div>
+          </div>
+          <div>▶</div>
+        </button>
+        <button class="slot-btn" data-slot="2">
+          <div>
+            <div class="slot-name" id="slot2-name">Slot 2 – leer</div>
+            <div class="slot-meta" id="slot2-meta">Noch kein Charakter gespeichert.</div>
+          </div>
+          <div>▶</div>
+        </button>
+        <button class="slot-btn" data-slot="3">
+          <div>
+            <div class="slot-name" id="slot3-name">Slot 3 – leer</div>
+            <div class="slot-meta" id="slot3-meta">Noch kein Charakter gespeichert.</div>
+          </div>
+          <div>▶</div>
+        </button>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-small" id="btn-close-load">Schließen</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Profession bestätigen & Fähigkeiten wählen -->
+  <div id="profession-modal" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-title">Berufung bestätigen</div>
+      <div class="modal-sub">
+        Wähle je eine Fähigkeit für Volk und Untergruppe.<br>
+        Die dritte Wahl gewährt dir einen <b>Attributbonus +1</b>.
+      </div>
+
+      <div style="text-align:left; font-size:11px; margin-bottom:10px;">
+        <div style="margin-bottom:6px;">
+          <b>Rassenfähigkeit:</b><br>
+          <input type="text" id="race-ability-input"
+                 placeholder="z.B. Nachtsicht, Zähes Blut..."
+                 style="width:100%; margin-top:3px; padding:4px; border-radius:6px;
+                        border:1px solid rgba(212,175,55,0.6); background:rgba(10,4,16,0.9); color:#f5efe6;">
+        </div>
+        <div style="margin-bottom:6px;">
+          <b>Untergruppen-Fähigkeit:</b><br>
+          <input type="text" id="sub-ability-input"
+                 placeholder="z.B. Waldläufer-Trieb, Wüsteninstinkt..."
+                 style="width:100%; margin-top:3px; padding:4px; border-radius:6px;
+                        border:1px solid rgba(212,175,55,0.6); background:rgba(10,4,16,0.9); color:#f5efe6;">
+        </div>
+        <div>
+          <b>Attributbonus +1:</b><br>
+          <select id="attr-bonus-select"
+                  style="width:100%; margin-top:3px; padding:4px; border-radius:6px;
+                         border:1px solid rgba(212,175,55,0.6); background:rgba(10,4,16,0.9); color:#f5efe6;">
+            <option value="">Bitte Attribut wählen...</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-small" id="btn-prof-cancel">Zurück</button>
+        <button class="btn-small" id="btn-prof-confirm" style="color:#f8e7b0;">Bestätigen</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Seite 1 verlassen -->
+  <div id="leave-modal" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-title">Auswahl bestätigen</div>
+      <div class="modal-sub">
+        Bist du mit deiner Auswahl auf dieser Seite zufrieden?<br>
+        Name, Rasse(n), Untergruppe, Profession und Attribute werden als Grundlage versiegelt.
+      </div>
+      <div style="text-align:left; font-size:11px; margin:8px 0 10px;">
+        <b>Aktuelle Zusammenfassung:</b><br>
+        <span id="leave-summary" style="color:var(--gold-bright);"></span>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-small" id="btn-leave-cancel">Zurück</button>
+        <button class="btn-small" id="btn-leave-confirm" style="color:#f8e7b0;">Ja, weiter zu Seite 2</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ---------- KONSTANTEN & DATEN ---------- */
+const ATTRIBUTES = [
+  "Mut","Intelligenz","Fingerfertigkeit","Gewandtheit","Körperkraft",
+  "Körperbewusstsein","Konstitution","Charisma","Sozialstatus",
+  "Geistiger Zustand","Intuition","Angriff","Verteidigung","Abwehrschlag",
+  "Fernkampf","Trefferchance","Technik"
+];
+
+const ATTR_SHORT = [
+  "MU","IN","FF","GE","KK",
+  "KB","KO","CH","SS",
+  "GZ","IT","AN","VE","AS",
+  "FK","TC","TE"
+];
+
+const ORIGIN_DATA = {
+  "Mensch": { subs: ["Mittelländer", "Tulamiden", "Thorwaler"], profs: ["Ritter", "Dieb", "Händler", "Feuermagier", "Druide"] },
+  "Elf": { subs: ["Hochelf", "Waldelf", "Dunkelelf"], profs: ["Wildnisläufer", "Necromant", "Druide", "Sänger"] },
+  "Zwerg": { subs: ["Ambosszwerg", "Erzzwerg"], profs: ["Waffenschmied", "Bergmann"] },
+  "Ork": { subs: ["Schwarzpelz", "Zholochai"], profs: ["Krieger", "Schamane"] },
+  "Halbling": { subs: ["Auen-Halbling","Stadt-Halbling","Wald-Halbling"], profs: ["Späher","Dieb","Koch","Barde","Fernkämpfer"] },
+  "Gnom": { subs: ["Felsgnom","Waldgnom","Tüftlergnom"], profs: ["Illusionist","Alchemist","Tüftler","Mechanikus","Trickser"] },
+  "Troll": { subs: ["Bergtroll","Höhlentroll","Flusstroll","Felsentroll"], profs: ["Berserker","Schamane","Steinwerfer","Stammeskrieger"] },
+  "Goblin": { subs: ["Rotpelz","Stadtgoblin","Wildgoblin","Sumpfgoblin"], profs: ["Kundschafter","Dieb","Hexer","Speerträger","Saboteur"] },
+  "Drachengeborener": { subs: ["Flammenbrut","Frostschuppe","Sturmgeboren","Säureschuppe"], profs: ["Krieger","Kampfmagier","Paladin","Drachendisciple"] },
+  "Echsenmensch": { subs: ["Sumpfechse","Wüstenechse","Dschungelbrut","Tempelbrut"], profs: ["Speerträger","Schamane","Tempelwächter","Pirscher"] },
+  "Tabaxi": { subs: ["Wüsten-Tabaxi","Dschungel-Tabaxi","Schnee-Tabaxi","Steppen-Tabaxi"], profs: ["Jäger","Späher","Klingenmeister","Akrobat","Dieb"] }
+};
+
+const SPECIAL_POOL = [
+  "Göttlicher Funke","Schattenlauf","Manaschild","Eisenzorn",
+  "Blutrunen-Resonanz","Seelenfokus","Nachtschritt","Runenblick"
+];
+
+// KEYS
+const KEY_CHAR = "undra15_character";
+const KEY_ID   = "undra15_identity";
+const KEY_DASH = "undra15_dashboard";
+
+/* ---------- STATE ---------- */
+let char = {
+  name: "",
+  title: "",
+  attrs: {},
+  pool: 0,
+  used: 0,
+  race: "",
+  race2: "",        // Zweite Rasse (Mischwesen)
+  sub: "",
+  prof: "",
+  special: "",
+  portraitData: null,
+  raceAbility: "",
+  subAbility: "",
+  attrBonusNote: ""
+};
+
+let transientTimeout = null;
+let pendingProfession = "";
+
+/* ---------- DOM ---------- */
+const heroPreviewSub = document.getElementById("hero-preview-sub");
+const inName = document.getElementById("in-name");
+const inTitel = document.getElementById("in-titel");
+const sumName = document.getElementById("sum-name");
+const sumTitle = document.getElementById("sum-title");
+const sRace = document.getElementById("s-race");
+const sSubWrap = document.getElementById("s-sub-wrap");
+const sSub = document.getElementById("s-sub");
+const sProf = document.getElementById("s-prof");
+const sSpec = document.getElementById("s-spec");
+
+const pTotal = document.getElementById("p-total");
+const pUsed = document.getElementById("p-used");
+const pLeft = document.getElementById("p-left");
+
+const raceList = document.getElementById("race-list");
+const subList = document.getElementById("sub-list");
+const profList = document.getElementById("prof-list");
+
+const rollBtn = document.getElementById("roll-btn");
+const btnNext = document.getElementById("btn-next");
+const btnSaveLocal = document.getElementById("btn-save-local");
+const btnLoad = document.getElementById("btn-load");
+
+const radarCanvas = document.getElementById("radarCanvas");
+const radarCtx = radarCanvas.getContext("2d");
+
+const previewImg = document.getElementById("preview");
+const placeholder = document.getElementById("placeholder");
+const uploadInput = document.getElementById("upload");
+
+const transientMsgEl = document.getElementById("transient-msg");
+
+// Load modal
+const loadModal = document.getElementById("load-modal");
+const btnCloseLoad = document.getElementById("btn-close-load");
+const slotButtons = loadModal.querySelectorAll(".slot-btn");
+const slotNameEls = {
+  1: document.getElementById("slot1-name"),
+  2: document.getElementById("slot2-name"),
+  3: document.getElementById("slot3-name")
+};
+const slotMetaEls = {
+  1: document.getElementById("slot1-meta"),
+  2: document.getElementById("slot2-meta"),
+  3: document.getElementById("slot3-meta")
+};
+
+// Profession modal
+const professionModal = document.getElementById("profession-modal");
+const raceAbilityInput = document.getElementById("race-ability-input");
+const subAbilityInput = document.getElementById("sub-ability-input");
+const attrBonusSelectEl = document.getElementById("attr-bonus-select");
+const btnProfCancel = document.getElementById("btn-prof-cancel");
+const btnProfConfirm = document.getElementById("btn-prof-confirm");
+
+// Leave modal
+const leaveModal = document.getElementById("leave-modal");
+const leaveSummary = document.getElementById("leave-summary");
+const btnLeaveCancel = document.getElementById("btn-leave-cancel");
+const btnLeaveConfirm = document.getElementById("btn-leave-confirm");
+
+/* ---------- HELPER ---------- */
+function showMsg(text, ms = 2200) {
+  transientMsgEl.textContent = text;
+  transientMsgEl.style.opacity = "1";
+  if (transientTimeout) clearTimeout(transientTimeout);
+  transientTimeout = setTimeout(() => {
+    transientMsgEl.style.opacity = "0";
+  }, ms);
+}
+
+function randomFrom(arr) {
+  if (!arr || arr.length === 0) return "";
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function clearActiveIn(container) {
+  if (!container) return;
+  container.querySelectorAll(".check-item").forEach(c => c.classList.remove("active"));
+}
+
+/* ---------- INIT ATTRIBUTE-GRID ---------- */
+function initAttributes() {
+  const grid = document.getElementById("attr-grid-s1");
+  grid.innerHTML = "";
+  ATTRIBUTES.forEach(a => {
+    if (typeof char.attrs[a] !== "number") char.attrs[a] = 0;
+    const row = document.createElement("div");
+    row.className = "attr-row";
+
+    const nameSpan = document.createElement("span");
+    nameSpan.className = "attr-name";
+    nameSpan.textContent = a;
+
+    const btnMinus = document.createElement("button");
+    btnMinus.className = "btn-step";
+    btnMinus.textContent = "▼";
+    btnMinus.addEventListener("click", () => modAttr(a, -1));
+
+    const valBox = document.createElement("div");
+    valBox.className = "val-box";
+    valBox.id = "v-" + a;
+    valBox.textContent = String(char.attrs[a]);
+
+    const btnPlus = document.createElement("button");
+    btnPlus.className = "btn-step btn-plus";
+    btnPlus.id = "plus-" + a;
+    btnPlus.textContent = "▲";
+    btnPlus.addEventListener("click", () => modAttr(a, 1));
+
+    row.appendChild(nameSpan);
+    row.appendChild(btnMinus);
+    row.appendChild(valBox);
+    row.appendChild(btnPlus);
+    grid.appendChild(row);
+  });
+}
+
+/* ---------- PUNKTE MODIFIZIEREN ---------- */
+function modAttr(a, delta) {
+  if (char.pool <= 0 && delta > 0) return;
+  const current = char.attrs[a] || 0;
+
+  if (delta > 0) {
+    if (char.pool - char.used <= 0) return;
+    if (current >= 20) {
+      showMsg("Maximum von 20 Punkten in " + a + " erreicht.");
+      return;
+    }
+    char.attrs[a] = current + 1;
+    char.used += 1;
+  } else if (delta < 0) {
+    if (current <= 0) return;
+    char.attrs[a] = current - 1;
+    char.used -= 1;
+  }
+
+  updateUI();
+}
+
+/* ---------- RASSEN / SUB / PROF ---------- */
+function initRaces() {
+  raceList.innerHTML = "";
+  Object.keys(ORIGIN_DATA).forEach(r => {
+    const el = document.createElement("div");
+    el.className = "check-item";
+    el.textContent = r;
+    el.dataset.value = r;
+    el.addEventListener("click", () => selectRace(r));
+    raceList.appendChild(el);
+  });
+}
+
+// Mischwesen-Logik: bis zu zwei Rassen
+function selectRace(r) {
+  if (!char.race && !char.race2) {
+    char.race = r;
+  } else if (char.race === r) {
+    char.race = char.race2;
+    char.race2 = "";
+  } else if (char.race2 === r) {
+    char.race2 = "";
+  } else if (!char.race2) {
+    char.race2 = r;
+  } else {
+    showMsg("Es können maximal zwei Rassen als Mischwesen gewählt werden.");
+    return;
+  }
+
+  // Untergruppe & Profession bleiben an der Hauptrasse
+  char.sub = "";
+  char.prof = "";
+  char.special = "";
+  char.raceAbility = char.raceAbility || "";
+  char.subAbility = char.subAbility || "";
+  char.attrBonusNote = char.attrBonusNote || "";
+
+  clearActiveIn(raceList);
+  clearActiveIn(subList);
+  clearActiveIn(profList);
+
+  // Aktive Markierung auf gewählten Rassen
+  raceList.querySelectorAll(".check-item").forEach(el => {
+    const val = el.dataset.value;
+    if (val === char.race || val === char.race2) {
+      el.classList.add("active");
+    }
+  });
+
+  subList.innerHTML = "";
+  profList.innerHTML = "";
+  if (char.race) {
+    const subs = ORIGIN_DATA[char.race]?.subs || [];
+    subs.forEach(s => {
+      const el = document.createElement("div");
+      el.className = "check-item";
+      el.textContent = s;
+      el.dataset.value = s;
+      el.addEventListener("click", () => selectSub(s));
+      subList.appendChild(el);
+    });
+  }
+
+  if (!char.race && !char.race2) {
+    sSpec.textContent = "Wähle eine Hauptrasse und optional eine Zweitrasse (Mischwesen).";
+  } else if (!char.sub || !char.prof) {
+    sSpec.textContent = "Wähle eine Untergruppe und eine Profession...";
+  }
+  sSpec.style.color = "var(--gold-bright)";
+
+  updateUI();
+}
+
+function selectSub(s) {
+  char.sub = s;
+  char.prof = "";
+  char.special = "";
+  clearActiveIn(subList);
+  clearActiveIn(profList);
+
+  const chosen = subList.querySelector(`[data-value="${s}"]`);
+  if (chosen) chosen.classList.add("active");
+
+  profList.innerHTML = "";
+  if (char.race) {
+    const profs = ORIGIN_DATA[char.race]?.profs || [];
+    profs.forEach(p => {
+      const el = document.createElement("div");
+      el.className = "check-item";
+      el.textContent = p;
+      el.dataset.value = p;
+      el.addEventListener("click", () => openProfessionModal(p));
+      profList.appendChild(el);
+    });
+  }
+
+  sSpec.textContent = "Wähle eine Profession, um deine Gabe zu manifestieren.";
+  sSpec.style.color = "var(--gold-bright)";
+  updateUI();
+}
+
+/* ---------- PROFESSION MODAL ---------- */
+function openProfessionModal(p) {
+  pendingProfession = p;
+  raceAbilityInput.value = char.raceAbility || "";
+  subAbilityInput.value = char.subAbility || "";
+  attrBonusSelectEl.value = char.attrBonusNote || "";
+  professionModal.style.display = "flex";
+}
+
+function closeProfessionModal() {
+  professionModal.style.display = "none";
+  pendingProfession = "";
+}
+
+/* ---------- UI-UPDATE ---------- */
+function updateUI() {
+  char.name = inName.value.trim();
+  char.title = inTitel.value.trim();
+
+  sumName.textContent = char.name || "Namenlos";
+  sumTitle.textContent = char.title ? ("– " + char.title) : "ohne Titel";
+
+  // Rassenanzeige inkl. Mischwesen
+  if (char.race && char.race2) {
+    sRace.textContent = char.race + " / " + char.race2 + " (Mischwesen)";
+  } else if (char.race) {
+    sRace.textContent = char.race;
+  } else if (char.race2) {
+    sRace.textContent = char.race2;
+  } else {
+    sRace.textContent = "–";
+  }
+
+  if (char.sub) {
+    sSubWrap.style.display = "";
+    sSub.textContent = char.sub;
+  } else {
+    sSubWrap.style.display = "none";
+  }
+
+  sProf.textContent = char.prof || "–";
+
+  if (char.special) {
+    sSpec.textContent = char.special;
+    sSpec.style.color = "var(--gold-bright)";
+  }
+
+  const poolLeft = char.pool - char.used;
+  pTotal.textContent = char.pool;
+  pUsed.textContent = char.used;
+  pLeft.textContent = poolLeft;
+
+  ATTRIBUTES.forEach(a => {
+    const val = char.attrs[a] || 0;
+    const box = document.getElementById("v-" + a);
+    if (box) box.textContent = val;
+
+    const plusBtn = document.getElementById("plus-" + a);
+    if (plusBtn) {
+      if (poolLeft <= 0 || val >= 20) {
+        plusBtn.classList.add("disabled");
+        plusBtn.classList.remove("glow");
+      } else {
+        plusBtn.classList.remove("disabled");
+        if (char.pool > 0) plusBtn.classList.add("glow");
+      }
+    }
+  });
+
+  // Subheadline
+  const parts = [];
+  if (char.race && char.race2) {
+    parts.push(char.race + " / " + char.race2);
+  } else if (char.race) {
+    parts.push(char.race);
+  } else if (char.race2) {
+    parts.push(char.race2);
+  }
+  if (char.sub) parts.push("(" + char.sub + ")");
+  if (char.prof) parts.push("– " + char.prof);
+  heroPreviewSub.textContent = parts.join(" ");
+
+  const canProceed = !!char.name && (char.race || char.race2) && !!char.prof && char.pool > 0 && char.used > 0;
+  btnNext.disabled = !canProceed;
+
+  drawRadar();
+}
+
+/* ---------- RADAR ---------- */
+function drawRadar() {
+  const w = radarCanvas.width;
+  const h = radarCanvas.height;
+  const cx = w / 2;
+  const cy = h / 2;
+  const radius = Math.min(w, h) / 2 - 20;
+
+  radarCtx.clearRect(0,0,w,h);
+
+  const grad = radarCtx.createRadialGradient(cx, cy, 10, cx, cy, radius+20);
+  grad.addColorStop(0, "rgba(180,108,255,0.3)");
+  grad.addColorStop(1, "rgba(0,0,0,0.0)");
+  radarCtx.fillStyle = grad;
+  radarCtx.beginPath();
+  radarCtx.arc(cx, cy, radius+20, 0, Math.PI*2);
+  radarCtx.fill();
+
+  const count = ATTRIBUTES.length;
+  const step = (Math.PI * 2) / count;
+
+  radarCtx.strokeStyle = "rgba(212,175,55,0.25)";
+  radarCtx.lineWidth = 1;
+
+  for (let i = 0; i < count; i++) {
+    const angle = step*i - Math.PI/2;
+    const x = cx + Math.cos(angle) * radius;
+    const y = cy + Math.sin(angle) * radius;
+
+    radarCtx.beginPath();
+    radarCtx.moveTo(cx, cy);
+    radarCtx.lineTo(x, y);
+    radarCtx.stroke();
+
+    const tx = cx + Math.cos(angle) * (radius + 12);
+    const ty = cy + Math.sin(angle) * (radius + 12);
+    radarCtx.fillStyle = "#f8e7b0";
+    radarCtx.font = "9px " + (getComputedStyle(document.body).getPropertyValue("font-family") || "serif");
+    radarCtx.textAlign = "center";
+    radarCtx.textBaseline = "middle";
+    radarCtx.fillText(ATTR_SHORT[i], tx, ty);
+  }
+
+  radarCtx.beginPath();
+  radarCtx.arc(cx, cy, radius, 0, Math.PI*2);
+  radarCtx.strokeStyle = "rgba(248,231,176,0.6)";
+  radarCtx.lineWidth = 1;
+  radarCtx.stroke();
+
+  radarCtx.beginPath();
+  for (let i = 0; i < count; i++) {
+    const val = char.attrs[ATTRIBUTES[i]] || 0;
+    const factor = val / 20;
+    const r = radius * (0.1 + factor * 0.9);
+    const angle = step*i - Math.PI/2;
+    const x = cx + Math.cos(angle) * r;
+    const y = cy + Math.sin(angle) * r;
+    if (i === 0) radarCtx.moveTo(x,y);
+    else radarCtx.lineTo(x,y);
+  }
+  radarCtx.closePath();
+  radarCtx.fillStyle = "rgba(208,70,70,0.35)";
+  radarCtx.strokeStyle = "#d4af37";
+  radarCtx.lineWidth = 2;
+  radarCtx.fill();
+  radarCtx.stroke();
+}
+
+/* ---------- POOL WURF ---------- */
+function rollPool() {
+  if (char.pool > 0) {
+    showMsg("Punkte wurden bereits ausgewürfelt.");
+    return;
+  }
+  const pool = Math.floor(Math.random() * (120 - 40 + 1)) + 40;
+  char.pool = pool;
+  char.used = 0;
+  Object.keys(char.attrs).forEach(a => char.attrs[a] = 0);
+  showMsg("Du erhältst " + pool + " Attributpunkte.");
+  updateUI();
+}
+
+/* ---------- LOCAL STORAGE ---------- */
+function saveCharacterLocal() {
+  const data = {
+    name: char.name,
+    title: char.title,
+    race: char.race,
+    race2: char.race2,
+    sub: char.sub,
+    prof: char.prof,
+    special: char.special,
+    attrs: char.attrs,
+    pool: char.pool,
+    used: char.used,
+    portraitData: char.portraitData || null,
+    raceAbility: char.raceAbility || "",
+    subAbility: char.subAbility || "",
+    attrBonusNote: char.attrBonusNote || ""
+  };
+  try {
+    localStorage.setItem(KEY_CHAR, JSON.stringify(data));
+    showMsg("Charakterdaten (Seite 1) lokal gespeichert.");
+  } catch (e) {
+    console.error(e);
+    showMsg("Fehler beim lokalen Speichern.");
+  }
+}
+
+function loadCharacterLocal() {
+  try {
+    const raw = localStorage.getItem(KEY_CHAR);
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    if (!data || typeof data !== "object") return;
+
+    char.name = data.name || "";
+    char.title = data.title || "";
+    char.race = data.race || "";
+    char.race2 = data.race2 || "";
+    char.sub = data.sub || "";
+    char.prof = data.prof || "";
+    char.special = data.special || "";
+    char.attrs = data.attrs || {};
+    char.pool = data.pool || 0;
+    char.used = data.used || 0;
+    char.portraitData = data.portraitData || null;
+    char.raceAbility = data.raceAbility || "";
+    char.subAbility = data.subAbility || "";
+    char.attrBonusNote = data.attrBonusNote || "";
+
+    inName.value = char.name;
+    inTitel.value = char.title;
+
+    if (char.portraitData) {
+      previewImg.src = char.portraitData;
+      previewImg.style.display = "block";
+      placeholder.style.display = "none";
+    }
+
+    ATTRIBUTES.forEach(a => {
+      if (typeof char.attrs[a] !== "number") char.attrs[a] = 0;
+    });
+
+    initRaces();
+    if (char.race) selectRace(char.race);
+    if (char.race2 && char.race2 !== char.race) selectRace(char.race2);
+    if (char.sub) selectSub(char.sub);
+    if (char.prof) {
+      // Profession direkt ohne Popup setzen
+      char.prof = char.prof;
+      char.special = char.special || randomFrom(SPECIAL_POOL);
+      clearActiveIn(profList);
+      const chosen = profList.querySelector(`[data-value="${char.prof}"]`);
+      if (chosen) chosen.classList.add("active");
+    }
+
+    initAttributes();
+    updateUI();
+    showMsg("Lokale Charakterdaten geladen.");
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+/* ---------- SLOTS LESEN (MODAL) ---------- */
+function refreshSlotOverview() {
+  for (let i = 1; i <= 3; i++) {
+    const raw = localStorage.getItem("undra15_slot" + i);
+    if (!raw) {
+      slotNameEls[i].textContent = "Slot " + i + " – leer";
+      slotMetaEls[i].textContent = "Noch kein Charakter gespeichert.";
+    } else {
+      try {
+        const data = JSON.parse(raw);
+        const c = data.character || {};
+        const name = c.name || "Unbenannt";
+        const race = c.race || "?";
+        const race2 = c.race2 || "";
+        const prof = c.prof || "?";
+        let raceText = race;
+        if (race && race2) {
+          raceText = race + " / " + race2 + " (Mischwesen)";
+        } else if (race2 && !race) {
+          raceText = race2;
+        }
+        slotNameEls[i].textContent = "Slot " + i + " – " + name;
+        slotMetaEls[i].textContent = raceText + " • " + prof;
+      } catch {
+        slotNameEls[i].textContent = "Slot " + i + " – (fehlerhaft)";
+        slotMetaEls[i].textContent = "Daten konnten nicht gelesen werden.";
+      }
+    }
+  }
+}
+
+function openLoadModal() {
+  refreshSlotOverview();
+  loadModal.style.display = "flex";
+}
+
+function closeLoadModal() {
+  loadModal.style.display = "none";
+}
+
+function loadFromSlot(slot) {
+  const key = "undra15_slot" + slot;
+  const raw = localStorage.getItem(key);
+  if (!raw) {
+    showMsg("Slot " + slot + " ist leer.");
+    return;
+  }
+  try {
+    const pack = JSON.parse(raw);
+    if (!pack || typeof pack !== "object") {
+      showMsg("Slot " + slot + " konnte nicht gelesen werden.");
+      return;
+    }
+    if (pack.character) localStorage.setItem(KEY_CHAR, JSON.stringify(pack.character));
+    if (pack.identity) localStorage.setItem(KEY_ID, JSON.stringify(pack.identity));
+    if (pack.dashboard) localStorage.setItem(KEY_DASH, JSON.stringify(pack.dashboard));
+
+    showMsg("Charakter aus Slot " + slot + " geladen. Wechsel zum Dashboard...");
+    setTimeout(() => {
+      window.location.href = "UNDRA-ENGINE-1.5-Seite3.html";
+    }, 900);
+  } catch (e) {
+    console.error(e);
+    showMsg("Fehler beim Laden aus Slot " + slot + ".");
+  }
+}
+
+/* ---------- NAVIGATION ---------- */
+function goToPage2() {
+  saveCharacterLocal();
+  window.location.href = "UNDRA-ENGINE-1.5-Seite2.html";
+}
+
+/* ---------- LEAVE MODAL ---------- */
+function openLeaveModal() {
+  const raceText = (char.race && char.race2)
+    ? char.race + " / " + char.race2 + " (Mischwesen)"
+    : (char.race || char.race2 || "–");
+
+  const parts = [];
+  parts.push((char.name || "Namenlos") + (char.title ? " – " + char.title : ""));
+  parts.push("Volk: " + raceText + (char.sub ? " (" + char.sub + ")" : ""));
+  parts.push("Profession: " + (char.prof || "–"));
+  leaveSummary.textContent = parts.join(" • ");
+  leaveModal.style.display = "flex";
+}
+
+function closeLeaveModal() {
+  leaveModal.style.display = "none";
+}
+
+/* ---------- PORTRAIT UPLOAD ---------- */
+function handleUploadChange(e) {
+  const file = e.target.files && e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const dataUrl = ev.target.result;
+    previewImg.src = dataUrl;
+    previewImg.style.display = "block";
+    placeholder.style.display = "none";
+    char.portraitData = dataUrl;
+    saveCharacterLocal();
+  };
+  reader.readAsDataURL(file);
+}
+
+/* ---------- EVENT BINDING ---------- */
+document.addEventListener("DOMContentLoaded", () => {
+  initAttributes();
+  initRaces();
+  loadCharacterLocal();
+  updateUI();
+
+  // Attributbonus-Select füllen
+  if (attrBonusSelectEl) {
+    ATTRIBUTES.forEach(a => {
+      const opt = document.createElement("option");
+      opt.value = a;
+      opt.textContent = a;
+      attrBonusSelectEl.appendChild(opt);
+    });
+  }
+
+  window.addEventListener("resize", drawRadar);
+
+  rollBtn.addEventListener("click", rollPool);
+  btnNext.addEventListener("click", openLeaveModal);
+  btnSaveLocal.addEventListener("click", saveCharacterLocal);
+  btnLoad.addEventListener("click", openLoadModal);
+  btnCloseLoad.addEventListener("click", closeLoadModal);
+
+  slotButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const slot = btn.dataset.slot;
+      loadFromSlot(slot);
+    });
+  });
+
+  inName.addEventListener("input", updateUI);
+  inTitel.addEventListener("input", updateUI);
+
+  uploadInput.addEventListener("change", handleUploadChange);
+
+  if (btnProfCancel) btnProfCancel.addEventListener("click", closeProfessionModal);
+  if (btnProfConfirm) btnProfConfirm.addEventListener("click", () => {
+    if (!pendingProfession) {
+      closeProfessionModal();
+      return;
+    }
+
+    char.prof = pendingProfession;
+    char.special = randomFrom(SPECIAL_POOL);
+
+    char.raceAbility = raceAbilityInput.value.trim();
+    char.subAbility = subAbilityInput.value.trim();
+    const bonusAttr = attrBonusSelectEl.value || "";
+    char.attrBonusNote = bonusAttr;
+
+    if (bonusAttr && char.attrs[bonusAttr] != null) {
+      char.attrs[bonusAttr] = (char.attrs[bonusAttr] || 0) + 1;
+      char.used += 1; // Bonus verbraucht effektiv einen Punkt mehr
+      if (char.used > char.pool) {
+        char.pool = char.used;
+      }
+    }
+
+    clearActiveIn(profList);
+    const chosen = profList.querySelector(`[data-value="${pendingProfession}"]`);
+    if (chosen) chosen.classList.add("active");
+
+    updateUI();
+    showMsg("Berufung und Fähigkeiten bestätigt.");
+    closeProfessionModal();
+  });
+
+  if (btnLeaveCancel) btnLeaveCancel.addEventListener("click", closeLeaveModal);
+  if (btnLeaveConfirm) btnLeaveConfirm.addEventListener("click", () => {
+    closeLeaveModal();
+    goToPage2();
+  });
+});
+</script>
+</body>
+</html>
