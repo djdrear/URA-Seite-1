@@ -33,6 +33,7 @@
     }
 
     html, body {
+      height: 100%;
       margin: 0;
       padding: 0;
       background:
@@ -41,31 +42,28 @@
         radial-gradient(circle at bottom, #050307 0%, #020107 35%, #000 100%);
       color: var(--text-main);
       font-family: var(--font-body);
-      min-height: 100vh;
     }
 
     body {
-      display: flex;
-      justify-content: center;
-      padding: 16px;
-    }
-
-    /* SHELL */
+  display: flex;
+  justify-content: center;
+  padding: clamp(8px, 3vw, 16px);
+  align-items: flex-start;
+}
     #app-shell {
-      width: 100%;
-      max-width: 950px;
-      background:
-        linear-gradient(145deg, rgba(8,2,12,0.98), rgba(4,1,7,0.98));
-      border-radius: 12px;
-      border: 2px solid var(--gold-soft);
-      box-shadow:
-        0 18px 45px rgba(0,0,0,0.9),
-        0 0 24px rgba(40,0,60,0.65);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      max-height: calc(100vh - 32px);
-    }
+  width: 100%;
+  max-width: 950px;
+  background: linear-gradient(145deg, rgba(8,2,12,0.98), rgba(4,1,7,0.98));
+  border-radius: 12px;
+  border: 2px solid var(--gold-soft);
+  box-shadow:
+    0 18px 45px rgba(0,0,0,0.9),
+    0 0 24px rgba(40,0,60,0.65);
+  overflow: hidden;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
 
     header {
       padding: 14px 16px 10px;
@@ -115,18 +113,13 @@
       color: var(--text-muted);
     }
 
-    /* CONTENT */
     #content {
-      flex: 1;
-      padding: 10px 12px 8px;
-      overflow-y: auto;
-      overflow-x: hidden;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      min-height: 0;
-    }
-
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px 12px 8px;
+}
     .panel {
       background:
         linear-gradient(145deg, rgba(26,10,32,0.96), rgba(10,4,16,0.98));
@@ -390,7 +383,7 @@
       background:
         radial-gradient(circle at top, rgba(50,10,50,0.85), rgba(12,4,16,0.95));
       padding: 8px 8px 6px;
-      max-height: 260px;
+      max-height: 360px;
       overflow-y: auto;
       scrollbar-width: thin;
       scrollbar-color: var(--gold) #000;
@@ -693,7 +686,7 @@
 <body>
 <div id="app-shell">
   <header>
-    <div id="engine-tag">UNDRA‑ENGINE v1.5</div>
+    <div id="engine-tag">UNDRA‑ENGINE v1.8</div>
     <h1>Ursprung & Blutlinien</h1>
     <div id="sub-title">Genesis des Heldencharakters</div>
     <div id="page-indicator">Seite 1 von 3</div>
@@ -791,17 +784,23 @@
   <!-- FOOTER -->
   <footer>
     <div class="footer-left">
-      <button class="btn-main btn-ghost" id="btn-load">Laden</button>
+      <button onclick="loadCharacterFromGist(prompt('Gist-ID eingeben'))">
+  Cloud-Charakter laden
+</button>
     </div>
     <div class="footer-center">
       <div class="footer-info">
-        Attributspiegel – <span>UNDRA‑ENGINE v1.5</span>
+        Attributspiegel – <span>UNDRA‑ENGINE v1.8</span>
       </div>
     </div>
     <div class="footer-right">
-      <button class="btn-main btn-ghost" id="btn-save-local">Zwischenspeichern</button>
-      <button class="btn-main" id="btn-next">Weiter zu Seite 2</button>
+      <button onclick="saveCharacterToGist()">Cloud speichern</button>
+      <button class="btn-main" id="btn-next">Weiter</button>
     </div>
+<script>
+document.getElementById("btn-next").addEventListener("click", openLeaveModal);
+});
+</script>
   </footer>
 
   <!-- TRANSIENT MESSAGE -->
@@ -898,13 +897,17 @@
       </div>
       <div class="modal-actions">
         <button class="btn-small" id="btn-leave-cancel">Zurück</button>
-        <button class="btn-small" id="btn-leave-confirm" style="color:#f8e7b0;">Ja, weiter zu Seite 2</button>
+        <button class="btn-small" id="btn-leave-confirm" style="color:#f8e7b0;">Ja,weiter und Speichern
+        </button>
       </div>
     </div>
   </div>
 </div>
 
 <script>
+    /* ---------- UNDRA CLOUD (GITHUB GIST) ---------- */
+const GITHUB_TOKEN = "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";  // <-- Token einfügen
+
 /* ---------- KONSTANTEN & DATEN ---------- */
 const ATTRIBUTES = [
   "Mut","Intelligenz","Fingerfertigkeit","Gewandtheit","Körperkraft",
@@ -936,7 +939,20 @@ const ORIGIN_DATA = {
 
 const SPECIAL_POOL = [
   "Göttlicher Funke","Schattenlauf","Manaschild","Eisenzorn",
-  "Blutrunen-Resonanz","Seelenfokus","Nachtschritt","Runenblick"
+  "Blutrunen-Resonanz","Seelenfokus","Nachtschritt","Runenblick",
+  "Klingenwirbel", "Schildstoß", "Ausweichrolle", "Kraftschlag",
+  "Präzisionshieb", "Standfestigkeit", "Waffenkenntnis", "Kampfhaltung",
+  "Taktischer Rückzug", "Schnellschritt", "Flinke Hände", "Schwerer Tritt",
+  "Ausdauerstoß", "Fokussierter Angriff", "Gegenschlag", "Wuchtblock",
+  "Konzentrationsstoß", "Körperbeherrschung", "Ruhiger Atem", "Spurensinn",
+  "Schleichtritt", "Scharfer Blick", "Schnellziehen", "Balancehaltung",
+  "Widerstandswille", "Klettergriff", "Sprintkraft", "Zielgenauigkeit",
+  "Waffenwechsel", "Harter Griff", "Schulterramme", "Beinfege",
+  "Kampfintuition", "Durchhaltewille", "Schnellkonter", "Fester Stand",
+  "Überblick", "Wachsamkeit", "Klingenparade", "Rüstungskenntnis",
+  "Körperkraft", "Zähigkeit", "Sturmlauf", "Schrittanalyse",
+  "Wurfgeschick", "Grifftechnik", "Stoßkraft", "Trittsicherheit",
+  "Reaktionsschub", "Kampfdisziplin"
 ];
 
 // KEYS
@@ -1026,8 +1042,12 @@ const btnProfConfirm = document.getElementById("btn-prof-confirm");
 const leaveModal = document.getElementById("leave-modal");
 const leaveSummary = document.getElementById("leave-summary");
 const btnLeaveCancel = document.getElementById("btn-leave-cancel");
-const btnLeaveConfirm = document.getElementById("btn-leave-confirm");
-
+btnLeaveCancel.addEventListener("click", () => {
+  document.getElementById("leave-modal").style.display = "none";
+});
+document.getElementById("btn-leave-confirm").addEventListener("click", () => {
+    window.location.href = "https://djdrear.github.io/Seite-2/";
+});
 /* ---------- HELPER ---------- */
 function showMsg(text, ms = 2200) {
   transientMsgEl.textContent = text;
@@ -1092,8 +1112,8 @@ function modAttr(a, delta) {
 
   if (delta > 0) {
     if (char.pool - char.used <= 0) return;
-    if (current >= 20) {
-      showMsg("Maximum von 20 Punkten in " + a + " erreicht.");
+    if (current >= 10) {
+      showMsg("Maximum von 10 Punkten in " + a + " erreicht.");
       return;
     }
     char.attrs[a] = current + 1;
@@ -1267,7 +1287,7 @@ function updateUI() {
 
     const plusBtn = document.getElementById("plus-" + a);
     if (plusBtn) {
-      if (poolLeft <= 0 || val >= 20) {
+      if (poolLeft <= 0 || val >= 10) {
         plusBtn.classList.add("disabled");
         plusBtn.classList.remove("glow");
       } else {
@@ -1302,16 +1322,16 @@ function drawRadar() {
   const h = radarCanvas.height;
   const cx = w / 2;
   const cy = h / 2;
-  const radius = Math.min(w, h) / 2 - 20;
+  const radius = Math.min(w, h) / 2 - 10;
 
   radarCtx.clearRect(0,0,w,h);
 
-  const grad = radarCtx.createRadialGradient(cx, cy, 10, cx, cy, radius+20);
+  const grad = radarCtx.createRadialGradient(cx, cy, 10, cx, cy, radius+10);
   grad.addColorStop(0, "rgba(180,108,255,0.3)");
   grad.addColorStop(1, "rgba(0,0,0,0.0)");
   radarCtx.fillStyle = grad;
   radarCtx.beginPath();
-  radarCtx.arc(cx, cy, radius+20, 0, Math.PI*2);
+  radarCtx.arc(cx, cy, radius+10, 0, Math.PI*2);
   radarCtx.fill();
 
   const count = ATTRIBUTES.length;
@@ -1348,7 +1368,7 @@ function drawRadar() {
   radarCtx.beginPath();
   for (let i = 0; i < count; i++) {
     const val = char.attrs[ATTRIBUTES[i]] || 0;
-    const factor = val / 20;
+    const factor = val / 10;
     const r = radius * (0.1 + factor * 0.9);
     const angle = step*i - Math.PI/2;
     const x = cx + Math.cos(angle) * r;
@@ -1370,7 +1390,7 @@ function rollPool() {
     showMsg("Punkte wurden bereits ausgewürfelt.");
     return;
   }
-  const pool = Math.floor(Math.random() * (120 - 40 + 1)) + 40;
+  const pool = Math.floor(Math.random() * (60 - 20 + 0,5)) + 20;
   char.pool = pool;
   char.used = 0;
   Object.keys(char.attrs).forEach(a => char.attrs[a] = 0);
@@ -1461,6 +1481,115 @@ function loadCharacterLocal() {
   }
 }
 
+async function saveCharacterToGist() {
+  const data = {
+    name: char.name,
+    title: char.title,
+    race: char.race,
+    race2: char.race2,
+    sub: char.sub,
+    prof: char.prof,
+    special: char.special,
+    attrs: char.attrs,
+    pool: char.pool,
+    used: char.used,
+    portraitData: char.portraitData || null,
+    raceAbility: char.raceAbility || "",
+    subAbility: char.subAbility || "",
+    attrBonusNote: char.attrBonusNote || ""
+  };
+
+  const body = {
+    description: "UNDRA Character Save",
+    public: false,
+    files: {
+      "character.json": {
+        content: JSON.stringify(data, null, 2)
+      }
+    }
+  };
+
+  try {
+    const res = await fetch("https://api.github.com/gists", {
+      method: "POST",
+      headers: {
+        "Authorization": "token " + GITHUB_TOKEN,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(body)
+    });
+
+    const result = await res.json();
+
+    if (result.id) {
+      localStorage.setItem("undra_cloud_id", result.id);
+
+      const popup = document.createElement("div");
+      popup.style.position = "fixed";
+      popup.style.top = "50%";
+      popup.style.left = "50%";
+      popup.style.transform = "translate(-50%, -50%)";
+      popup.style.background = "#1a1a1a";
+      popup.style.color = "#fff";
+      popup.style.padding = "20px";
+      popup.style.border = "2px solid #800000";
+      popup.style.borderRadius = "8px";
+      popup.style.zIndex = "9999";
+      popup.style.textAlign = "center";
+
+      const info = document.createElement("div");
+      info.textContent = "Gist-ID gespeichert!";
+      info.style.marginBottom = "8px";
+
+      const idField = document.createElement("input");
+      idField.value = result.id;
+      idField.readOnly = true;
+      idField.style.width = "100%";
+      idField.style.padding = "6px";
+      idField.style.marginBottom = "10px";
+      idField.style.background = "#2a2a2a";
+      idField.style.color = "#fff";
+      idField.style.border = "1px solid #555";
+      idField.style.textAlign = "center";
+
+      const copyBtn = document.createElement("button");
+      copyBtn.textContent = "ID kopieren";
+      copyBtn.style.padding = "6px 12px";
+      copyBtn.style.marginBottom = "10px";
+      copyBtn.style.background = "#800000";
+      copyBtn.style.color = "#fff";
+      copyBtn.style.border = "none";
+      copyBtn.style.cursor = "pointer";
+      copyBtn.onclick = () => {
+        navigator.clipboard.writeText(result.id);
+        copyBtn.textContent = "✔️ Kopiert";
+        setTimeout(() => {
+          copyBtn.textContent = "ID kopieren";
+        }, 1500);
+      };
+
+      const closeBtn = document.createElement("button");
+      closeBtn.textContent = "Schließen";
+      closeBtn.style.padding = "6px 12px";
+      closeBtn.style.background = "#444";
+      closeBtn.style.color = "#fff";
+      closeBtn.style.border = "none";
+      closeBtn.style.cursor = "pointer";
+      closeBtn.onclick = () => popup.remove();
+
+      popup.appendChild(info);
+      popup.appendChild(idField);
+      popup.appendChild(copyBtn);
+      popup.appendChild(closeBtn);
+      document.body.appendChild(popup);
+
+      showMsg("Charakter in der UNDRA‑Cloud gespeichert.");
+    }
+  } catch (e) {
+    console.error(e);
+    showMsg("Cloud‑Speichern fehlgeschlagen.");
+  }
+}
 /* ---------- SLOTS LESEN (MODAL) ---------- */
 function refreshSlotOverview() {
   for (let i = 1; i <= 3; i++) {
@@ -1492,6 +1621,36 @@ function refreshSlotOverview() {
   }
 }
 
+async function loadCharacterFromGist(id) {
+  try {
+    const res = await fetch("https://api.github.com/gists/" + id, {
+      headers: {
+        "Authorization": "token " + GITHUB_TOKEN
+      }
+    });
+
+    const gist = await res.json();
+    const file = gist.files["character.json"];
+
+    if (!file) {
+      showMsg("Keine Charakterdaten im Cloud‑Slot gefunden.");
+      return;
+    }
+
+    const data = JSON.parse(file.content);
+
+    localStorage.setItem(KEY_CHAR, JSON.stringify(data));
+
+    showMsg("Cloud‑Charakter geladen. Wechsel zum Dashboard...");
+    setTimeout(() => {
+      window.location.href = "UNDRA-ENGINE-1.5-Seite3.html";
+    }, 900);
+
+  } catch (e) {
+    console.error(e);
+    showMsg("Fehler beim Laden aus der UNDRA‑Cloud.");
+  }
+}
 function openLoadModal() {
   refreshSlotOverview();
   loadModal.style.display = "flex";
@@ -1569,6 +1728,7 @@ function handleUploadChange(e) {
 }
 
 /* ---------- EVENT BINDING ---------- */
+
 document.addEventListener("DOMContentLoaded", () => {
   initAttributes();
   initRaces();
@@ -1585,26 +1745,46 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+
   window.addEventListener("resize", drawRadar);
 
   rollBtn.addEventListener("click", rollPool);
-  btnNext.addEventListener("click", openLeaveModal);
+  btnNext.addEventListener("click", () => {
+  openLeaveModal();
+});
+  if (btnSaveLocal) {
   btnSaveLocal.addEventListener("click", saveCharacterLocal);
-  btnLoad.addEventListener("click", openLoadModal);
-  btnCloseLoad.addEventListener("click", closeLoadModal);
+}
 
+if (btnLoad) {
+  btnLoad.addEventListener("click", openLoadModal);
+}
+
+if (btnCloseLoad) {
+  btnCloseLoad.addEventListener("click", closeLoadModal);
+}
+
+if (slotButtons && slotButtons.forEach) {
   slotButtons.forEach(btn => {
+    if (!btn) return;
     btn.addEventListener("click", () => {
       const slot = btn.dataset.slot;
       loadFromSlot(slot);
     });
   });
+}
 
+if (inName) {
   inName.addEventListener("input", updateUI);
+}
+
+if (inTitel) {
   inTitel.addEventListener("input", updateUI);
+}
 
+if (uploadInput) {
   uploadInput.addEventListener("change", handleUploadChange);
-
+}
   if (btnProfCancel) btnProfCancel.addEventListener("click", closeProfessionModal);
   if (btnProfConfirm) btnProfConfirm.addEventListener("click", () => {
     if (!pendingProfession) {
@@ -1636,13 +1816,8 @@ document.addEventListener("DOMContentLoaded", () => {
     showMsg("Berufung und Fähigkeiten bestätigt.");
     closeProfessionModal();
   });
-
-  if (btnLeaveCancel) btnLeaveCancel.addEventListener("click", closeLeaveModal);
-  if (btnLeaveConfirm) btnLeaveConfirm.addEventListener("click", () => {
-    closeLeaveModal();
-    goToPage2();
   });
-});
+
 </script>
 </body>
 </html>
