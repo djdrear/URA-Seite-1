@@ -6,683 +6,684 @@
   <title>UNDRA-ENGINE v1.5 – Seite 1 – Ursprung & Blutlinien</title>
 
   <style>
-    :root {
-      --bg-main: #050307;
-      --bg-panel: #120814;
-      --bg-panel-alt: #1b0d24;
-      --bg-header: linear-gradient(135deg, #4a0a2f, #1a0b22);
-      --bg-header-soft: linear-gradient(135deg, #3a071f, #120614);
-      --gold: #d4af37;
-      --gold-bright: #f8e7b0;
-      --gold-soft: rgba(212, 175, 55, 0.55);
-      --gold-shadow: rgba(212, 175, 55, 0.28);
-      --accent-red: #d04646;
-      --accent-purple: #b46cff;
-      --accent-deep: #4a165a;
-      --text-main: #f5efe6;
-      --text-muted: #a6938a;
-      --danger: #ff4b5c;
-      --border-strong: rgba(255, 220, 150, 0.8);
-      --marble-overlay: radial-gradient(circle at top, rgba(120, 40, 160, 0.35), transparent 55%);
-      --font-header: "Palatino Linotype", "Book Antiqua", Palatino, serif;
-      --font-body: "Georgia", serif;
-    }
+  :root {
+    --bg-main: #050307;
+    --bg-panel: #120814;
+    --bg-panel-alt: #1b0d24;
+    --bg-header: linear-gradient(135deg, #4a0a2f, #1a0b22);
+    --bg-header-soft: linear-gradient(135deg, #3a071f, #120614);
+    --gold: #d4af37;
+    --gold-bright: #f8e7b0;
+    --gold-soft: rgba(212, 175, 55, 0.55);
+    --gold-shadow: rgba(212, 175, 55, 0.28);
+    --accent-red: #d04646;
+    --accent-purple: #b46cff;
+    --accent-deep: #4a165a;
+    --text-main: #f5efe6;
+    --text-muted: #a6938a;
+    --danger: #ff4b5c;
+    --border-strong: rgba(255, 220, 150, 0.8);
+    --marble-overlay: radial-gradient(circle at top, rgba(120, 40, 160, 0.35), transparent 55%);
+    --font-header: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    --font-body: "Georgia", serif;
+  }
 
-    * {
-      box-sizing: border-box;
-    }
+  * {
+    box-sizing: border-box;
+  }
 
-    html, body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      background:
-        var(--marble-overlay),
-        url("dark-marmor-texture.png") center/cover fixed no-repeat,
-        radial-gradient(circle at bottom, #050307 0%, #020107 35%, #000 100%);
-      color: var(--text-main);
-      font-family: var(--font-body);
-    }
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background:
+      var(--marble-overlay),
+      url("dark-marmor-texture.png") center/cover fixed no-repeat,
+      radial-gradient(circle at bottom, #050307 0%, #020107 35%, #000 100%);
+    color: var(--text-main);
+    font-family: var(--font-body);
+  }
 
-    body {
-  display: flex;
-  justify-content: center;
-  padding: clamp(8px, 3vw, 16px);
-  align-items: flex-start;
-}
-    #app-shell {
-  width: 100%;
-  max-width: 950px;
-  background: linear-gradient(145deg, rgba(8,2,12,0.98), rgba(4,1,7,0.98));
-  border-radius: 12px;
-  border: 2px solid var(--gold-soft);
-  box-shadow:
-    0 18px 45px rgba(0,0,0,0.9),
-    0 0 24px rgba(40,0,60,0.65);
-  overflow: hidden;
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-}
+  body {
+    display: flex;
+    justify-content: center;
+    padding: clamp(8px, 3vw, 16px);
+    align-items: flex-start;
+  }
 
-    header {
-      padding: 14px 16px 10px;
-      background: var(--bg-header);
-      border-bottom: 1px solid var(--gold-soft);
-      position: relative;
-      text-align: center;
-    }
+  #app-shell {
+    width: 100%;
+    max-width: 950px;
+    background: linear-gradient(145deg, rgba(8,2,12,0.98), rgba(4,1,7,0.98));
+    border-radius: 12px;
+    border: 2px solid var(--gold-soft);
+    box-shadow:
+      0 18px 45px rgba(0,0,0,0.9),
+      0 0 24px rgba(40,0,60,0.65);
+    overflow: hidden;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
 
-    header h1 {
-      margin: 0;
-      font-family: var(--font-header);
-      color: var(--gold-bright);
-      text-transform: uppercase;
-      letter-spacing: 0.32em;
-      font-size: 16px;
-    }
+  header {
+    padding: 14px 16px 10px;
+    background: var(--bg-header);
+    border-bottom: 1px solid var(--gold-soft);
+    position: relative;
+    text-align: center;
+  }
 
-    #sub-title {
-      margin-top: 4px;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: var(--text-muted);
-    }
+  header h1 {
+    margin: 0;
+    font-family: var(--font-header);
+    color: var(--gold-bright);
+    text-transform: uppercase;
+    letter-spacing: 0.32em;
+    font-size: 16px;
+  }
 
-    #engine-tag {
-      position: absolute;
-      left: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 10px;
-      color: var(--gold-bright);
-      padding: 2px 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(248,231,176,0.5);
-      background: linear-gradient(135deg, rgba(40,8,40,0.9), rgba(12,3,20,0.9));
-      box-shadow: 0 0 8px rgba(120,0,160,0.6);
-    }
+  #sub-title {
+    margin-top: 4px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--text-muted);
+  }
 
-    #page-indicator {
-      position: absolute;
-      right: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 11px;
-      color: var(--text-muted);
-    }
+  #engine-tag {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 10px;
+    color: var(--gold-bright);
+    padding: 2px 8px;
+    border-radius: 999px;
+    border: 1px solid rgba(248,231,176,0.5);
+    background: linear-gradient(135deg, rgba(40,8,40,0.9), rgba(12,3,20,0.9));
+    box-shadow: 0 0 8px rgba(120,0,160,0.6);
+  }
 
-    #content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 10px 12px 8px;
-}
-    .panel {
-      background:
-        linear-gradient(145deg, rgba(26,10,32,0.96), rgba(10,4,16,0.98));
-      border-radius: 10px;
-      border: 1px solid rgba(212,175,55,0.45);
-      box-shadow:
-        inset 0 0 18px rgba(0,0,0,0.7),
-        0 0 10px rgba(60,0,90,0.55);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
+  #page-indicator {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 11px;
+    color: var(--text-muted);
+  }
 
-    .panel-header {
-      background: var(--bg-header-soft);
-      padding: 8px 12px;
-      border-bottom: 1px solid rgba(212,175,55,0.4);
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-    }
+  #content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 12px 8px;
+  }
 
-    .panel-title {
-      font-family: var(--font-header);
-      color: var(--gold-bright);
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      font-size: 11px;
-    }
+  .panel {
+    background:
+      linear-gradient(145deg, rgba(26,10,32,0.96), rgba(10,4,16,0.98));
+    border-radius: 10px;
+    border: 1px solid rgba(212,175,55,0.45);
+    box-shadow:
+      inset 0 0 18px rgba(0,0,0,0.7),
+      0 0 10px rgba(60,0,90,0.55);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
 
-    .panel-sub {
-      font-size: 11px;
-      color: var(--text-muted);
-    }
+  .panel-header {
+    background: var(--bg-header-soft);
+    padding: 8px 12px;
+    border-bottom: 1px solid rgba(212,175,55,0.4);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
 
-    /* GRID 1: Portrait + Daten + Radar */
+  .panel-title {
+    font-family: var(--font-header);
+    color: var(--gold-bright);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 11px;
+  }
+
+  .panel-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  .identity-grid {
+    display: grid;
+    grid-template-columns: 190px minmax(0, 1.4fr) 240px;
+    gap: 12px;
+    padding: 10px 12px 12px;
+  }
+
+  @media (max-width: 860px) {
     .identity-grid {
-      display: grid;
-      grid-template-columns: 190px minmax(0, 1.4fr) 240px;
-      gap: 12px;
-      padding: 10px 12px 12px;
+      grid-template-columns: 1fr;
     }
+  }
 
-    @media (max-width: 860px) {
-      .identity-grid {
-        grid-template-columns: 1fr;
-      }
-    }
+  .portrait-frame {
+    width: 170px;
+    height: 220px;
+    border-radius: 10px;
+    border: 2px solid rgba(212,175,55,0.7);
+    background:
+      radial-gradient(circle at top, rgba(255,255,255,0.05), transparent 55%),
+      url("stone-noise.png");
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow:
+      inset 0 0 30px rgba(0,0,0,0.8),
+      0 0 16px rgba(0,0,0,0.9);
+    position: relative;
+  }
 
-    .portrait-frame {
-      width: 170px;
-      height: 220px;
-      border-radius: 10px;
-      border: 2px solid rgba(212,175,55,0.7);
-      background:
-        radial-gradient(circle at top, rgba(255,255,255,0.05), transparent 55%),
-        url("stone-noise.png");
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      box-shadow:
-        inset 0 0 30px rgba(0,0,0,0.8),
-        0 0 16px rgba(0,0,0,0.9);
-      position: relative;
-    }
+  .portrait-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 
-    .portrait-frame img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+  .portrait-placeholder {
+    color: #4b374a;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+  }
 
-    .portrait-placeholder {
-      color: #4b374a;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-    }
+  #upload {
+    width: 100%;
+    margin-top: 8px;
+    font-size: 10px;
+    color: var(--text-muted);
+  }
 
-    #upload {
-      width: 100%;
-      margin-top: 8px;
-      font-size: 10px;
-      color: var(--text-muted);
-    }
+  .identity-main {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
 
-    .identity-main {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
+  .name-input {
+    font-size: 18px;
+    padding: 6px 8px;
+    border-radius: 8px;
+    border: 1px solid rgba(248,231,176,0.4);
+    background: rgba(8,4,12,0.9);
+    color: var(--gold-bright);
+    width: 100%;
+    box-shadow: 0 0 10px rgba(120,0,160,0.4);
+  }
 
-    .name-input {
-      font-size: 18px;
-      padding: 6px 8px;
-      border-radius: 8px;
-      border: 1px solid rgba(248,231,176,0.4);
-      background: rgba(8,4,12,0.9);
-      color: var(--gold-bright);
-      width: 100%;
-      box-shadow: 0 0 10px rgba(120,0,160,0.4);
-    }
+  .title-input {
+    font-size: 12px;
+    padding: 5px 8px;
+    border-radius: 6px;
+    border: 1px solid rgba(212,175,55,0.35);
+    background: rgba(8,4,12,0.9);
+    color: var(--text-main);
+    width: 100%;
+  }
 
-    .title-input {
-      font-size: 12px;
-      padding: 5px 8px;
-      border-radius: 6px;
-      border: 1px solid rgba(212,175,55,0.35);
-      background: rgba(8,4,12,0.9);
-      color: var(--text-main);
-      width: 100%;
-    }
+  .name-input:focus,
+  .title-input:focus {
+    outline: none;
+    border-color: var(--accent-purple);
+    box-shadow: 0 0 12px rgba(180,108,255,0.8);
+    background: rgba(18,8,28,0.96);
+  }
 
-    .name-input:focus,
-    .title-input:focus {
-      outline: none;
-      border-color: var(--accent-purple);
-      box-shadow: 0 0 12px rgba(180,108,255,0.8);
-      background: rgba(18,8,28,0.96);
-    }
+  .identity-summary {
+    margin-top: 10px;
+    font-size: 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(212,175,55,0.35);
+    background:
+      radial-gradient(circle at top, rgba(80,0,80,0.35), transparent 60%),
+      rgba(0,0,0,0.6);
+    padding: 8px 10px;
+  }
 
-    .identity-summary {
-      margin-top: 10px;
-      font-size: 12px;
-      border-radius: 8px;
-      border: 1px solid rgba(212,175,55,0.35);
-      background:
-        radial-gradient(circle at top, rgba(80,0,80,0.35), transparent 60%),
-        rgba(0,0,0,0.6);
-      padding: 8px 10px;
-    }
+  .identity-summary b {
+    color: var(--gold-bright);
+  }
 
-    .identity-summary b {
-      color: var(--gold-bright);
-    }
+  .identity-summary-label {
+    color: var(--text-muted);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+  }
 
-    .identity-summary-label {
-      color: var(--text-muted);
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 4px;
-    }
+  .radar-box {
+    background: rgba(0,0,0,0.55);
+    border-radius: 10px;
+    border: 1px solid rgba(212,175,55,0.35);
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow:
+      inset 0 0 20px rgba(0,0,0,0.9),
+      0 0 10px rgba(100,0,140,0.6);
+  }
 
-    .radar-box {
-      background: rgba(0,0,0,0.55);
-      border-radius: 10px;
-      border: 1px solid rgba(212,175,55,0.35);
-      padding: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow:
-        inset 0 0 20px rgba(0,0,0,0.9),
-        0 0 10px rgba(100,0,140,0.6);
-    }
+  #radarCanvas {
+    width: 220px;
+    height: 220px;
+    display: block;
+  }
 
-    #radarCanvas {
-      width: 220px;
-      height: 220px;
-      display: block;
-    }
+  .attr-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 20px;
+    padding: 10px 12px 8px;
+  }
 
-    /* ATTRIBUTES PANEL */
+  @media (max-width: 720px) {
     .attr-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6px 20px;
-      padding: 10px 12px 8px;
+      grid-template-columns: 1fr;
     }
+  }
 
-    @media (max-width: 720px) {
-      .attr-grid {
-        grid-template-columns: 1fr;
-      }
-    }
+  .attr-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) auto 40px auto;
+    gap: 6px;
+    align-items: center;
+    font-size: 12px;
+    padding: 3px 4px;
+    border-bottom: 1px solid rgba(212,175,55,0.1);
+  }
 
-    .attr-row {
-      display: grid;
-      grid-template-columns: minmax(0, 1.3fr) auto 40px auto;
-      gap: 6px;
-      align-items: center;
-      font-size: 12px;
-      padding: 3px 4px;
-      border-bottom: 1px solid rgba(212,175,55,0.1);
-    }
+  .attr-name {
+    color: var(--text-main);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
-    .attr-name {
-      color: var(--text-main);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+  .val-box {
+    background: #000;
+    border-radius: 4px;
+    border: 1px solid rgba(248,231,176,0.5);
+    color: var(--gold-bright);
+    font-weight: bold;
+    text-align: center;
+    padding: 3px 0;
+    font-size: 12px;
+    box-shadow: 0 0 8px rgba(255,220,150,0.4);
+  }
 
-    .val-box {
-      background: #000;
-      border-radius: 4px;
-      border: 1px solid rgba(248,231,176,0.5);
-      color: var(--gold-bright);
-      font-weight: bold;
-      text-align: center;
-      padding: 3px 0;
-      font-size: 12px;
-      box-shadow: 0 0 8px rgba(255,220,150,0.4);
-    }
+  .btn-step {
+    width: 22px;
+    height: 22px;
+    border-radius: 999px;
+    border: 1px solid rgba(212,175,55,0.4);
+    background: radial-gradient(circle at 30% 0%, #5b0d2a, #120612);
+    color: var(--gold-bright);
+    font-size: 11px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: box-shadow 0.15s ease, transform 0.15s ease, background 0.15s ease, opacity 0.15s ease;
+  }
 
-    .btn-step {
-      width: 22px;
-      height: 22px;
-      border-radius: 999px;
-      border: 1px solid rgba(212,175,55,0.4);
-      background: radial-gradient(circle at 30% 0%, #5b0d2a, #120612);
-      color: var(--gold-bright);
-      font-size: 11px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      transition: box-shadow 0.15s ease, transform 0.15s ease, background 0.15s ease, opacity 0.15s ease;
-    }
+  .btn-step:hover {
+    box-shadow: 0 0 10px rgba(212,175,55,0.7);
+    transform: translateY(-1px);
+    background: radial-gradient(circle at 30% 0%, #7d1638, #1a0714);
+  }
 
-    .btn-step:hover {
-      box-shadow: 0 0 10px rgba(212,175,55,0.7);
-      transform: translateY(-1px);
-      background: radial-gradient(circle at 30% 0%, #7d1638, #1a0714);
-    }
+  .btn-step.disabled {
+    opacity: 0.25;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
 
-    .btn-step.disabled {
-      opacity: 0.25;
-      cursor: not-allowed;
-      box-shadow: none;
-    }
+  .btn-plus {
+    background: radial-gradient(circle at 30% 0%, #4a165a, #14071a);
+  }
 
-    .btn-plus {
-      background: radial-gradient(circle at 30% 0%, #4a165a, #14071a);
-    }
+  .btn-plus.glow {
+    box-shadow: 0 0 12px rgba(180,108,255,0.9);
+    border-color: rgba(248,231,176,0.8);
+  }
 
-    .btn-plus.glow {
-      box-shadow: 0 0 12px rgba(180,108,255,0.9);
-      border-color: rgba(248,231,176,0.8);
-    }
+  .origin-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1.1fr 1.1fr;
+    gap: 2px;
+    background: var(--gold);
+    border-top: 1px solid var(--gold-soft);
+    border-bottom: 1px solid var(--gold-soft);
+  }
 
-    /* ORIGIN GRID */
+  @media (max-width: 860px) {
     .origin-grid {
-      display: grid;
-      grid-template-columns: 1.1fr 1.1fr 1.1fr;
-      gap: 2px;
-      background: var(--gold);
-      border-top: 1px solid var(--gold-soft);
-      border-bottom: 1px solid var(--gold-soft);
+      grid-template-columns: 1fr;
     }
+  }
 
-    @media (max-width: 860px) {
-      .origin-grid {
-        grid-template-columns: 1fr;
-      }
-    }
+  .origin-col {
+    background:
+      radial-gradient(circle at top, rgba(50,10,50,0.85), rgba(12,4,16,0.95));
+    padding: 8px 8px 6px;
+    max-height: 360px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--gold) #000;
+  }
 
-    .origin-col {
-      background:
-        radial-gradient(circle at top, rgba(50,10,50,0.85), rgba(12,4,16,0.95));
-      padding: 8px 8px 6px;
-      max-height: 360px;
-      overflow-y: auto;
-      scrollbar-width: thin;
-      scrollbar-color: var(--gold) #000;
-    }
+  .origin-col h4 {
+    margin: 0 0 6px;
+    font-family: var(--font-header);
+    color: var(--gold-bright);
+    font-size: 12px;
+    text-align: center;
+    border-bottom: 1px solid rgba(212,175,55,0.3);
+    padding-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+  }
 
-    .origin-col h4 {
-      margin: 0 0 6px;
-      font-family: var(--font-header);
-      color: var(--gold-bright);
-      font-size: 12px;
-      text-align: center;
-      border-bottom: 1px solid rgba(212,175,55,0.3);
-      padding-bottom: 4px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-    }
+  .check-item {
+    display: block;
+    padding: 4px 6px;
+    cursor: pointer;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    margin-bottom: 3px;
+    font-size: 12px;
+    color: var(--text-main);
+    background: rgba(0,0,0,0.35);
+    transition: background 0.15s ease, border 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease;
+  }
 
-    .check-item {
-      display: block;
-      padding: 4px 6px;
-      cursor: pointer;
-      border-radius: 6px;
-      border: 1px solid transparent;
-      margin-bottom: 3px;
-      font-size: 12px;
-      color: var(--text-main);
-      background: rgba(0,0,0,0.35);
-      transition: background 0.15s ease, border 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease;
-    }
+  .check-item:hover {
+    background: rgba(212,175,55,0.12);
+    border-color: rgba(212,175,55,0.5);
+    box-shadow: 0 0 10px rgba(180,108,255,0.5);
+    transform: translateY(-1px);
+  }
 
-    .check-item:hover {
-      background: rgba(212,175,55,0.12);
-      border-color: rgba(212,175,55,0.5);
-      box-shadow: 0 0 10px rgba(180,108,255,0.5);
-      transform: translateY(-1px);
-    }
+  .check-item.active {
+    background: radial-gradient(circle at top, #7d1638, #180308);
+    border-color: var(--border-strong);
+    box-shadow: 0 0 12px rgba(255,215,120,0.7);
+  }
 
-    .check-item.active {
-      background: radial-gradient(circle at top, #7d1638, #180308);
-      border-color: var(--border-strong);
-      box-shadow: 0 0 12px rgba(255,215,120,0.7);
-    }
+  footer {
+    padding: 8px 10px;
+    border-top: 1px solid var(--gold-soft);
+    background: linear-gradient(180deg, rgba(10,2,14,0.9), rgba(4,0,8,0.98));
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 11px;
+  }
 
-    /* FOOTER BAR */
-    footer {
-      padding: 8px 10px;
-      border-top: 1px solid var(--gold-soft);
-      background: linear-gradient(180deg, rgba(10,2,14,0.9), rgba(4,0,8,0.98));
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      font-size: 11px;
-    }
+  .footer-left,
+  .footer-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
 
-    .footer-left,
-    .footer-right {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+  .footer-center {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+  }
 
-    .footer-center {
-      display: flex;
-      justify-content: center;
-      flex: 1;
-    }
+  .btn-main {
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(212,175,55,0.7);
+    background: linear-gradient(135deg, #4a0a2f, #1a0b22);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 0 12px rgba(180,0,60,0.7);
+    text-shadow: 0 0 6px rgba(0,0,0,0.9);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, opacity 0.15s ease;
+    white-space: nowrap;
+  }
 
-    .btn-main {
-      padding: 6px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(212,175,55,0.7);
-      background: linear-gradient(135deg, #4a0a2f, #1a0b22);
-      color: #fff;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      box-shadow: 0 0 12px rgba(180,0,60,0.7);
-      text-shadow: 0 0 6px rgba(0,0,0,0.9);
-      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, opacity 0.15s ease;
-      white-space: nowrap;
-    }
+  .btn-main:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 16px rgba(255,215,120,0.9);
+    background: linear-gradient(135deg, #7d1638, #2a1034);
+  }
 
-    .btn-main:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 0 16px rgba(255,215,120,0.9);
-      background: linear-gradient(135deg, #7d1638, #2a1034);
-    }
+  .btn-main:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
 
-    .btn-main:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-      box-shadow: none;
-    }
+  .btn-ghost {
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(212,175,55,0.4);
+    background: linear-gradient(135deg, #241329, #100613);
+    color: var(--text-muted);
+    font-size: 11px;
+    cursor: pointer;
+    box-shadow: 0 0 8px rgba(0,0,0,0.8);
+  }
 
-    .btn-ghost {
-      background: linear-gradient(135deg, #241329, #100613);
-      color: var(--text-muted);
-      box-shadow: 0 0 8px rgba(0,0,0,0.8);
-    }
+  .btn-ghost:hover {
+    box-shadow: 0 0 12px rgba(160,100,240,0.7);
+    color: var(--gold-bright);
+  }
 
-    .btn-ghost:hover {
-      box-shadow: 0 0 12px rgba(160,100,240,0.7);
-      color: var(--gold-bright);
-    }
+  .footer-info {
+    color: var(--text-muted);
+  }
 
-    .footer-info {
-      color: var(--text-muted);
-    }
+  .footer-info span {
+    color: var(--gold-bright);
+    font-weight: 700;
+  }
 
-    .footer-info span {
-      color: var(--gold-bright);
-      font-weight: 700;
-    }
+  .attr-footer {
+    padding: 8px 10px 10px;
+    border-top: 1px solid rgba(212,175,55,0.25);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    background: rgba(0,0,0,0.45);
+  }
 
-    /* POOL INFO */
-    .attr-footer {
-      padding: 8px 10px 10px;
-      border-top: 1px solid rgba(212,175,55,0.25);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 11px;
-      background: rgba(0,0,0,0.45);
-    }
+  .pool-label {
+    color: var(--text-muted);
+  }
 
-    .pool-label {
-      color: var(--text-muted);
-    }
+  .pool-value {
+    color: var(--gold-bright);
+    font-weight: bold;
+    margin-left: 4px;
+  }
 
-    .pool-value {
-      color: var(--gold-bright);
-      font-weight: bold;
-      margin-left: 4px;
-    }
+  .btn-roll {
+    padding: 5px 10px;
+    font-size: 11px;
+    border-radius: 999px;
+    border: 1px solid rgba(248,231,176,0.7);
+    background: radial-gradient(circle at 30% 0%, #7d1638, #26030a);
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(255,120,120,0.8);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+  }
 
-    .btn-roll {
-      padding: 5px 10px;
-      font-size: 11px;
-      border-radius: 999px;
-      border: 1px solid rgba(248,231,176,0.7);
-      background: radial-gradient(circle at 30% 0%, #7d1638, #26030a);
-      color: #fff;
-      cursor: pointer;
-      box-shadow: 0 0 10px rgba(255,120,120,0.8);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      font-weight: 700;
-      transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
-    }
+  .btn-roll:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 14px rgba(255,200,160,0.9);
+    background: radial-gradient(circle at 30% 0%, #a01d44, #3a050e);
+  }
 
-    .btn-roll:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 0 14px rgba(255,200,160,0.9);
-      background: radial-gradient(circle at 30% 0%, #a01d44, #3a050e);
-    }
+  .btn-roll:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
 
-    .btn-roll:disabled {
-      opacity: 0.45;
-      cursor: not-allowed;
-      box-shadow: none;
-    }
+  #transient-msg {
+    position: fixed;
+    left: 50%;
+    bottom: 20px;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #2a102f, #130814);
+    color: var(--gold-bright);
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(212,175,55,0.6);
+    box-shadow: 0 0 18px rgba(0,0,0,0.9);
+    font-size: 11px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 2000;
+  }
 
-    /* TRANSIENT MSG */
-    #transient-msg {
-      position: fixed;
-      left: 50%;
-      bottom: 20px;
-      transform: translateX(-50%);
-      background: linear-gradient(135deg, #2a102f, #130814);
-      color: var(--gold-bright);
-      padding: 6px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(212,175,55,0.6);
-      box-shadow: 0 0 18px rgba(0,0,0,0.9);
-      font-size: 11px;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.2s ease;
-      z-index: 2000;
-    }
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.88);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1500;
+    backdrop-filter: blur(4px);
+  }
 
-    /* MODAL: GENERIC OVERLAY */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.88);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 1500;
-      backdrop-filter: blur(4px);
-    }
+  .modal-box {
+    width: 320px;
+    max-width: calc(100% - 40px);
+    background:
+      linear-gradient(145deg, rgba(16,6,26,0.98), rgba(6,2,12,0.98));
+    border: 2px solid rgba(212,175,55,0.7);
+    border-radius: 12px;
+    padding: 18px 18px 14px;
+    box-shadow:
+      0 18px 40px rgba(0,0,0,0.9),
+      0 0 28px rgba(160,80,240,0.8);
+    text-align: center;
+  }
 
-    .modal-box {
-      width: 320px;
-      max-width: calc(100% - 40px);
-      background:
-        linear-gradient(145deg, rgba(16,6,26,0.98), rgba(6,2,12,0.98));
-      border: 2px solid rgba(212,175,55,0.7);
-      border-radius: 12px;
-      padding: 18px 18px 14px;
-      box-shadow:
-        0 18px 40px rgba(0,0,0,0.9),
-        0 0 28px rgba(160,80,240,0.8);
-      text-align: center;
-    }
+  .modal-title {
+    font-family: var(--font-header);
+    color: var(--gold-bright);
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    margin-bottom: 8px;
+  }
 
-    .modal-title {
-      font-family: var(--font-header);
-      color: var(--gold-bright);
+  .modal-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+
+  .slot-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+
+  .slot-btn {
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(212,175,55,0.6);
+    background: radial-gradient(circle at 30% 0%, #4a165a, #150714);
+    color: var(--text-main);
+    cursor: pointer;
+    font-size: 11px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    transition: box-shadow 0.15s ease, transform 0.1s ease, background 0.15s ease;
+  }
+
+  .slot-btn:hover {
+    box-shadow: 0 0 14px rgba(248,231,176,0.9);
+    transform: translateY(-1px);
+    background: radial-gradient(circle at 30% 0%, #7f2a9f, #1e081f);
+  }
+
+  .slot-name {
+    font-weight: 600;
+    color: var(--gold-bright);
+  }
+
+  .slot-meta {
+    font-size: 10px;
+    color: var(--text-muted);
+  }
+
+  .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 4px;
+  }
+
+  .btn-small {
+    padding: 4px 10px;
+    font-size: 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(212,175,55,0.6);
+    background: linear-gradient(135deg, #221427, #0d050f);
+    color: var(--text-muted);
+    cursor: pointer;
+  }
+
+  .btn-small:hover {
+    color: var(--gold-bright);
+    box-shadow: 0 0 10px rgba(160,80,240,0.9);
+  }
+
+  @media (max-width: 720px) {
+    header h1 {
       font-size: 14px;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      margin-bottom: 8px;
+      letter-spacing: 0.24em;
     }
-
-    .modal-sub {
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-bottom: 12px;
+    #engine-tag {
+      display: none;
     }
-
-    .slot-row {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      margin-bottom: 10px;
-    }
-
-    .slot-btn {
-      padding: 6px 10px;
-      border-radius: 8px;
-      border: 1px solid rgba(212,175,55,0.6);
-      background: radial-gradient(circle at 30% 0%, #4a165a, #150714);
-      color: var(--text-main);
-      cursor: pointer;
-      font-size: 11px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      text-align: left;
-      transition: box-shadow 0.15s ease, transform 0.1s ease, background 0.15s ease;
-    }
-
-    .slot-btn:hover {
-      box-shadow: 0 0 14px rgba(248,231,176,0.9);
-      transform: translateY(-1px);
-      background: radial-gradient(circle at 30% 0%, #7f2a9f, #1e081f);
-    }
-
-    .slot-name {
-      font-weight: 600;
-      color: var(--gold-bright);
-    }
-
-    .slot-meta {
-      font-size: 10px;
-      color: var(--text-muted);
-    }
-
-    .modal-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 8px;
-      margin-top: 4px;
-    }
-
-    .btn-small {
-      padding: 4px 10px;
-      font-size: 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(212,175,55,0.6);
-      background: linear-gradient(135deg, #221427, #0d050f);
-      color: var(--text-muted);
-      cursor: pointer;
-    }
-
-    .btn-small:hover {
-      color: var(--gold-bright);
-      box-shadow: 0 0 10px rgba(160,80,240,0.9);
-    }
-
-    @media (max-width: 720px) {
-      header h1 {
-        font-size: 14px;
-        letter-spacing: 0.24em;
-      }
-      #engine-tag {
-        display: none;
-      }
-    }
+  }
   </style>
 </head>
+
 <body>
 <div id="app-shell">
   <header>
@@ -699,6 +700,7 @@
         <div class="panel-title">Essenz & Antlitz</div>
         <div class="panel-sub" id="hero-preview-sub">Noch ungeschrieben</div>
       </div>
+
       <div class="identity-grid">
         <!-- Portrait -->
         <div>
@@ -713,6 +715,7 @@
         <div class="identity-main">
           <input type="text" id="in-name" class="name-input" placeholder="Name des Helden">
           <input type="text" id="in-titel" class="title-input" placeholder="Zusatz / Titel (optional)">
+
           <div class="identity-summary">
             <div class="identity-summary-label">Vorschau</div>
             <div>
@@ -725,7 +728,7 @@
               <b>Profession:</b> <span id="s-prof">–</span><br>
               <b>Besondere Gabe:</b>
               <span id="s-spec" style="font-style:italic; color:var(--gold-bright);">
-                Wähle Rasse & Beruf, um eine Gabe zu erhalten...
+                Wähle Rasse &amp; Beruf, um eine Gabe zu erhalten...
               </span>
             </div>
           </div>
@@ -742,9 +745,11 @@
     <div class="panel">
       <div class="panel-header">
         <div class="panel-title">Basisattribute</div>
-        <div class="panel-sub">Punkte verteilen – Maximum 20 je Attribut</div>
+        <div class="panel-sub">Punkte verteilen – Maximum 10 je Attribut</div>
       </div>
+
       <div id="attr-grid-s1" class="attr-grid"></div>
+
       <div class="attr-footer">
         <div>
           <span class="pool-label">Punktepool:</span>
@@ -764,6 +769,7 @@
         <div class="panel-title">Herkunft & Berufung</div>
         <div class="panel-sub">Rasse • Untergruppe • Profession</div>
       </div>
+
       <div class="origin-grid">
         <div class="origin-col">
           <h4>Rassen</h4>
@@ -784,130 +790,124 @@
   <!-- FOOTER -->
   <footer>
     <div class="footer-left">
-      <button onclick="loadCharacterFromGist(prompt('Gist-ID eingeben'))">
-  Cloud-Charakter laden
-</button>
+      <button class="btn-ghost" id="btn-cloud-load">Cloud-Charakter laden</button>
     </div>
+
     <div class="footer-center">
       <div class="footer-info">
         Attributspiegel – <span>UNDRA‑ENGINE v1.8</span>
       </div>
     </div>
+
     <div class="footer-right">
-      <button onclick="saveCharacterToGist()">Cloud speichern</button>
+      <button class="btn-ghost" id="btn-cloud-save">Cloud speichern</button>
       <button class="btn-main" id="btn-next">Weiter</button>
     </div>
-<script>
-document.getElementById("btn-next").addEventListener("click", openLeaveModal);
-});
-</script>
   </footer>
+</div>
 
-  <!-- TRANSIENT MESSAGE -->
-  <div id="transient-msg"></div>
+<!-- TRANSIENT MESSAGE -->
+<div id="transient-msg"></div>
 
-  <!-- MODAL: LOAD SLOTS -->
-  <div id="load-modal" class="modal-overlay">
-    <div class="modal-box">
-      <div class="modal-title">Charakter laden</div>
-      <div class="modal-sub">
-        Wähle einen der drei UNDRA‑Slots. Nach dem Laden gelangst du direkt zum Dashboard (Seite 3).
-      </div>
-      <div class="slot-row">
-        <button class="slot-btn" data-slot="1">
-          <div>
-            <div class="slot-name" id="slot1-name">Slot 1 – leer</div>
-            <div class="slot-meta" id="slot1-meta">Noch kein Charakter gespeichert.</div>
-          </div>
-          <div>▶</div>
-        </button>
-        <button class="slot-btn" data-slot="2">
-          <div>
-            <div class="slot-name" id="slot2-name">Slot 2 – leer</div>
-            <div class="slot-meta" id="slot2-meta">Noch kein Charakter gespeichert.</div>
-          </div>
-          <div>▶</div>
-        </button>
-        <button class="slot-btn" data-slot="3">
-          <div>
-            <div class="slot-name" id="slot3-name">Slot 3 – leer</div>
-            <div class="slot-meta" id="slot3-meta">Noch kein Charakter gespeichert.</div>
-          </div>
-          <div>▶</div>
-        </button>
-      </div>
-      <div class="modal-actions">
-        <button class="btn-small" id="btn-close-load">Schließen</button>
-      </div>
+<!-- MODAL: LOAD SLOTS -->
+<div id="load-modal" class="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-title">Charakter laden</div>
+    <div class="modal-sub">
+      Wähle einen UNDRA‑Slot. Nach dem Laden gelangst du direkt zum Dashboard (Seite 3).
     </div>
-  </div>
-
-  <!-- MODAL: Profession bestätigen & Fähigkeiten wählen -->
-  <div id="profession-modal" class="modal-overlay">
-    <div class="modal-box">
-      <div class="modal-title">Berufung bestätigen</div>
-      <div class="modal-sub">
-        Wähle je eine Fähigkeit für Volk und Untergruppe.<br>
-        Die dritte Wahl gewährt dir einen <b>Attributbonus +1</b>.
-      </div>
-
-      <div style="text-align:left; font-size:11px; margin-bottom:10px;">
-        <div style="margin-bottom:6px;">
-          <b>Rassenfähigkeit:</b><br>
-          <input type="text" id="race-ability-input"
-                 placeholder="z.B. Nachtsicht, Zähes Blut..."
-                 style="width:100%; margin-top:3px; padding:4px; border-radius:6px;
-                        border:1px solid rgba(212,175,55,0.6); background:rgba(10,4,16,0.9); color:#f5efe6;">
-        </div>
-        <div style="margin-bottom:6px;">
-          <b>Untergruppen-Fähigkeit:</b><br>
-          <input type="text" id="sub-ability-input"
-                 placeholder="z.B. Waldläufer-Trieb, Wüsteninstinkt..."
-                 style="width:100%; margin-top:3px; padding:4px; border-radius:6px;
-                        border:1px solid rgba(212,175,55,0.6); background:rgba(10,4,16,0.9); color:#f5efe6;">
-        </div>
+    <div class="slot-row">
+      <button class="slot-btn" data-slot="1">
         <div>
-          <b>Attributbonus +1:</b><br>
-          <select id="attr-bonus-select"
-                  style="width:100%; margin-top:3px; padding:4px; border-radius:6px;
-                         border:1px solid rgba(212,175,55,0.6); background:rgba(10,4,16,0.9); color:#f5efe6;">
-            <option value="">Bitte Attribut wählen...</option>
-          </select>
+          <div class="slot-name" id="slot1-name">Slot 1 – leer</div>
+          <div class="slot-meta" id="slot1-meta">Noch kein Charakter gespeichert.</div>
         </div>
-      </div>
-
-      <div class="modal-actions">
-        <button class="btn-small" id="btn-prof-cancel">Zurück</button>
-        <button class="btn-small" id="btn-prof-confirm" style="color:#f8e7b0;">Bestätigen</button>
-      </div>
+        <div>▶</div>
+      </button>
+      <button class="slot-btn" data-slot="2">
+        <div>
+          <div class="slot-name" id="slot2-name">Slot 2 – leer</div>
+          <div class="slot-meta" id="slot2-meta">Noch kein Charakter gespeichert.</div>
+        </div>
+        <div>▶</div>
+      </button>
+      <button class="slot-btn" data-slot="3">
+        <div>
+          <div class="slot-name" id="slot3-name">Slot 3 – leer</div>
+          <div class="slot-meta" id="slot3-meta">Noch kein Charakter gespeichert.</div>
+        </div>
+        <div>▶</div>
+      </button>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-small" id="btn-close-load">Schließen</button>
     </div>
   </div>
+</div>
 
-  <!-- MODAL: Seite 1 verlassen -->
-  <div id="leave-modal" class="modal-overlay">
-    <div class="modal-box">
-      <div class="modal-title">Auswahl bestätigen</div>
-      <div class="modal-sub">
-        Bist du mit deiner Auswahl auf dieser Seite zufrieden?<br>
-        Name, Rasse(n), Untergruppe, Profession und Attribute werden als Grundlage versiegelt.
+<!-- MODAL: Profession bestätigen & Fähigkeiten wählen -->
+<div id="profession-modal" class="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-title">Berufung bestätigen</div>
+    <div class="modal-sub">
+      Wähle je eine Fähigkeit für Volk und Untergruppe.<br>
+      Die dritte Wahl gewährt dir einen <b>Attributbonus +1</b>.
+    </div>
+
+    <div style="text-align:left; font-size:11px; margin-bottom:10px;">
+      <div style="margin-bottom:6px;">
+        <b>Rassenfähigkeit:</b><br>
+        <input type="text" id="race-ability-input"
+               placeholder="z.B. Nachtsicht, Zähes Blut..."
+               style="width:100%; margin-top:3px; padding:4px; border-radius:6px;
+                      border:1px solid rgba(212,175,55,0.6); background:rgba(10,4,16,0.9); color:#f5efe6;">
       </div>
-      <div style="text-align:left; font-size:11px; margin:8px 0 10px;">
-        <b>Aktuelle Zusammenfassung:</b><br>
-        <span id="leave-summary" style="color:var(--gold-bright);"></span>
+
+      <div style="margin-bottom:6px;">
+        <b>Untergruppen-Fähigkeit:</b><br>
+        <input type="text" id="sub-ability-input"
+               placeholder="z.B. Waldläufer-Trieb, Wüsteninstinkt..."
+               style="width:100%; margin-top:3px; padding:4px; border-radius:6px;
+                      border:1px solid rgba(212,175,55,0.6); background:rgba(10,4,16,0.9); color:#f5efe6;">
       </div>
-      <div class="modal-actions">
-        <button class="btn-small" id="btn-leave-cancel">Zurück</button>
-        <button class="btn-small" id="btn-leave-confirm" style="color:#f8e7b0;">Ja,weiter und Speichern
-        </button>
+
+      <div>
+        <b>Attributbonus +1:</b><br>
+        <select id="attr-bonus-select"
+                style="width:100%; margin-top:3px; padding:4px; border-radius:6px;
+                       border:1px solid rgba(212,175,55,0.6); background:rgba(10,4,16,0.9); color:#f5efe6;">
+          <option value="">Bitte Attribut wählen...</option>
+        </select>
       </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-small" id="btn-prof-cancel">Zurück</button>
+      <button class="btn-small" id="btn-prof-confirm" style="color:#f8e7b0;">Bestätigen</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Seite 1 verlassen -->
+<div id="leave-modal" class="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-title">Auswahl bestätigen</div>
+    <div class="modal-sub">
+      Bist du mit deiner Auswahl auf dieser Seite zufrieden?<br>
+      Name, Rasse(n), Untergruppe, Profession und Attribute werden als Grundlage versiegelt.
+    </div>
+    <div style="text-align:left; font-size:11px; margin:8px 0 10px;">
+      <b>Aktuelle Zusammenfassung:</b><br>
+      <span id="leave-summary" style="color:var(--gold-bright);"></span>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-small" id="btn-leave-cancel">Zurück</button>
+      <button class="btn-small" id="btn-leave-confirm" style="color:#f8e7b0;">Ja, weiter und speichern</button>
     </div>
   </div>
 </div>
 
 <script>
-    /* ---------- UNDRA CLOUD (GITHUB GIST) ---------- */
-const GITHUB_TOKEN = "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";  // <-- Token einfügen
-
 /* ---------- KONSTANTEN & DATEN ---------- */
 const ATTRIBUTES = [
   "Mut","Intelligenz","Fingerfertigkeit","Gewandtheit","Körperkraft",
@@ -940,25 +940,22 @@ const ORIGIN_DATA = {
 const SPECIAL_POOL = [
   "Göttlicher Funke","Schattenlauf","Manaschild","Eisenzorn",
   "Blutrunen-Resonanz","Seelenfokus","Nachtschritt","Runenblick",
-  "Klingenwirbel", "Schildstoß", "Ausweichrolle", "Kraftschlag",
-  "Präzisionshieb", "Standfestigkeit", "Waffenkenntnis", "Kampfhaltung",
-  "Taktischer Rückzug", "Schnellschritt", "Flinke Hände", "Schwerer Tritt",
-  "Ausdauerstoß", "Fokussierter Angriff", "Gegenschlag", "Wuchtblock",
-  "Konzentrationsstoß", "Körperbeherrschung", "Ruhiger Atem", "Spurensinn",
-  "Schleichtritt", "Scharfer Blick", "Schnellziehen", "Balancehaltung",
-  "Widerstandswille", "Klettergriff", "Sprintkraft", "Zielgenauigkeit",
-  "Waffenwechsel", "Harter Griff", "Schulterramme", "Beinfege",
-  "Kampfintuition", "Durchhaltewille", "Schnellkonter", "Fester Stand",
-  "Überblick", "Wachsamkeit", "Klingenparade", "Rüstungskenntnis",
-  "Körperkraft", "Zähigkeit", "Sturmlauf", "Schrittanalyse",
-  "Wurfgeschick", "Grifftechnik", "Stoßkraft", "Trittsicherheit",
-  "Reaktionsschub", "Kampfdisziplin"
+  "Klingenwirbel","Schildstoß","Ausweichrolle","Kraftschlag",
+  "Präzisionshieb","Standfestigkeit","Waffenkenntnis","Kampfhaltung",
+  "Taktischer Rückzug","Schnellschritt","Flinke Hände","Schwerer Tritt",
+  "Ausdauerstoß","Fokussierter Angriff","Gegenschlag","Wuchtblock",
+  "Konzentrationsstoß","Körperbeherrschung","Ruhiger Atem","Spurensinn",
+  "Schleichtritt","Scharfer Blick","Schnellziehen","Balancehaltung",
+  "Widerstandswille","Klettergriff","Sprintkraft","Zielgenauigkeit",
+  "Waffenwechsel","Harter Griff","Schulterramme","Beinfege",
+  "Kampfintuition","Durchhaltewille","Schnellkonter","Fester Stand",
+  "Überblick","Wachsamkeit","Klingenparade","Rüstungskenntnis",
+  "Körperkraft","Zähigkeit","Sturmlauf","Schrittanalyse",
+  "Wurfgeschick","Grifftechnik","Stoßkraft","Trittsicherheit",
+  "Reaktionsschub","Kampfdisziplin"
 ];
 
-// KEYS
 const KEY_CHAR = "undra15_character";
-const KEY_ID   = "undra15_identity";
-const KEY_DASH = "undra15_dashboard";
 
 /* ---------- STATE ---------- */
 let char = {
@@ -968,7 +965,7 @@ let char = {
   pool: 0,
   used: 0,
   race: "",
-  race2: "",        // Zweite Rasse (Mischwesen)
+  race2: "",
   sub: "",
   prof: "",
   special: "",
@@ -978,11 +975,10 @@ let char = {
   attrBonusNote: ""
 };
 
-let transientTimeout = null;
 let pendingProfession = "";
+let transientTimeout = null;
 
 /* ---------- DOM ---------- */
-const heroPreviewSub = document.getElementById("hero-preview-sub");
 const inName = document.getElementById("in-name");
 const inTitel = document.getElementById("in-titel");
 const sumName = document.getElementById("sum-name");
@@ -992,6 +988,7 @@ const sSubWrap = document.getElementById("s-sub-wrap");
 const sSub = document.getElementById("s-sub");
 const sProf = document.getElementById("s-prof");
 const sSpec = document.getElementById("s-spec");
+const heroPreviewSub = document.getElementById("hero-preview-sub");
 
 const pTotal = document.getElementById("p-total");
 const pUsed = document.getElementById("p-used");
@@ -1003,32 +1000,24 @@ const profList = document.getElementById("prof-list");
 
 const rollBtn = document.getElementById("roll-btn");
 const btnNext = document.getElementById("btn-next");
-const btnSaveLocal = document.getElementById("btn-save-local");
-const btnLoad = document.getElementById("btn-load");
-
-const radarCanvas = document.getElementById("radarCanvas");
-const radarCtx = radarCanvas.getContext("2d");
 
 const previewImg = document.getElementById("preview");
 const placeholder = document.getElementById("placeholder");
 const uploadInput = document.getElementById("upload");
 
+const radarCanvas = document.getElementById("radarCanvas");
+const radarCtx = radarCanvas.getContext("2d");
+
 const transientMsgEl = document.getElementById("transient-msg");
+
+// Cloud-Buttons
+const btnCloudLoad = document.getElementById("btn-cloud-load");
+const btnCloudSave = document.getElementById("btn-cloud-save");
 
 // Load modal
 const loadModal = document.getElementById("load-modal");
 const btnCloseLoad = document.getElementById("btn-close-load");
 const slotButtons = loadModal.querySelectorAll(".slot-btn");
-const slotNameEls = {
-  1: document.getElementById("slot1-name"),
-  2: document.getElementById("slot2-name"),
-  3: document.getElementById("slot3-name")
-};
-const slotMetaEls = {
-  1: document.getElementById("slot1-meta"),
-  2: document.getElementById("slot2-meta"),
-  3: document.getElementById("slot3-meta")
-};
 
 // Profession modal
 const professionModal = document.getElementById("profession-modal");
@@ -1042,13 +1031,9 @@ const btnProfConfirm = document.getElementById("btn-prof-confirm");
 const leaveModal = document.getElementById("leave-modal");
 const leaveSummary = document.getElementById("leave-summary");
 const btnLeaveCancel = document.getElementById("btn-leave-cancel");
-btnLeaveCancel.addEventListener("click", () => {
-  document.getElementById("leave-modal").style.display = "none";
-});
-document.getElementById("btn-leave-confirm").addEventListener("click", () => {
-    window.location.href = "https://djdrear.github.io/Seite-2/";
-});
-/* ---------- HELPER ---------- */
+const btnLeaveConfirm = document.getElementById("btn-leave-confirm");
+
+/* ---------- HELFER ---------- */
 function showMsg(text, ms = 2200) {
   transientMsgEl.textContent = text;
   transientMsgEl.style.opacity = "1";
@@ -1059,7 +1044,7 @@ function showMsg(text, ms = 2200) {
 }
 
 function randomFrom(arr) {
-  if (!arr || arr.length === 0) return "";
+  if (!arr || !arr.length) return "";
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
@@ -1068,12 +1053,16 @@ function clearActiveIn(container) {
   container.querySelectorAll(".check-item").forEach(c => c.classList.remove("active"));
 }
 
-/* ---------- INIT ATTRIBUTE-GRID ---------- */
+/* ---------- ATTRIBUTE ---------- */
 function initAttributes() {
   const grid = document.getElementById("attr-grid-s1");
+  if (!grid) return;
+
   grid.innerHTML = "";
+
   ATTRIBUTES.forEach(a => {
     if (typeof char.attrs[a] !== "number") char.attrs[a] = 0;
+
     const row = document.createElement("div");
     row.className = "attr-row";
 
@@ -1105,9 +1094,7 @@ function initAttributes() {
   });
 }
 
-/* ---------- PUNKTE MODIFIZIEREN ---------- */
 function modAttr(a, delta) {
-  if (char.pool <= 0 && delta > 0) return;
   const current = char.attrs[a] || 0;
 
   if (delta > 0) {
@@ -1130,6 +1117,7 @@ function modAttr(a, delta) {
 /* ---------- RASSEN / SUB / PROF ---------- */
 function initRaces() {
   raceList.innerHTML = "";
+
   Object.keys(ORIGIN_DATA).forEach(r => {
     const el = document.createElement("div");
     el.className = "check-item";
@@ -1138,6 +1126,37 @@ function initRaces() {
     el.addEventListener("click", () => selectRace(r));
     raceList.appendChild(el);
   });
+
+  // Aktive Markierung bei geladenem Charakter
+  raceList.querySelectorAll(".check-item").forEach(el => {
+    const val = el.dataset.value;
+    if (val === char.race || val === char.race2) el.classList.add("active");
+  });
+
+  subList.innerHTML = "";
+  profList.innerHTML = "";
+
+  if (char.race) {
+    const subs = ORIGIN_DATA[char.race]?.subs || [];
+    subs.forEach(s => {
+      const el = document.createElement("div");
+      el.className = "check-item";
+      el.textContent = s;
+      el.dataset.value = s;
+      el.addEventListener("click", () => selectSub(s));
+      subList.appendChild(el);
+      if (s === char.sub) el.classList.add("active");
+    });
+  }
+
+  if (!char.race && !char.race2) {
+    sSpec.textContent = "Wähle eine Hauptrasse und optional eine Zweitrasse (Mischwesen).";
+  } else if (!char.sub || !char.prof) {
+    sSpec.textContent = "Wähle eine Untergruppe und eine Profession...";
+  }
+  sSpec.style.color = "var(--gold-bright)";
+
+  updateUI();
 }
 
 // Mischwesen-Logik: bis zu zwei Rassen
@@ -1156,28 +1175,22 @@ function selectRace(r) {
     return;
   }
 
-  // Untergruppe & Profession bleiben an der Hauptrasse
   char.sub = "";
   char.prof = "";
   char.special = "";
-  char.raceAbility = char.raceAbility || "";
-  char.subAbility = char.subAbility || "";
-  char.attrBonusNote = char.attrBonusNote || "";
 
   clearActiveIn(raceList);
   clearActiveIn(subList);
   clearActiveIn(profList);
 
-  // Aktive Markierung auf gewählten Rassen
   raceList.querySelectorAll(".check-item").forEach(el => {
     const val = el.dataset.value;
-    if (val === char.race || val === char.race2) {
-      el.classList.add("active");
-    }
+    if (val === char.race || val === char.race2) el.classList.add("active");
   });
 
   subList.innerHTML = "";
   profList.innerHTML = "";
+
   if (char.race) {
     const subs = ORIGIN_DATA[char.race]?.subs || [];
     subs.forEach(s => {
@@ -1202,8 +1215,7 @@ function selectRace(r) {
 
 function selectSub(s) {
   char.sub = s;
-  char.prof = "";
-  char.special = "";
+
   clearActiveIn(subList);
   clearActiveIn(profList);
 
@@ -1211,6 +1223,7 @@ function selectSub(s) {
   if (chosen) chosen.classList.add("active");
 
   profList.innerHTML = "";
+
   if (char.race) {
     const profs = ORIGIN_DATA[char.race]?.profs || [];
     profs.forEach(p => {
@@ -1228,29 +1241,63 @@ function selectSub(s) {
   updateUI();
 }
 
-/* ---------- PROFESSION MODAL ---------- */
-function openProfessionModal(p) {
-  pendingProfession = p;
+/* ---------- PROFESSION-MODAL ---------- */
+function openProfessionModal(prof) {
+  pendingProfession = prof;
+
+  professionModal.style.display = "flex";
+
   raceAbilityInput.value = char.raceAbility || "";
   subAbilityInput.value = char.subAbility || "";
   attrBonusSelectEl.value = char.attrBonusNote || "";
-  professionModal.style.display = "flex";
+
+  checkProfessionReady();
 }
 
 function closeProfessionModal() {
   professionModal.style.display = "none";
-  pendingProfession = "";
+}
+
+/* ---------- LEAVE-MODAL ---------- */
+function openLeaveModal() {
+  const raceText = (char.race && char.race2)
+    ? char.race + " / " + char.race2 + " (Mischwesen)"
+    : (char.race || char.race2 || "–");
+
+  const parts = [];
+  parts.push((char.name || "Namenlos") + (char.title ? " – " + char.title : ""));
+  parts.push("Volk: " + raceText + (char.sub ? " (" + char.sub + ")" : ""));
+  parts.push("Profession: " + (char.prof || "–"));
+
+  leaveSummary.textContent = parts.join(" • ");
+  leaveModal.style.display = "flex";
+}
+
+function closeLeaveModal() {
+  leaveModal.style.display = "none";
+}
+
+function sealCharacter() {
+  if (inName) inName.disabled = true;
+  if (inTitel) inTitel.disabled = true;
+  raceList.querySelectorAll(".check-item").forEach(el => el.style.pointerEvents = "none");
+  subList.querySelectorAll(".check-item").forEach(el => el.style.pointerEvents = "none");
+  profList.querySelectorAll(".check-item").forEach(el => el.style.pointerEvents = "none");
+  if (raceAbilityInput) raceAbilityInput.disabled = true;
+  if (subAbilityInput) subAbilityInput.disabled = true;
+  if (attrBonusSelectEl) attrBonusSelectEl.disabled = true;
+  if (rollBtn) rollBtn.disabled = true;
+  if (btnNext) btnNext.disabled = true;
 }
 
 /* ---------- UI-UPDATE ---------- */
 function updateUI() {
-  char.name = inName.value.trim();
+  char.name  = inName.value.trim();
   char.title = inTitel.value.trim();
 
   sumName.textContent = char.name || "Namenlos";
   sumTitle.textContent = char.title ? ("– " + char.title) : "ohne Titel";
 
-  // Rassenanzeige inkl. Mischwesen
   if (char.race && char.race2) {
     sRace.textContent = char.race + " / " + char.race2 + " (Mischwesen)";
   } else if (char.race) {
@@ -1277,8 +1324,8 @@ function updateUI() {
 
   const poolLeft = char.pool - char.used;
   pTotal.textContent = char.pool;
-  pUsed.textContent = char.used;
-  pLeft.textContent = poolLeft;
+  pUsed.textContent  = char.used;
+  pLeft.textContent  = poolLeft;
 
   ATTRIBUTES.forEach(a => {
     const val = char.attrs[a] || 0;
@@ -1297,20 +1344,21 @@ function updateUI() {
     }
   });
 
-  // Subheadline
   const parts = [];
-  if (char.race && char.race2) {
-    parts.push(char.race + " / " + char.race2);
-  } else if (char.race) {
-    parts.push(char.race);
-  } else if (char.race2) {
-    parts.push(char.race2);
-  }
+  if (char.race && char.race2) parts.push(char.race + " / " + char.race2);
+  else if (char.race) parts.push(char.race);
+  else if (char.race2) parts.push(char.race2);
   if (char.sub) parts.push("(" + char.sub + ")");
   if (char.prof) parts.push("– " + char.prof);
   heroPreviewSub.textContent = parts.join(" ");
 
-  const canProceed = !!char.name && (char.race || char.race2) && !!char.prof && char.pool > 0 && char.used > 0;
+  const canProceed =
+    !!char.name &&
+    (char.race || char.race2) &&
+    !!char.prof &&
+    char.pool > 0 &&
+    char.used > 0;
+
   btnNext.disabled = !canProceed;
 
   drawRadar();
@@ -1324,14 +1372,14 @@ function drawRadar() {
   const cy = h / 2;
   const radius = Math.min(w, h) / 2 - 10;
 
-  radarCtx.clearRect(0,0,w,h);
+  radarCtx.clearRect(0, 0, w, h);
 
-  const grad = radarCtx.createRadialGradient(cx, cy, 10, cx, cy, radius+10);
+  const grad = radarCtx.createRadialGradient(cx, cy, 10, cx, cy, radius + 10);
   grad.addColorStop(0, "rgba(180,108,255,0.3)");
   grad.addColorStop(1, "rgba(0,0,0,0.0)");
   radarCtx.fillStyle = grad;
   radarCtx.beginPath();
-  radarCtx.arc(cx, cy, radius+10, 0, Math.PI*2);
+  radarCtx.arc(cx, cy, radius + 10, 0, Math.PI * 2);
   radarCtx.fill();
 
   const count = ATTRIBUTES.length;
@@ -1341,7 +1389,7 @@ function drawRadar() {
   radarCtx.lineWidth = 1;
 
   for (let i = 0; i < count; i++) {
-    const angle = step*i - Math.PI/2;
+    const angle = step * i - Math.PI / 2;
     const x = cx + Math.cos(angle) * radius;
     const y = cy + Math.sin(angle) * radius;
 
@@ -1352,6 +1400,7 @@ function drawRadar() {
 
     const tx = cx + Math.cos(angle) * (radius + 12);
     const ty = cy + Math.sin(angle) * (radius + 12);
+
     radarCtx.fillStyle = "#f8e7b0";
     radarCtx.font = "9px " + (getComputedStyle(document.body).getPropertyValue("font-family") || "serif");
     radarCtx.textAlign = "center";
@@ -1360,26 +1409,26 @@ function drawRadar() {
   }
 
   radarCtx.beginPath();
-  radarCtx.arc(cx, cy, radius, 0, Math.PI*2);
+  radarCtx.arc(cx, cy, radius, 0, Math.PI * 2);
   radarCtx.strokeStyle = "rgba(248,231,176,0.6)";
   radarCtx.lineWidth = 1;
   radarCtx.stroke();
 
   radarCtx.beginPath();
   for (let i = 0; i < count; i++) {
-    const val = char.attrs[ATTRIBUTES[i]] || 0;
+    const val    = char.attrs[ATTRIBUTES[i]] || 0;
     const factor = val / 10;
-    const r = radius * (0.1 + factor * 0.9);
-    const angle = step*i - Math.PI/2;
-    const x = cx + Math.cos(angle) * r;
-    const y = cy + Math.sin(angle) * r;
-    if (i === 0) radarCtx.moveTo(x,y);
-    else radarCtx.lineTo(x,y);
+    const r      = radius * (0.1 + factor * 0.9);
+    const angle  = step * i - Math.PI / 2;
+    const x      = cx + Math.cos(angle) * r;
+    const y      = cy + Math.sin(angle) * r;
+    if (i === 0) radarCtx.moveTo(x, y);
+    else radarCtx.lineTo(x, y);
   }
   radarCtx.closePath();
-  radarCtx.fillStyle = "rgba(208,70,70,0.35)";
+  radarCtx.fillStyle   = "rgba(208,70,70,0.35)";
   radarCtx.strokeStyle = "#d4af37";
-  radarCtx.lineWidth = 2;
+  radarCtx.lineWidth   = 2;
   radarCtx.fill();
   radarCtx.stroke();
 }
@@ -1390,15 +1439,18 @@ function rollPool() {
     showMsg("Punkte wurden bereits ausgewürfelt.");
     return;
   }
-  const pool = Math.floor(Math.random() * (60 - 20 + 0,5)) + 20;
+
+  const pool = Math.floor(Math.random() * (60 - 20 + 1)) + 20;
   char.pool = pool;
   char.used = 0;
-  Object.keys(char.attrs).forEach(a => char.attrs[a] = 0);
+
+  Object.keys(char.attrs).forEach(a => (char.attrs[a] = 0));
+
   showMsg("Du erhältst " + pool + " Attributpunkte.");
   updateUI();
 }
 
-/* ---------- LOCAL STORAGE ---------- */
+/* ---------- LOKAL SPEICHERN / LADEN ---------- */
 function saveCharacterLocal() {
   const data = {
     name: char.name,
@@ -1416,6 +1468,7 @@ function saveCharacterLocal() {
     subAbility: char.subAbility || "",
     attrBonusNote: char.attrBonusNote || ""
   };
+
   try {
     localStorage.setItem(KEY_CHAR, JSON.stringify(data));
     showMsg("Charakterdaten (Seite 1) lokal gespeichert.");
@@ -1429,25 +1482,109 @@ function loadCharacterLocal() {
   try {
     const raw = localStorage.getItem(KEY_CHAR);
     if (!raw) return;
+
     const data = JSON.parse(raw);
     if (!data || typeof data !== "object") return;
 
-    char.name = data.name || "";
-    char.title = data.title || "";
-    char.race = data.race || "";
-    char.race2 = data.race2 || "";
-    char.sub = data.sub || "";
-    char.prof = data.prof || "";
-    char.special = data.special || "";
-    char.attrs = data.attrs || {};
-    char.pool = data.pool || 0;
-    char.used = data.used || 0;
+    char.name         = data.name || "";
+    char.title        = data.title || "";
+    char.race         = data.race || "";
+    char.race2        = data.race2 || "";
+    char.sub          = data.sub || "";
+    char.prof         = data.prof || "";
+    char.special      = data.special || "";
+    char.attrs        = data.attrs || {};
+    char.pool         = data.pool || 0;
+    char.used         = data.used || 0;
     char.portraitData = data.portraitData || null;
-    char.raceAbility = data.raceAbility || "";
-    char.subAbility = data.subAbility || "";
+    char.raceAbility  = data.raceAbility || "";
+    char.subAbility   = data.subAbility || "";
     char.attrBonusNote = data.attrBonusNote || "";
 
-    inName.value = char.name;
+    inName.value  = char.name;
+    inTitel.value = char.title;
+
+    if (char.portraitData) {
+      previewImg.src = char.portraitData;
+      previewImg.style.display = "block";
+      placeholder.style.display = "none";
+    }
+
+    ATTRIBUTES.forEach(a => {
+      if (typeof char.attrs[a] !== "number") char.attrs[a] = 0;
+    });
+
+    initRaces();
+
+    if (char.race) selectRace(char.race);
+    if (char.race2 && char.race2 !== char.race) selectRace(char.race2);
+    if (char.sub) selectSub(char.sub);
+    if (char.prof) {
+      char.special = char.special || randomFrom(SPECIAL_POOL);
+      clearActiveIn(profList);
+      const chosen = profList.querySelector(`[data-value="${char.prof}"]`);
+      if (chosen) chosen.classList.add("active");
+    }
+
+    initAttributes();
+    updateUI();
+    showMsg("Lokale Charakterdaten geladen.");
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+/* ---------- CLOUD ---------- */
+
+async function saveCharacterToCloud() {
+  const id = `undra_${(char.name || "namenlos").trim().toLowerCase()}_${(char.title || "ohne").trim().toLowerCase()}`
+              .replace(/\s+/g, "_");
+
+  try {
+  const res = await fetch(`https://undra.djdrear.workers.dev/save/${id}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(char)
+  });
+
+  if (!res.ok) {
+    showMsg("Fehler beim Cloud‑Speichern.");
+    console.error(await res.text());
+    return;
+  }
+
+  showMsg("Charakter in der UNDRA‑Cloud gespeichert.");
+} catch (err) {
+  console.error(err);
+  showMsg("Netzwerkfehler beim Cloud‑Speichern.");
+}
+}
+
+
+
+async function loadCharacterFromCloudPrompt() {
+  const name  = prompt("Name des Helden für Cloud‑Laden?");
+  if (name === null) return;
+
+  const title = prompt("Titel / Zusatz (oder leer lassen)?") || "";
+
+  const id = `undra_${(name || "namenlos").trim().toLowerCase()}_${(title || "ohne").trim().toLowerCase()}`
+              .replace(/\s+/g, "_");
+
+  try {
+    const res = await fetch(`https://undra.djdrear.workers.dev/load/${id}`);
+
+    if (!res.ok) {
+      showMsg("Charakter nicht gefunden.");
+      console.error(await res.text());
+      return;
+    }
+
+    const data = await res.json();
+    Object.assign(char, data);
+
+    // UI aktualisieren
+    inName.value  = char.name;
     inTitel.value = char.title;
 
     if (char.portraitData) {
@@ -1464,9 +1601,8 @@ function loadCharacterLocal() {
     if (char.race) selectRace(char.race);
     if (char.race2 && char.race2 !== char.race) selectRace(char.race2);
     if (char.sub) selectSub(char.sub);
+
     if (char.prof) {
-      // Profession direkt ohne Popup setzen
-      char.prof = char.prof;
       char.special = char.special || randomFrom(SPECIAL_POOL);
       clearActiveIn(profList);
       const chosen = profList.querySelector(`[data-value="${char.prof}"]`);
@@ -1475,184 +1611,15 @@ function loadCharacterLocal() {
 
     initAttributes();
     updateUI();
-    showMsg("Lokale Charakterdaten geladen.");
-  } catch (e) {
-    console.error(e);
+
+    showMsg("Cloud‑Charakter geladen.");
+  } catch (err) {
+    console.error(err);
+    showMsg("Fehler beim Cloud‑Laden.");
   }
 }
-
-async function saveCharacterToGist() {
-  const data = {
-    name: char.name,
-    title: char.title,
-    race: char.race,
-    race2: char.race2,
-    sub: char.sub,
-    prof: char.prof,
-    special: char.special,
-    attrs: char.attrs,
-    pool: char.pool,
-    used: char.used,
-    portraitData: char.portraitData || null,
-    raceAbility: char.raceAbility || "",
-    subAbility: char.subAbility || "",
-    attrBonusNote: char.attrBonusNote || ""
-  };
-
-  const body = {
-    description: "UNDRA Character Save",
-    public: false,
-    files: {
-      "character.json": {
-        content: JSON.stringify(data, null, 2)
-      }
-    }
-  };
-
-  try {
-    const res = await fetch("https://api.github.com/gists", {
-      method: "POST",
-      headers: {
-        "Authorization": "token " + GITHUB_TOKEN,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(body)
-    });
-
-    const result = await res.json();
-
-    if (result.id) {
-      localStorage.setItem("undra_cloud_id", result.id);
-
-      const popup = document.createElement("div");
-      popup.style.position = "fixed";
-      popup.style.top = "50%";
-      popup.style.left = "50%";
-      popup.style.transform = "translate(-50%, -50%)";
-      popup.style.background = "#1a1a1a";
-      popup.style.color = "#fff";
-      popup.style.padding = "20px";
-      popup.style.border = "2px solid #800000";
-      popup.style.borderRadius = "8px";
-      popup.style.zIndex = "9999";
-      popup.style.textAlign = "center";
-
-      const info = document.createElement("div");
-      info.textContent = "Gist-ID gespeichert!";
-      info.style.marginBottom = "8px";
-
-      const idField = document.createElement("input");
-      idField.value = result.id;
-      idField.readOnly = true;
-      idField.style.width = "100%";
-      idField.style.padding = "6px";
-      idField.style.marginBottom = "10px";
-      idField.style.background = "#2a2a2a";
-      idField.style.color = "#fff";
-      idField.style.border = "1px solid #555";
-      idField.style.textAlign = "center";
-
-      const copyBtn = document.createElement("button");
-      copyBtn.textContent = "ID kopieren";
-      copyBtn.style.padding = "6px 12px";
-      copyBtn.style.marginBottom = "10px";
-      copyBtn.style.background = "#800000";
-      copyBtn.style.color = "#fff";
-      copyBtn.style.border = "none";
-      copyBtn.style.cursor = "pointer";
-      copyBtn.onclick = () => {
-        navigator.clipboard.writeText(result.id);
-        copyBtn.textContent = "✔️ Kopiert";
-        setTimeout(() => {
-          copyBtn.textContent = "ID kopieren";
-        }, 1500);
-      };
-
-      const closeBtn = document.createElement("button");
-      closeBtn.textContent = "Schließen";
-      closeBtn.style.padding = "6px 12px";
-      closeBtn.style.background = "#444";
-      closeBtn.style.color = "#fff";
-      closeBtn.style.border = "none";
-      closeBtn.style.cursor = "pointer";
-      closeBtn.onclick = () => popup.remove();
-
-      popup.appendChild(info);
-      popup.appendChild(idField);
-      popup.appendChild(copyBtn);
-      popup.appendChild(closeBtn);
-      document.body.appendChild(popup);
-
-      showMsg("Charakter in der UNDRA‑Cloud gespeichert.");
-    }
-  } catch (e) {
-    console.error(e);
-    showMsg("Cloud‑Speichern fehlgeschlagen.");
-  }
-}
-/* ---------- SLOTS LESEN (MODAL) ---------- */
-function refreshSlotOverview() {
-  for (let i = 1; i <= 3; i++) {
-    const raw = localStorage.getItem("undra15_slot" + i);
-    if (!raw) {
-      slotNameEls[i].textContent = "Slot " + i + " – leer";
-      slotMetaEls[i].textContent = "Noch kein Charakter gespeichert.";
-    } else {
-      try {
-        const data = JSON.parse(raw);
-        const c = data.character || {};
-        const name = c.name || "Unbenannt";
-        const race = c.race || "?";
-        const race2 = c.race2 || "";
-        const prof = c.prof || "?";
-        let raceText = race;
-        if (race && race2) {
-          raceText = race + " / " + race2 + " (Mischwesen)";
-        } else if (race2 && !race) {
-          raceText = race2;
-        }
-        slotNameEls[i].textContent = "Slot " + i + " – " + name;
-        slotMetaEls[i].textContent = raceText + " • " + prof;
-      } catch {
-        slotNameEls[i].textContent = "Slot " + i + " – (fehlerhaft)";
-        slotMetaEls[i].textContent = "Daten konnten nicht gelesen werden.";
-      }
-    }
-  }
-}
-
-async function loadCharacterFromGist(id) {
-  try {
-    const res = await fetch("https://api.github.com/gists/" + id, {
-      headers: {
-        "Authorization": "token " + GITHUB_TOKEN
-      }
-    });
-
-    const gist = await res.json();
-    const file = gist.files["character.json"];
-
-    if (!file) {
-      showMsg("Keine Charakterdaten im Cloud‑Slot gefunden.");
-      return;
-    }
-
-    const data = JSON.parse(file.content);
-
-    localStorage.setItem(KEY_CHAR, JSON.stringify(data));
-
-    showMsg("Cloud‑Charakter geladen. Wechsel zum Dashboard...");
-    setTimeout(() => {
-      window.location.href = "UNDRA-ENGINE-1.5-Seite3.html";
-    }, 900);
-
-  } catch (e) {
-    console.error(e);
-    showMsg("Fehler beim Laden aus der UNDRA‑Cloud.");
-  }
-}
+/* ---------- LOAD-MODAL (Slots Platzhalter) ---------- */
 function openLoadModal() {
-  refreshSlotOverview();
   loadModal.style.display = "flex";
 }
 
@@ -1661,60 +1628,14 @@ function closeLoadModal() {
 }
 
 function loadFromSlot(slot) {
-  const key = "undra15_slot" + slot;
-  const raw = localStorage.getItem(key);
-  if (!raw) {
-    showMsg("Slot " + slot + " ist leer.");
-    return;
-  }
-  try {
-    const pack = JSON.parse(raw);
-    if (!pack || typeof pack !== "object") {
-      showMsg("Slot " + slot + " konnte nicht gelesen werden.");
-      return;
-    }
-    if (pack.character) localStorage.setItem(KEY_CHAR, JSON.stringify(pack.character));
-    if (pack.identity) localStorage.setItem(KEY_ID, JSON.stringify(pack.identity));
-    if (pack.dashboard) localStorage.setItem(KEY_DASH, JSON.stringify(pack.dashboard));
-
-    showMsg("Charakter aus Slot " + slot + " geladen. Wechsel zum Dashboard...");
-    setTimeout(() => {
-      window.location.href = "UNDRA-ENGINE-1.5-Seite3.html";
-    }, 900);
-  } catch (e) {
-    console.error(e);
-    showMsg("Fehler beim Laden aus Slot " + slot + ".");
-  }
-}
-
-/* ---------- NAVIGATION ---------- */
-function goToPage2() {
-  saveCharacterLocal();
-  window.location.href = "UNDRA-ENGINE-1.5-Seite2.html";
-}
-
-/* ---------- LEAVE MODAL ---------- */
-function openLeaveModal() {
-  const raceText = (char.race && char.race2)
-    ? char.race + " / " + char.race2 + " (Mischwesen)"
-    : (char.race || char.race2 || "–");
-
-  const parts = [];
-  parts.push((char.name || "Namenlos") + (char.title ? " – " + char.title : ""));
-  parts.push("Volk: " + raceText + (char.sub ? " (" + char.sub + ")" : ""));
-  parts.push("Profession: " + (char.prof || "–"));
-  leaveSummary.textContent = parts.join(" • ");
-  leaveModal.style.display = "flex";
-}
-
-function closeLeaveModal() {
-  leaveModal.style.display = "none";
+  showMsg("Slot-" + slot + " Laden ist noch nicht implementiert.");
 }
 
 /* ---------- PORTRAIT UPLOAD ---------- */
 function handleUploadChange(e) {
   const file = e.target.files && e.target.files[0];
   if (!file) return;
+
   const reader = new FileReader();
   reader.onload = ev => {
     const dataUrl = ev.target.result;
@@ -1727,14 +1648,23 @@ function handleUploadChange(e) {
   reader.readAsDataURL(file);
 }
 
+/* ---------- PROFESSION READY ---------- */
+function checkProfessionReady() {
+  const ready =
+    pendingProfession &&
+    raceAbilityInput.value.trim() &&
+    subAbilityInput.value.trim() &&
+    attrBonusSelectEl.value;
+
+  btnProfConfirm.disabled = !ready;
+}
+updateUI();
+saveCharacterLocal();
+showMsg("Berufung und Fähigkeiten bestätigt.");
+closeProfessionModal();
+
 /* ---------- EVENT BINDING ---------- */
-
 document.addEventListener("DOMContentLoaded", () => {
-  initAttributes();
-  initRaces();
-  loadCharacterLocal();
-  updateUI();
-
   // Attributbonus-Select füllen
   if (attrBonusSelectEl) {
     ATTRIBUTES.forEach(a => {
@@ -1745,48 +1675,27 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  initAttributes();
+  initRaces();
+  loadCharacterLocal();
+  updateUI();
+  drawRadar();
+
+  rollBtn.addEventListener("click", rollPool);
+  inName.addEventListener("input", updateUI);
+  inTitel.addEventListener("input", updateUI);
+
+  uploadInput.addEventListener("change", handleUploadChange);
 
   window.addEventListener("resize", drawRadar);
 
-  rollBtn.addEventListener("click", rollPool);
-  btnNext.addEventListener("click", () => {
-  openLeaveModal();
-});
-  if (btnSaveLocal) {
-  btnSaveLocal.addEventListener("click", saveCharacterLocal);
-}
+  raceAbilityInput.addEventListener("input", checkProfessionReady);
+  subAbilityInput.addEventListener("input", checkProfessionReady);
+  attrBonusSelectEl.addEventListener("change", checkProfessionReady);
 
-if (btnLoad) {
-  btnLoad.addEventListener("click", openLoadModal);
-}
+  btnProfCancel.addEventListener("click", closeProfessionModal);
 
-if (btnCloseLoad) {
-  btnCloseLoad.addEventListener("click", closeLoadModal);
-}
-
-if (slotButtons && slotButtons.forEach) {
-  slotButtons.forEach(btn => {
-    if (!btn) return;
-    btn.addEventListener("click", () => {
-      const slot = btn.dataset.slot;
-      loadFromSlot(slot);
-    });
-  });
-}
-
-if (inName) {
-  inName.addEventListener("input", updateUI);
-}
-
-if (inTitel) {
-  inTitel.addEventListener("input", updateUI);
-}
-
-if (uploadInput) {
-  uploadInput.addEventListener("change", handleUploadChange);
-}
-  if (btnProfCancel) btnProfCancel.addEventListener("click", closeProfessionModal);
-  if (btnProfConfirm) btnProfConfirm.addEventListener("click", () => {
+  btnProfConfirm.addEventListener("click", () => {
     if (!pendingProfession) {
       closeProfessionModal();
       return;
@@ -1796,17 +1705,19 @@ if (uploadInput) {
     char.special = randomFrom(SPECIAL_POOL);
 
     char.raceAbility = raceAbilityInput.value.trim();
-    char.subAbility = subAbilityInput.value.trim();
-    const bonusAttr = attrBonusSelectEl.value || "";
+    char.subAbility  = subAbilityInput.value.trim();
+    const bonusAttr  = attrBonusSelectEl.value || "";
     char.attrBonusNote = bonusAttr;
 
-    if (bonusAttr && char.attrs[bonusAttr] != null) {
-      char.attrs[bonusAttr] = (char.attrs[bonusAttr] || 0) + 1;
-      char.used += 1; // Bonus verbraucht effektiv einen Punkt mehr
-      if (char.used > char.pool) {
-        char.pool = char.used;
-      }
-    }
+    // Bonuspunkt korrekt anwenden
+if (!char.bonusApplied) char.bonusApplied = {};
+
+if (bonusAttr && char.attrs[bonusAttr] != null) {
+  if (!char.bonusApplied[bonusAttr]) {
+    char.attrs[bonusAttr] += 1;
+    char.bonusApplied[bonusAttr] = true;
+  }
+}
 
     clearActiveIn(profList);
     const chosen = profList.querySelector(`[data-value="${pendingProfession}"]`);
@@ -1816,8 +1727,26 @@ if (uploadInput) {
     showMsg("Berufung und Fähigkeiten bestätigt.");
     closeProfessionModal();
   });
+
+  btnNext.addEventListener("click", openLeaveModal);
+  btnLeaveCancel.addEventListener("click", closeLeaveModal);
+  btnLeaveConfirm.addEventListener("click", () => {
+    sealCharacter();
+    saveCharacterLocal();
+    window.location.href = "https://djdrear.github.io/Seite-2/"; // Zielseite anpassen
   });
 
+  btnCloudSave.addEventListener("click", saveCharacterToCloud);
+  btnCloudLoad.addEventListener("click", loadCharacterFromCloudPrompt);
+
+  btnCloseLoad.addEventListener("click", closeLoadModal);
+  slotButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const slot = btn.dataset.slot;
+      loadFromSlot(slot);
+    });
+  });
+});
 </script>
 </body>
 </html>
