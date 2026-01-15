@@ -912,6 +912,7 @@
   </div>
 </div>
 
+<!-- BLOCK 1: Konstanten, State, globale DOM-Referenzen, Helfer -->
 <script>
 /* ---------- KONSTANTEN & DATEN ---------- */
 const ATTRIBUTES = [
@@ -977,69 +978,82 @@ let char = {
   portraitData: null,
   raceAbility: "",
   subAbility: "",
-  attrBonusNote: ""
+  attrBonusNote: "",
+  bonusApplied: {}
 };
 
 let pendingProfession = "";
 let transientTimeout = null;
 
-/* ---------- DOM ---------- */
-const inName = document.getElementById("in-name");
-const inTitel = document.getElementById("in-titel");
-const sumName = document.getElementById("sum-name");
-const sumTitle = document.getElementById("sum-title");
-const sRace = document.getElementById("s-race");
-const sSubWrap = document.getElementById("s-sub-wrap");
-const sSub = document.getElementById("s-sub");
-const sProf = document.getElementById("s-prof");
-const sSpec = document.getElementById("s-spec");
-const heroPreviewSub = document.getElementById("hero-preview-sub");
+/* ---------- GLOBALE DOM-ELEMENTE ---------- */
+let raceSelect;
+let subraceSelect;
+let profSelect;
 
-const pTotal = document.getElementById("p-total");
-const pUsed = document.getElementById("p-used");
-const pLeft = document.getElementById("p-left");
+let idAge;
+let idHeight;
+let idWeight;
+let idEyes;
+let idHair;
+let idVoice;
+let idClothes;
+let idSpecialMarks;
+let idShortdesc;
+let idStory;
 
-const raceList = document.getElementById("race-list");
-const subList = document.getElementById("sub-list");
-const profList = document.getElementById("prof-list");
+let inName;
+let inTitel;
+let sumName;
+let sumTitle;
+let sRace;
+let sSubWrap;
+let sSub;
+let sProf;
+let sSpec;
+let heroPreviewSub;
 
-const rollBtn = document.getElementById("roll-btn");
-const btnNext = document.getElementById("btn-next");
+let pTotal;
+let pUsed;
+let pLeft;
 
-const previewImg = document.getElementById("preview");
-const placeholder = document.getElementById("placeholder");
-const uploadInput = document.getElementById("upload");
+let raceList;
+let subList;
+let profList;
 
-const radarCanvas = document.getElementById("radarCanvas");
-const radarCtx = radarCanvas.getContext("2d");
+let rollBtn;
+let btnNext;
 
-const transientMsgEl = document.getElementById("transient-msg");
+let previewImg;
+let placeholder;
+let uploadInput;
 
-// Cloud-Buttons
-const btnCloudLoad = document.getElementById("btn-cloud-load");
-const btnCloudSave = document.getElementById("btn-cloud-save");
+let radarCanvas;
+let radarCtx;
 
-// Load modal
-const loadModal = document.getElementById("load-modal");
-const btnCloseLoad = document.getElementById("btn-close-load");
-const slotButtons = loadModal.querySelectorAll(".slot-btn");
+let transientMsgEl;
 
-// Profession modal
-const professionModal = document.getElementById("profession-modal");
-const raceAbilityInput = document.getElementById("race-ability-input");
-const subAbilityInput = document.getElementById("sub-ability-input");
-const attrBonusSelectEl = document.getElementById("attr-bonus-select");
-const btnProfCancel = document.getElementById("btn-prof-cancel");
-const btnProfConfirm = document.getElementById("btn-prof-confirm");
+let btnCloudLoad;
+let btnCloudSave;
 
-// Leave modal
-const leaveModal = document.getElementById("leave-modal");
-const leaveSummary = document.getElementById("leave-summary");
-const btnLeaveCancel = document.getElementById("btn-leave-cancel");
-const btnLeaveConfirm = document.getElementById("btn-leave-confirm");
+let loadModal;
+let btnCloseLoad;
+let slotButtons;
+
+let professionModal;
+let raceAbilityInput;
+let subAbilityInput;
+let attrBonusSelectEl;
+let btnProfCancel;
+let btnProfConfirm;
+
+let leaveModal;
+let leaveSummary;
+let btnLeaveCancel;
+let btnLeaveConfirm;
 
 /* ---------- HELFER ---------- */
 function showMsg(text, ms = 2200) {
+  if (!transientMsgEl) return;
   transientMsgEl.textContent = text;
   transientMsgEl.style.opacity = "1";
   if (transientTimeout) clearTimeout(transientTimeout);
@@ -1057,7 +1071,9 @@ function clearActiveIn(container) {
   if (!container) return;
   container.querySelectorAll(".check-item").forEach(c => c.classList.remove("active"));
 }
-
+</script>
+<!-- BLOCK 2: Attribute, Rassen/Sub/Profession, Profession-/Leave-Logik -->
+<script>
 /* ---------- ATTRIBUTE ---------- */
 function initAttributes() {
   const grid = document.getElementById("attr-grid-s1");
@@ -1121,8 +1137,9 @@ function modAttr(a, delta) {
 
 /* ---------- RASSEN / SUB / PROF ---------- */
 function initRaces() {
-  raceList.innerHTML = "";
+  if (!raceList || !subList || !profList) return;
 
+  raceList.innerHTML = "";
   Object.keys(ORIGIN_DATA).forEach(r => {
     const el = document.createElement("div");
     el.className = "check-item";
@@ -1132,7 +1149,6 @@ function initRaces() {
     raceList.appendChild(el);
   });
 
-  // Aktive Markierung bei geladenem Charakter
   raceList.querySelectorAll(".check-item").forEach(el => {
     const val = el.dataset.value;
     if (val === char.race || val === char.race2) el.classList.add("active");
@@ -1183,6 +1199,10 @@ function selectRace(r) {
   char.sub = "";
   char.prof = "";
   char.special = "";
+  char.raceAbility = "";
+  char.subAbility = "";
+  char.attrBonusNote = "";
+  char.bonusApplied = {};
 
   clearActiveIn(raceList);
   clearActiveIn(subList);
@@ -1250,17 +1270,18 @@ function selectSub(s) {
 function openProfessionModal(prof) {
   pendingProfession = prof;
 
+  if (!professionModal) return;
   professionModal.style.display = "flex";
 
-  raceAbilityInput.value = char.raceAbility || "";
-  subAbilityInput.value = char.subAbility || "";
-  attrBonusSelectEl.value = char.attrBonusNote || "";
+  if (raceAbilityInput) raceAbilityInput.value = char.raceAbility || "";
+  if (subAbilityInput) subAbilityInput.value = char.subAbility || "";
+  if (attrBonusSelectEl) attrBonusSelectEl.value = char.attrBonusNote || "";
 
   checkProfessionReady();
 }
 
 function closeProfessionModal() {
-  professionModal.style.display = "none";
+  if (professionModal) professionModal.style.display = "none";
 }
 
 /* ---------- LEAVE-MODAL ---------- */
@@ -1274,38 +1295,37 @@ function openLeaveModal() {
   parts.push("Volk: " + raceText + (char.sub ? " (" + char.sub + ")" : ""));
   parts.push("Profession: " + (char.prof || "–"));
 
-  leaveSummary.textContent = parts.join(" • ");
-  leaveModal.style.display = "flex";
+  if (leaveSummary) leaveSummary.textContent = parts.join(" • ");
+  if (leaveModal) leaveModal.style.display = "flex";
 }
 
 function closeLeaveModal() {
-  leaveModal.style.display = "none";
+  if (leaveModal) leaveModal.style.display = "none";
 }
 
 function sealCharacter() {
   if (inName) inName.disabled = true;
   if (inTitel) inTitel.disabled = true;
-  raceList.querySelectorAll(".check-item").forEach(el => el.style.pointerEvents = "none");
-  subList.querySelectorAll(".check-item").forEach(el => el.style.pointerEvents = "none");
-  profList.querySelectorAll(".check-item").forEach(el => el.style.pointerEvents = "none");
+  if (raceList) raceList.querySelectorAll(".check-item").forEach(el => el.style.pointerEvents = "none");
+  if (subList) subList.querySelectorAll(".check-item").forEach(el => el.style.pointerEvents = "none");
+  if (profList) profList.querySelectorAll(".check-item").forEach(el => el.style.pointerEvents = "none");
   if (raceAbilityInput) raceAbilityInput.disabled = true;
   if (subAbilityInput) subAbilityInput.disabled = true;
   if (attrBonusSelectEl) attrBonusSelectEl.disabled = true;
   if (rollBtn) rollBtn.disabled = true;
   if (btnNext) btnNext.disabled = true;
 }
-
+</script>
+<!-- BLOCK 3: UI-Update, Radar, Pool, Identität, LocalStorage -->
+<script>
 /* ---------- UI-UPDATE ---------- */
 function updateUI() {
-  /* --- NAME & TITEL --- */
-  char.name  = inName.value.trim();
-  char.title = inTitel.value.trim();
+  if (inName)  char.name  = inName.value.trim();
+  if (inTitel) char.title = inTitel.value.trim();
 
-  sumName.textContent = char.name || "Namenlos";
-  sumTitle.textContent = char.title ? ("– " + char.title) : "ohne Titel";
+  if (sumName) sumName.textContent = char.name || "Namenlos";
+  if (sumTitle) sumTitle.textContent = char.title ? ("– " + char.title) : "ohne Titel";
 
-
-  /* --- RASSE / MISCHWESEN --- */
   if (char.race && char.race2) {
     sRace.textContent = char.race + " / " + char.race2 + " (Mischwesen)";
   } else if (char.race) {
@@ -1316,8 +1336,6 @@ function updateUI() {
     sRace.textContent = "–";
   }
 
-
-  /* --- UNTERGRUPPE --- */
   if (char.sub) {
     sSubWrap.style.display = "";
     sSub.textContent = char.sub;
@@ -1325,12 +1343,8 @@ function updateUI() {
     sSubWrap.style.display = "none";
   }
 
-
-  /* --- PROFESSION --- */
   sProf.textContent = char.prof || "–";
 
-
-  /* --- ATTRIBUTE & POOL --- */
   const poolLeft = char.pool - char.used;
   pTotal.textContent = char.pool;
   pUsed.textContent  = char.used;
@@ -1354,8 +1368,6 @@ function updateUI() {
     }
   });
 
-
-  /* --- HERO PREVIEW (unter dem Namen) --- */
   const parts = [];
   if (char.race && char.race2) parts.push(char.race + " / " + char.race2);
   else if (char.race) parts.push(char.race);
@@ -1364,24 +1376,13 @@ function updateUI() {
   if (char.sub) parts.push("(" + char.sub + ")");
   if (char.prof) parts.push("– " + char.prof);
 
-  heroPreviewSub.textContent = parts.join(" ");
+  if (heroPreviewSub) heroPreviewSub.textContent = parts.join(" ");
 
-
-  /* --- ERWEITERTE VORSCHAU: Spezial + Freitexte + +1 Bonus --- */
   let extraLines = [];
-
-  if (char.special) {
-    extraLines.push("Spezial: " + char.special);
-  }
-  if (char.raceAbility) {
-    extraLines.push(char.raceAbility);
-  }
-  if (char.subAbility) {
-    extraLines.push(char.subAbility);
-  }
-  if (char.attrBonusNote) {
-    extraLines.push("+1 " + char.attrBonusNote);
-  }
+  if (char.special) extraLines.push("Spezial: " + char.special);
+  if (char.raceAbility) extraLines.push(char.raceAbility);
+  if (char.subAbility) extraLines.push(char.subAbility);
+  if (char.attrBonusNote) extraLines.push("+1 " + char.attrBonusNote);
 
   if (extraLines.length > 0) {
     sSpec.innerHTML = extraLines.join("<br>");
@@ -1391,8 +1392,6 @@ function updateUI() {
     sSpec.style.color = "var(--text-muted)";
   }
 
-
-  /* --- WEITER-BUTTON --- */
   const canProceed =
     !!char.name &&
     (char.race || char.race2) &&
@@ -1400,15 +1399,15 @@ function updateUI() {
     char.pool > 0 &&
     char.used > 0;
 
-  btnNext.disabled = !canProceed;
+  if (btnNext) btnNext.disabled = !canProceed;
 
-
-  /* --- RADAR --- */
   drawRadar();
 }
 
 /* ---------- RADAR ---------- */
 function drawRadar() {
+  if (!radarCanvas || !radarCtx) return;
+
   const w = radarCanvas.width;
   const h = radarCanvas.height;
   const cx = w / 2;
@@ -1493,8 +1492,25 @@ function rollPool() {
   updateUI();
 }
 
-/* ---------- LOKAL SPEICHERN / LADEN ---------- */
+/* ---------- IDENTITÄT (Seite 2) ---------- */
+function saveIdentity() {
+  if (!idAge) return;
+  char.age           = idAge.value.trim();
+  char.height        = idHeight.value.trim();
+  char.weight        = idWeight.value.trim();
+  char.eyes          = idEyes.value.trim();
+  char.hair          = idHair.value.trim();
+  char.voice         = idVoice.value.trim();
+  char.clothes       = idClothes.value.trim();
+  char.specialmarks  = idSpecialMarks.value.trim();
+  char.shortdesc     = idShortdesc.value.trim();
+  char.story         = idStory.value.trim();
+}
+
+/* ---------- LOKAL SPEICHERN ---------- */
 function saveCharacterLocal() {
+  saveIdentity();
+
   const data = {
     name: char.name,
     title: char.title,
@@ -1509,18 +1525,31 @@ function saveCharacterLocal() {
     portraitData: char.portraitData || null,
     raceAbility: char.raceAbility || "",
     subAbility: char.subAbility || "",
-    attrBonusNote: char.attrBonusNote || ""
+    attrBonusNote: char.attrBonusNote || "",
+    bonusApplied: char.bonusApplied || {},
+
+    age: char.age || "",
+    height: char.height || "",
+    weight: char.weight || "",
+    eyes: char.eyes || "",
+    hair: char.hair || "",
+    voice: char.voice || "",
+    clothes: char.clothes || "",
+    specialmarks: char.specialmarks || "",
+    shortdesc: char.shortdesc || "",
+    story: char.story || ""
   };
 
   try {
     localStorage.setItem(KEY_CHAR, JSON.stringify(data));
-    showMsg("Charakterdaten (Seite 1) lokal gespeichert.");
+    showMsg("Charakterdaten lokal gespeichert.");
   } catch (e) {
     console.error(e);
     showMsg("Fehler beim lokalen Speichern.");
   }
 }
 
+/* ---------- LOKAL LADEN ---------- */
 function loadCharacterLocal() {
   try {
     const raw = localStorage.getItem(KEY_CHAR);
@@ -1539,18 +1568,36 @@ function loadCharacterLocal() {
     char.attrs        = data.attrs || {};
     char.pool         = data.pool || 0;
     char.used         = data.used || 0;
+
+    char.age           = data.age || "";
+    char.height        = data.height || "";
+    char.weight        = data.weight || "";
+    char.eyes          = data.eyes || "";
+    char.hair          = data.hair || "";
+    char.voice         = data.voice || "";
+    char.clothes       = data.clothes || "";
+    char.specialmarks  = data.specialmarks || "";
+    char.shortdesc     = data.shortdesc || "";
+    char.story         = data.story || "";
+
     char.portraitData = data.portraitData || null;
     char.raceAbility  = data.raceAbility || "";
     char.subAbility   = data.subAbility || "";
     char.attrBonusNote = data.attrBonusNote || "";
+    char.bonusApplied  = data.bonusApplied || {};
 
-    inName.value  = char.name;
-    inTitel.value = char.title;
+    if (inName)  inName.value  = char.name;
+    if (inTitel) inTitel.value = char.title;
 
-    if (char.portraitData) {
-      previewImg.src = char.portraitData;
-      previewImg.style.display = "block";
-      placeholder.style.display = "none";
+    if (previewImg && placeholder) {
+      if (char.portraitData) {
+        previewImg.src = char.portraitData;
+        previewImg.style.display = "block";
+        placeholder.style.display = "none";
+      } else {
+        previewImg.style.display = "none";
+        placeholder.style.display = "block";
+      }
     }
 
     ATTRIBUTES.forEach(a => {
@@ -1558,69 +1605,52 @@ function loadCharacterLocal() {
     });
 
     initRaces();
-
-    if (char.race) selectRace(char.race);
-    if (char.race2 && char.race2 !== char.race) selectRace(char.race2);
-    if (char.sub) selectSub(char.sub);
-    if (char.prof) {
-      char.special = char.special || randomFrom(SPECIAL_POOL);
-      clearActiveIn(profList);
-      const chosen = profList.querySelector(`[data-value="${char.prof}"]`);
-      if (chosen) chosen.classList.add("active");
-    }
-    // UI sauber wiederherstellen
+setTimeout(() => {
+  if (char.race) selectRace(char.race);
+  if (char.race2 && char.race2 !== char.race) selectRace(char.race2);
+  if (char.sub) selectSub(char.sub);
+  if (char.prof) {
+    const chosen = profList.querySelector(`[data-value="${char.prof}"]`);
+    if (chosen) chosen.classList.add("active");
+  }
+  updateUI();
+}, 30);
 
     initAttributes();
     updateUI();
+
     showMsg("Lokale Charakterdaten geladen.");
   } catch (e) {
     console.error(e);
   }
 }
-
-// --- Erweiterte Vorschau unterhalb von sSpec ---
-let extraLines = [];
-
-if (char.special) {
-  extraLines.push("Spezial: " + char.special);
-}
-if (char.raceAbility) {
-  extraLines.push(char.raceAbility);
-}
-if (char.subAbility) {
-  extraLines.push(char.subAbility);
-}
-
-sSpec.innerHTML = extraLines.join("<br>");
-sSpec.style.color = "var(--gold-bright)";
-
+</script>
+<!-- BLOCK 4: Cloud-Speicher & -Laden -->
+<script>
 /* ---------- CLOUD ---------- */
-
 async function saveCharacterToCloud() {
   const id = `undra_${(char.name || "namenlos").trim().toLowerCase()}_${(char.title || "ohne").trim().toLowerCase()}`
               .replace(/\s+/g, "_");
 
   try {
-  const res = await fetch(`https://undra.djdrear.workers.dev/save/${id}`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(char)
-  });
+    const res = await fetch(`https://undra.djdrear.workers.dev/save/${id}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(char)
+    });
 
-  if (!res.ok) {
-    showMsg("Fehler beim Cloud‑Speichern.");
-    console.error(await res.text());
-    return;
+    if (!res.ok) {
+      showMsg("Fehler beim Cloud‑Speichern.");
+      console.error(await res.text());
+      return;
+    }
+
+    showMsg("Charakter in der UNDRA‑Cloud gespeichert.");
+  } catch (err) {
+    console.error(err);
+    showMsg("Netzwerkfehler beim Cloud‑Speichern.");
   }
-
-  showMsg("Charakter in der UNDRA‑Cloud gespeichert.");
-} catch (err) {
-  console.error(err);
-  showMsg("Netzwerkfehler beim Cloud‑Speichern.");
 }
-}
-
-
 
 async function loadCharacterFromCloudPrompt() {
   const name  = prompt("Name des Helden für Cloud‑Laden?");
@@ -1643,62 +1673,39 @@ async function loadCharacterFromCloudPrompt() {
     const data = await res.json();
     Object.assign(char, data);
 
-    // UI aktualisieren
-    inName.value  = char.name;
-    inTitel.value = char.title;
+    if (inName)  inName.value  = char.name || "";
+    if (inTitel) inTitel.value = char.title || "";
 
-    if (char.portraitData) {
-      previewImg.src = char.portraitData;
-      previewImg.style.display = "block";
-      placeholder.style.display = "none";
+    if (previewImg && placeholder) {
+      if (char.portraitData) {
+        previewImg.src = char.portraitData;
+        previewImg.style.display = "block";
+        placeholder.style.display = "none";
+      } else {
+        previewImg.style.display = "none";
+        placeholder.style.display = "block";
+      }
     }
 
     ATTRIBUTES.forEach(a => {
       if (typeof char.attrs[a] !== "number") char.attrs[a] = 0;
     });
 
-initRaces();
+    initRaces();
 
-// --- Dropdown-Werte setzen ---
-if (raceSelect && char.race) {
-  raceSelect.value = char.race;
-}
-if (subraceSelect && char.sub) {
-  subraceSelect.value = char.sub;
-}
-if (profSelect && char.prof) {
-  profSelect.value = char.prof;
-}
+    if (char.race) selectRace(char.race);
+    if (char.race2 && char.race2 !== char.race) selectRace(char.race2);
+    if (char.sub) selectSub(char.sub);
 
-// --- UNDRA-Logik auslösen ---
-if (char.race) {
-  selectRace(char.race);
-}
+    if (char.prof) {
+      if (!char.special) char.special = randomFrom(SPECIAL_POOL);
+      clearActiveIn(profList);
+      const chosen = profList.querySelector(`[data-value="${char.prof}"]`);
+      if (chosen) chosen.classList.add("active");
+    }
 
-if (char.race2 && char.race2 !== char.race) {
-  selectRace(char.race2);
-}
-
-if (char.sub) {
-  selectSub(char.sub);
-}
-
-if (char.prof) {
-  // Spezialfähigkeit nur setzen, wenn sie fehlt
-  if (!char.special) {
-    char.special = randomFrom(SPECIAL_POOL);
-  }
-  clearActiveIn(profList);
-
-  const chosen = profList.querySelector(`[data-value="${char.prof}"]`);
-  if (chosen) {
-    chosen.classList.add("active");
-    chosen.dispatchEvent(new Event("click")); // Profession vollständig laden
-  }
-}
-
-initAttributes();
-updateUI();
+    initAttributes();
+    updateUI();
 
     showMsg("Cloud‑Charakter geladen.");
   } catch (err) {
@@ -1706,13 +1713,16 @@ updateUI();
     showMsg("Fehler beim Cloud‑Laden.");
   }
 }
+</script>
+<!-- BLOCK 5: Load-Modal, Upload, Profession-Ready, Init & Events -->
+<script>
 /* ---------- LOAD-MODAL (Slots Platzhalter) ---------- */
 function openLoadModal() {
-  loadModal.style.display = "flex";
+  if (loadModal) loadModal.style.display = "flex";
 }
 
 function closeLoadModal() {
-  loadModal.style.display = "none";
+  if (loadModal) loadModal.style.display = "none";
 }
 
 function loadFromSlot(slot) {
@@ -1727,9 +1737,11 @@ function handleUploadChange(e) {
   const reader = new FileReader();
   reader.onload = ev => {
     const dataUrl = ev.target.result;
-    previewImg.src = dataUrl;
-    previewImg.style.display = "block";
-    placeholder.style.display = "none";
+    if (previewImg && placeholder) {
+      previewImg.src = dataUrl;
+      previewImg.style.display = "block";
+      placeholder.style.display = "none";
+    }
     char.portraitData = dataUrl;
     saveCharacterLocal();
   };
@@ -1738,22 +1750,86 @@ function handleUploadChange(e) {
 
 /* ---------- PROFESSION READY ---------- */
 function checkProfessionReady() {
+  if (!btnProfConfirm) return;
   const ready =
     pendingProfession &&
+    raceAbilityInput &&
+    subAbilityInput &&
+    attrBonusSelectEl &&
     raceAbilityInput.value.trim() &&
     subAbilityInput.value.trim() &&
     attrBonusSelectEl.value;
 
   btnProfConfirm.disabled = !ready;
 }
-updateUI();
-saveCharacterLocal();
-showMsg("Berufung und Fähigkeiten bestätigt.");
-closeProfessionModal();
 
-/* ---------- EVENT BINDING ---------- */
+/* ---------- EVENT BINDING / INIT ---------- */
 document.addEventListener("DOMContentLoaded", () => {
-  // Attributbonus-Select füllen
+  inName         = document.getElementById("in-name");
+  inTitel        = document.getElementById("in-titel");
+  sumName        = document.getElementById("sum-name");
+  sumTitle       = document.getElementById("sum-title");
+  sRace          = document.getElementById("s-race");
+  sSubWrap       = document.getElementById("s-sub-wrap");
+  sSub           = document.getElementById("s-sub");
+  sProf          = document.getElementById("s-prof");
+  sSpec          = document.getElementById("s-spec");
+  heroPreviewSub = document.getElementById("hero-preview-sub");
+
+  pTotal = document.getElementById("p-total");
+  pUsed  = document.getElementById("p-used");
+  pLeft  = document.getElementById("p-left");
+
+  raceList = document.getElementById("race-list");
+  subList  = document.getElementById("sub-list");
+  profList = document.getElementById("prof-list");
+
+  rollBtn = document.getElementById("roll-btn");
+  btnNext = document.getElementById("btn-next");
+
+  previewImg  = document.getElementById("preview");
+  placeholder = document.getElementById("placeholder");
+  uploadInput = document.getElementById("upload");
+
+  radarCanvas = document.getElementById("radarCanvas");
+  radarCtx    = radarCanvas ? radarCanvas.getContext("2d") : null;
+
+  transientMsgEl = document.getElementById("transient-msg");
+
+  btnCloudLoad = document.getElementById("btn-cloud-load");
+  btnCloudSave = document.getElementById("btn-cloud-save");
+
+  loadModal    = document.getElementById("load-modal");
+  btnCloseLoad = document.getElementById("btn-close-load");
+  slotButtons  = loadModal ? loadModal.querySelectorAll(".slot-btn") : [];
+
+  professionModal   = document.getElementById("profession-modal");
+  raceAbilityInput  = document.getElementById("race-ability-input");
+  subAbilityInput   = document.getElementById("sub-ability-input");
+  attrBonusSelectEl = document.getElementById("attr-bonus-select");
+  btnProfCancel     = document.getElementById("btn-prof-cancel");
+  btnProfConfirm    = document.getElementById("btn-prof-confirm");
+
+  leaveModal     = document.getElementById("leave-modal");
+  leaveSummary   = document.getElementById("leave-summary");
+  btnLeaveCancel = document.getElementById("btn-leave-cancel");
+  btnLeaveConfirm= document.getElementById("btn-leave-confirm");
+
+  idAge          = document.getElementById("idAge");
+  idHeight       = document.getElementById("idHeight");
+  idWeight       = document.getElementById("idWeight");
+  idEyes         = document.getElementById("idEyes");
+  idHair         = document.getElementById("idHair");
+  idVoice        = document.getElementById("idVoice");
+  idClothes      = document.getElementById("idClothes");
+  idSpecialMarks = document.getElementById("idSpecialMarks");
+  idShortdesc    = document.getElementById("idShortdesc");
+  idStory        = document.getElementById("idStory");
+
+  raceSelect    = document.getElementById("raceSelect");
+  subraceSelect = document.getElementById("subraceSelect");
+  profSelect    = document.getElementById("profSelect");
+
   if (attrBonusSelectEl) {
     ATTRIBUTES.forEach(a => {
       const opt = document.createElement("option");
@@ -1769,21 +1845,21 @@ document.addEventListener("DOMContentLoaded", () => {
   updateUI();
   drawRadar();
 
-  rollBtn.addEventListener("click", rollPool);
-  inName.addEventListener("input", updateUI);
-  inTitel.addEventListener("input", updateUI);
+  if (rollBtn) rollBtn.addEventListener("click", rollPool);
+  if (inName)  inName.addEventListener("input", updateUI);
+  if (inTitel) inTitel.addEventListener("input", updateUI);
 
-  uploadInput.addEventListener("change", handleUploadChange);
+  if (uploadInput) uploadInput.addEventListener("change", handleUploadChange);
 
   window.addEventListener("resize", drawRadar);
 
-  raceAbilityInput.addEventListener("input", checkProfessionReady);
-  subAbilityInput.addEventListener("input", checkProfessionReady);
-  attrBonusSelectEl.addEventListener("change", checkProfessionReady);
+  if (raceAbilityInput) raceAbilityInput.addEventListener("input", checkProfessionReady);
+  if (subAbilityInput)  subAbilityInput.addEventListener("input", checkProfessionReady);
+  if (attrBonusSelectEl) attrBonusSelectEl.addEventListener("change", checkProfessionReady);
 
-  btnProfCancel.addEventListener("click", closeProfessionModal);
+  if (btnProfCancel) btnProfCancel.addEventListener("click", closeProfessionModal);
 
-  btnProfConfirm.addEventListener("click", () => {
+  if (btnProfConfirm) btnProfConfirm.addEventListener("click", () => {
     if (!pendingProfession) {
       closeProfessionModal();
       return;
@@ -1792,23 +1868,21 @@ document.addEventListener("DOMContentLoaded", () => {
     char.prof = pendingProfession;
     char.special = randomFrom(SPECIAL_POOL);
 
-    char.raceAbility = raceAbilityInput.value.trim();
-    char.subAbility  = subAbilityInput.value.trim();
-    const bonusAttr  = attrBonusSelectEl.value || "";
+    char.raceAbility = raceAbilityInput ? raceAbilityInput.value.trim() : "";
+    char.subAbility  = subAbilityInput ? subAbilityInput.value.trim() : "";
+    const bonusAttr  = attrBonusSelectEl ? (attrBonusSelectEl.value || "") : "";
     char.attrBonusNote = bonusAttr;
 
-    // Bonuspunkt korrekt anwenden
-if (!char.bonusApplied) char.bonusApplied = {};
-
-if (bonusAttr && char.attrs[bonusAttr] != null) {
-  if (!char.bonusApplied[bonusAttr]) {
-    char.attrs[bonusAttr] += 1;
-    char.bonusApplied[bonusAttr] = true;
-  }
-}
+    if (!char.bonusApplied) char.bonusApplied = {};
+    if (bonusAttr && char.attrs[bonusAttr] != null) {
+      if (!char.bonusApplied[bonusAttr]) {
+        char.attrs[bonusAttr] += 1;
+        char.bonusApplied[bonusAttr] = true;
+      }
+    }
 
     clearActiveIn(profList);
-    const chosen = profList.querySelector(`[data-value="${pendingProfession}"]`);
+    const chosen = profList ? profList.querySelector(`[data-value="${pendingProfession}"]`) : null;
     if (chosen) chosen.classList.add("active");
 
     updateUI();
@@ -1816,24 +1890,26 @@ if (bonusAttr && char.attrs[bonusAttr] != null) {
     closeProfessionModal();
   });
 
-  btnNext.addEventListener("click", openLeaveModal);
-  btnLeaveCancel.addEventListener("click", closeLeaveModal);
-  btnLeaveConfirm.addEventListener("click", () => {
+  if (btnNext) btnNext.addEventListener("click", openLeaveModal);
+  if (btnLeaveCancel) btnLeaveCancel.addEventListener("click", closeLeaveModal);
+  if (btnLeaveConfirm) btnLeaveConfirm.addEventListener("click", () => {
     sealCharacter();
     saveCharacterLocal();
-    window.location.href = "https://djdrear.github.io/Seite-2/"; // Zielseite anpassen
+    window.location.href = "https://djdrear.github.io/Seite-2/";
   });
 
-  btnCloudSave.addEventListener("click", saveCharacterToCloud);
-  btnCloudLoad.addEventListener("click", loadCharacterFromCloudPrompt);
+  if (btnCloudSave) btnCloudSave.addEventListener("click", saveCharacterToCloud);
+  if (btnCloudLoad) btnCloudLoad.addEventListener("click", loadCharacterFromCloudPrompt);
 
-  btnCloseLoad.addEventListener("click", closeLoadModal);
-  slotButtons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      const slot = btn.dataset.slot;
-      loadFromSlot(slot);
+  if (btnCloseLoad) btnCloseLoad.addEventListener("click", closeLoadModal);
+  if (slotButtons && slotButtons.forEach) {
+    slotButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const slot = btn.dataset.slot;
+        loadFromSlot(slot);
+      });
     });
-  });
+  }
 });
 </script>
 </body>
