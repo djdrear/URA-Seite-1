@@ -3,1128 +3,918 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>UNDRA-ENGINE v1.5 – Seite 2 – Identität & Chronik</title>
+  <title>UNDRA-ENGINE v1.5 – Seite 1 – Ursprung & Blutlinien</title>
 
-  <!-- Ab hier kommt dein Bloodcore Ember CSS -->
   <style>
-  /* --- TEXTAREAS NICHT MEHR GEQUETSCHT --- */
-.id-input,
-.id-textarea,
-.id-textarea-long {
-  width: 100%;
-  box-sizing: border-box;
-}
+  :root {
+    --bg-main: #050307;
+    --bg-panel: #120814;
+    --bg-panel-alt: #1b0d24;
+    --bg-header: linear-gradient(135deg, #4a0a2f, #1a0b22);
+    --bg-header-soft: linear-gradient(135deg, #3a071f, #120614);
+    --gold: #d4af37;
+    --gold-bright: #f8e7b0;
+    --gold-soft: rgba(212, 175, 55, 0.55);
+    --gold-shadow: rgba(212, 175, 55, 0.28);
+    --accent-red: #d04646;
+    --accent-purple: #b46cff;
+    --accent-deep: #4a165a;
+    --text-main: #f5efe6;
+    --text-muted: #a6938a;
+    --danger: #ff4b5c;
+    --border-strong: rgba(255, 220, 150, 0.8);
+    --marble-overlay: radial-gradient(circle at top, rgba(120, 40, 160, 0.35), transparent 55%);
+    --font-header: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    --font-body: "Georgia", serif;
+  }
 
-/* Linke Spalte breiter, verhindert Quetschen */
-.top-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 2.2fr) 220px;
-  gap: 18px;
-}
+  * {
+    box-sizing: border-box;
+  }
 
-/* Luftigere Textareas */
-.id-textarea {
-  min-height: 90px;
-  padding: 10px 12px;
-  line-height: 1.45;
-}
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background:
+      var(--marble-overlay),
+      url("dark-marmor-texture.png") center/cover fixed no-repeat,
+      radial-gradient(circle at bottom, #050307 0%, #020107 35%, #000 100%);
+    color: var(--text-main);
+    font-family: var(--font-body);
+  }
 
-.id-textarea-long {
-  min-height: 180px;
-  padding: 12px 14px;
-  line-height: 1.5;
-}
+  body {
+    display: flex;
+    justify-content: center;
+    padding: clamp(8px, 3vw, 16px);
+    align-items: flex-start;
+  }
 
-/* Portrait-Frame stabilisieren */
-.preview-portrait-frame {
-  width: 180px;
-  height: 180px;
-  min-width: 160px;
-  min-height: 160px;
-}
-    :root {
-      --bg-main: #050307;
-      --bg-panel: #120814;
-      --bg-panel-alt: #1b0d24;
-      --bg-header: linear-gradient(135deg, #4a0a2f, #1a0b22);
-      --bg-header-soft: linear-gradient(135deg, #3a071f, #120614);
-      --gold: #d4af37;
-      --gold-bright: #f8e7b0;
-      --gold-soft: rgba(212,175,55,0.55);
-      --text-main: #f5efe6;
-      --text-muted: #a6938a;
-      --accent-purple: #b46cff;
-      --accent-deep: #4a165a;
-      --danger: #ff4b5c;
-      --marble-overlay: radial-gradient(circle at top, rgba(120, 40, 160, 0.35), transparent 55%);
-      --font-header: "Palatino Linotype", "Book Antiqua", Palatino, serif;
-      --font-body: "Georgia", serif;
+  #app-shell {
+    width: 100%;
+    max-width: 950px;
+    background: linear-gradient(145deg, rgba(8,2,12,0.98), rgba(4,1,7,0.98));
+    border-radius: 12px;
+    border: 2px solid var(--gold-soft);
+    box-shadow:
+      0 18px 45px rgba(0,0,0,0.9),
+      0 0 24px rgba(40,0,60,0.65);
+    overflow: hidden;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  header {
+    padding: 14px 16px 10px;
+    background: var(--bg-header);
+    border-bottom: 1px solid var(--gold-soft);
+    position: relative;
+    text-align: center;
+  }
+
+  header h1 {
+    margin: 0;
+    font-family: var(--font-header);
+    color: var(--gold-bright);
+    text-transform: uppercase;
+    letter-spacing: 0.32em;
+    font-size: 16px;
+  }
+
+  #sub-title {
+    margin-top: 4px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--text-muted);
+  }
+
+  #engine-tag {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 10px;
+    color: var(--gold-bright);
+    padding: 2px 8px;
+    border-radius: 999px;
+    border: 1px solid rgba(248,231,176,0.5);
+    background: linear-gradient(135deg, rgba(40,8,40,0.9), rgba(12,3,20,0.9));
+    box-shadow: 0 0 8px rgba(120,0,160,0.6);
+  }
+
+  #page-indicator {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  #content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 12px 8px;
+  }
+
+  .panel {
+    background:
+      linear-gradient(145deg, rgba(26,10,32,0.96), rgba(10,4,16,0.98));
+    border-radius: 10px;
+    border: 1px solid rgba(212,175,55,0.45);
+    box-shadow:
+      inset 0 0 18px rgba(0,0,0,0.7),
+      0 0 10px rgba(60,0,90,0.55);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .panel-header {
+    background: var(--bg-header-soft);
+    padding: 8px 12px;
+    border-bottom: 1px solid rgba(212,175,55,0.4);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .panel-title {
+    font-family: var(--font-header);
+    color: var(--gold-bright);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 11px;
+  }
+
+  .panel-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  .identity-grid {
+    display: grid;
+    grid-template-columns: 190px minmax(0, 1.4fr) 240px;
+    gap: 12px;
+    padding: 10px 12px 12px;
+  }
+
+  @media (max-width: 860px) {
+    .identity-grid {
+      grid-template-columns: 1fr;
     }
+  }
 
-    * { box-sizing: border-box; }
+  .portrait-frame {
+    width: 170px;
+    height: 220px;
+    border-radius: 10px;
+    border: 2px solid rgba(212,175,55,0.7);
+    background:
+      radial-gradient(circle at top, rgba(255,255,255,0.05), transparent 55%),
+      url("stone-noise.png");
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow:
+      inset 0 0 30px rgba(0,0,0,0.8),
+      0 0 16px rgba(0,0,0,0.9);
+    position: relative;
+  }
 
-    html, body {
-      margin: 0;
-      padding: 0;
-      background:
-        var(--marble-overlay),
-        url("dark-marmor-texture.png") center/cover fixed no-repeat,
-        radial-gradient(circle at bottom, #050307 0%, #020107 35%, #000 100%);
-      color: var(--text-main);
-      font-family: var(--font-body);
-      min-height: 100vh;
-    }
+  .portrait-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 
-    body {
-      display: flex;
-      justify-content: center;
-      padding: 16px;
-    }
+  .portrait-placeholder {
+    color: #4b374a;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+  }
 
-    #app-shell {
-      width: 100%;
-      max-width: 950px;
-      background:
-        linear-gradient(145deg, rgba(8,2,12,0.98), rgba(4,1,7,0.98));
-      border-radius: 12px;
-      border: 2px solid var(--gold-soft);
-      box-shadow:
-        0 18px 45px rgba(0,0,0,0.9),
-        0 0 24px rgba(40,0,60,0.65);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      max-height: calc(100vh - 32px);
-    }
+  #upload {
+    width: 100%;
+    margin-top: 8px;
+    font-size: 10px;
+    color: var(--text-muted);
+  }
 
-    header {
-      padding: 14px 16px 10px;
-      background: var(--bg-header);
-      border-bottom: 1px solid var(--gold-soft);
-      position: relative;
-      text-align: center;
-    }
+  .identity-main {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
 
-    header h1 {
-      margin: 0;
-      font-family: var(--font-header);
-      color: var(--gold-bright);
-      text-transform: uppercase;
-      letter-spacing: 0.32em;
-      font-size: 16px;
-    }
+  .name-input {
+    font-size: 18px;
+    padding: 6px 8px;
+    border-radius: 8px;
+    border: 1px solid rgba(248,231,176,0.4);
+    background: rgba(8,4,12,0.9);
+    color: var(--gold-bright);
+    width: 100%;
+    box-shadow: 0 0 10px rgba(120,0,160,0.4);
+  }
 
-    #sub-title {
-      margin-top: 4px;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: var(--text-muted);
-    }
+  .title-input {
+    font-size: 12px;
+    padding: 5px 8px;
+    border-radius: 6px;
+    border: 1px solid rgba(212,175,55,0.35);
+    background: rgba(8,4,12,0.9);
+    color: var(--text-main);
+    width: 100%;
+  }
 
-    #engine-tag {
-      position: absolute;
-      left: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 10px;
-      color: var(--gold-bright);
-      padding: 2px 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(248,231,176,0.5);
-      background: linear-gradient(135deg, rgba(40,8,40,0.9), rgba(12,3,20,0.9));
-      box-shadow: 0 0 8px rgba(120,0,160,0.6);
-    }
+  .name-input:focus,
+  .title-input:focus {
+    outline: none;
+    border-color: var(--accent-purple);
+    box-shadow: 0 0 12px rgba(180,108,255,0.8);
+    background: rgba(18,8,28,0.96);
+  }
 
-    #page-indicator {
-      position: absolute;
-      right: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 11px;
-      color: var(--text-muted);
-    }
-
-    #content {
-      flex: 1;
-      padding: 10px 12px 8px;
-      overflow-y: auto;
-      overflow-x: hidden;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      min-height: 0;
-    }
-
-    .panel {
-      background:
-        linear-gradient(145deg, rgba(26,10,32,0.96), rgba(10,4,16,0.98));
-      border-radius: 10px;
-      border: 1px solid rgba(212,175,55,0.45);
-      box-shadow:
-        inset 0 0 18px rgba(0,0,0,0.7),
-        0 0 10px rgba(60,0,90,0.55);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .panel-header {
-      background: var(--bg-header-soft);
-      padding: 8px 12px;
-      border-bottom: 1px solid rgba(212,175,55,0.4);
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-    }
-
-    .panel-title {
-      font-family: var(--font-header);
-      color: var(--gold-bright);
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      font-size: 11px;
-    }
-
-    .panel-sub {
-      font-size: 11px;
-      color: var(--text-muted);
-    }
-
-    /* GRID oben: linke Spalte jetzt breiter */
-    .top-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 2.1fr) 220px;
-      gap: 16px;
-      padding: 10px 12px 12px;
-    }
-
-    @media (max-width: 820px) {
-      .top-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .id-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6px 12px;
-      font-size: 12px;
-      margin-bottom: 6px;
-    }
-
-    @media (max-width: 640px) {
-      .id-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .id-field {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .id-label {
-      color: var(--text-muted);
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .id-input {
-      border-radius: 6px;
-      border: 1px solid rgba(212,175,55,0.35);
-      background: rgba(8,4,12,0.9);
-      color: var(--text-main);
-      padding: 4px 6px;
-      font-size: 12px;
-    }
-
-    .id-input:focus {
-      outline: none;
-      border-color: var(--accent-purple);
-      box-shadow: 0 0 10px rgba(180,108,255,0.8);
-      background: rgba(18,8,28,0.96);
-    }
-
-    .id-textarea {
-      resize: vertical;
-      min-height: 70px;
-      max-height: 260px;
-      padding: 8px 10px;
-      line-height: 1.35;
-    }
-
-    .id-textarea-long {
-      resize: vertical;
-      min-height: 140px;
-      max-height: 380px;
-      padding: 8px 10px;
-      line-height: 1.35;
-    }
-
-    .id-headline {
-      margin-top: 10px;
-      margin-bottom: 2px;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--gold-bright);
-      border-top: 1px solid rgba(212,175,55,0.3);
-      padding-top: 6px;
-    }
-
-    .preview-card {
-      border-radius: 8px;
-      border: 1px solid rgba(212,175,55,0.4);
-      background:
-        radial-gradient(circle at top, rgba(80,0,80,0.4), transparent 60%),
-        rgba(0,0,0,0.6);
-      padding: 8px;
-      font-size: 12px;
-      box-shadow: 0 0 12px rgba(0,0,0,0.8);
-    }
-
-    .preview-card b {
-      color: var(--gold-bright);
-    }
-
-    .preview-name {
-      font-size: 13px;
-      margin-bottom: 4px;
-    }
-
-    /* Portrait jetzt quadratisch */
-    .preview-portrait-frame {
-      width: 220px;
-      height: 300px;
-      border-radius: 10px;
-      border: 2px solid rgba(212,175,55,0.7);
-      background:
-        radial-gradient(circle at top, rgba(255,255,255,0.05), transparent 55%),
-        url("stone-noise.png");
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      box-shadow:
-        inset 0 0 24px rgba(0,0,0,0.8),
-        0 0 14px rgba(0,0,0,0.9);
-      margin-bottom: 6px;
-    }
-
-    .preview-portrait-frame img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .preview-placeholder {
-      color: #4b374a;
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      text-align: center;
-    }
-
-    .traits-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      padding: 10px 12px 12px;
-      font-size: 12px;
-    }
-
-    @media (max-width: 720px) {
-      .traits-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .traits-col h4 {
-      margin: 0 0 6px;
-      font-family: var(--font-header);
-      color: var(--gold-bright);
-      font-size: 12px;
-      text-align: center;
-      border-bottom: 1px solid rgba(212,175,55,0.3);
-      padding-bottom: 4px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-    }
-
-    .traits-col-inner {
-      display: flex;
-      flex-direction: column;
-      height: 230px;
-      border-radius: 8px;
-      border: 1px solid rgba(212,175,55,0.35);
-      background:
-        radial-gradient(circle at top, rgba(80,0,80,0.25), transparent 60%),
-        rgba(0,0,0,0.6);
-      overflow: hidden;
-    }
-
-    .traits-search-bar {
-      padding: 4px 6px;
-      border-bottom: 1px solid rgba(212,175,55,0.3);
-      background: rgba(10,4,16,0.95);
-      font-size: 11px;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .traits-search-bar input {
-      flex: 1;
-      border-radius: 999px;
-      border: 1px solid rgba(212,175,55,0.4);
-      background: rgba(5,2,10,0.9);
-      color: var(--text-main);
-      padding: 3px 8px;
-      font-size: 11px;
-    }
-
-    .traits-search-bar input:focus {
-      outline: none;
-      border-color: var(--accent-purple);
-      box-shadow: 0 0 8px rgba(180,108,255,0.7);
-    }
-
-    .check-list {
-      flex: 1;
-      overflow-y: auto;
-      padding: 4px 4px 4px 6px;
-      scrollbar-width: thin;
-      scrollbar-color: var(--gold) #000;
-    }
-
-    .trait-item {
-      display: block;
-      padding: 4px 6px;
-      margin-bottom: 3px;
-      border-radius: 6px;
-      background: rgba(0,0,0,0.35);
-      border: 1px solid transparent;
-      cursor: pointer;
-      transition: background 0.15s ease, border 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease, opacity 0.1s ease;
-      font-size: 12px;
-    }
-
-    .trait-item:hover {
-      background: rgba(212,175,55,0.12);
-      border-color: rgba(212,175,55,0.5);
-      box-shadow: 0 0 10px rgba(180,108,255,0.5);
-      transform: translateY(-1px);
-    }
-
-    .trait-item.disabled {
-      opacity: 0.35;
-      cursor: not-allowed;
-      box-shadow: none;
-    }
-
-    .trait-item input {
-      margin-right: 6px;
-    }
-    
-    /* Ritualbereich */
-#orb-ritual-area {
-  width: 100%;
-  height: 300px; /* Höhe B */
+  .identity-summary {
+  margin-top: 10px;
+  font-size: 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(212,175,55,0.35);
+  background:
+    radial-gradient(circle at top, rgba(80,0,80,0.35), transparent 60%),
+    rgba(0,0,0,0.6);
+  padding: 8px 10px;
+  min-height: 160px; /* ← NEU */
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  margin-top: 40px;
-  margin-bottom: 40px;
-  background: #050308;
-}
-
-/* EKG-Null-Linie */
-.flatline {
-  width: 300px;
-  height: 6px;
-  border-radius: 4px;
-  background: #ff0000;
-  box-shadow: 0 0 25px rgba(255,0,0,0.9);
-  animation: ekg-flat 1.2s ease-out infinite;
-}
-
-@keyframes ekg-flat {
-  0% { opacity: 1; }
-  50% { opacity: 0.4; }
-  100% { opacity: 1; }
-}
-
-/* Explosion Flash */
-.flash-explosion {
-  position: absolute;
-  width: 260px;
-  height: 260px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,255,255,1), rgba(150,200,255,0.6), transparent);
-  box-shadow: 0 0 60px rgba(180,220,255,1);
-  animation: flashA 0.45s ease-out forwards;
-  pointer-events: none;
-}
-
-@keyframes flashA {
-  0% { transform: scale(0.2); opacity: 1; }
-  70% { transform: scale(1.4); opacity: 0.9; }
-  100% { transform: scale(2.2); opacity: 0; }
-}
-
-/* Orb versteckt */
-.orb-hidden {
-  display: none;
-}
-
-/* Orb Wrapper */
-.orbit-wrapper {
-  position: relative;
-  width: 180px;
-  height: 180px;
-  display: grid;
-  place-items: center;
-}
-
-/* Orb Core */
-.orbit-core {
-  width: 180px;
-  height: 180px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 40% 30%, #ff2a2a, #6b0000, #1a0000);
-  box-shadow:
-    0 0 35px rgba(255,0,0,0.9),
-    inset 0 0 25px rgba(255,180,180,0.4);
-  animation: heartbeat 1.6s ease-in-out infinite;
-}
-
-/* Heartbeat */
-@keyframes heartbeat {
-  0%   { transform: scale(1); }
-  25%  { transform: scale(1.18); }
-  40%  { transform: scale(0.92); }
-  60%  { transform: scale(1.14); }
-  100% { transform: scale(1); }
-}
-
-/* Erwecken Button */
-.btn-erwecken {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background: #333;
-  border: 1px solid #555;
-  color: #777;
-  border-radius: 6px;
-  cursor: not-allowed;
-}
-
-.btn-erwecken.active {
-  background: #4a8cff;
-  border-color: #8ab4ff;
-  color: white;
-  cursor: pointer;
-  box-shadow: 0 0 12px rgba(120,160,255,0.8);
-}
-
-/* Weiter Button */
-.btn-to-page3 {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background: #d4af37;
-  border: none;
-  color: #1a0f0f;
-  font-weight: bold;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-    .traits-footer {
-      grid-column: 1 / -1;
-      padding: 6px 10px 8px;
-      border-top: 1px solid rgba(212,175,55,0.3);
-      background: rgba(0,0,0,0.45);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 11px;
-    }
-
-    .traits-footer span {
-      color: var(--text-muted);
-    }
-
-    .traits-footer b {
-      color: var(--gold-bright);
-    }
-
-    .btn-reset {
-      padding: 4px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(212,175,55,0.6);
-      background: linear-gradient(135deg, #221427, #0d050f);
-      color: var(--text-muted);
-      font-size: 10px;
-      cursor: pointer;
-    }
-
-    .btn-reset:hover {
-      color: var(--gold-bright);
-      box-shadow: 0 0 10px rgba(160,80,240,0.9);
-    }
-
-    .chronik-grid {
-      display: grid;
-      grid-template-columns: 2fr 1.4fr;
-      gap: 10px;
-      padding: 10px 12px 12px;
-      font-size: 12px;
-    }
-
-    @media (max-width: 860px) {
-      .chronik-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .chronik-text {
-      border-radius: 8px;
-      border: 1px solid rgba(212,175,55,0.4);
-      background:
-        radial-gradient(circle at top, rgba(80,0,80,0.4), transparent 60%),
-        rgba(0,0,0,0.6);
-      padding: 8px 10px;
-      max-height: 260px;
-      overflow-y: auto;
-      scrollbar-width: thin;
-      scrollbar-color: var(--gold) #000;
-    }
-
-    .chronik-text p {
-      margin: 0 0 6px;
-    }
-
-    .chronik-grid-small {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4px 10px;
-      border-top: 1px solid #444;
-      padding-top: 6px;
-      margin-top: 6px;
-      font-size: 11px;
-    }
-
-    .chronik-grid-small span {
-      color: var(--text-muted);
-    }
-
-    .chronik-right {
-      border-radius: 8px;
-      border: 1px solid rgba(212,175,55,0.4);
-      background:
-        radial-gradient(circle at top, rgba(80,0,80,0.4), transparent 60%),
-        rgba(0,0,0,0.6);
-      padding: 8px 10px;
-      display: grid;
-      grid-template-columns: 180px minmax(0, 1fr);
-      gap: 8px;
-      align-items: center;
-    }
-
-    @media (max-width: 720px) {
-      .chronik-right {
-        grid-template-columns: 1fr;
-        text-align: center;
-        justify-items: center;
-      }
-    }
-
-    .chronik-radar-box {
-      width: 180px;
-      height: 180px;
-      border-radius: 10px;
-      border: 1px solid rgba(212,175,55,0.5);
-      background: rgba(0,0,0,0.7);
-      box-shadow:
-        inset 0 0 18px rgba(0,0,0,0.8),
-        0 0 12px rgba(120,0,160,0.8);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    #chronikRadar {
-      width: 180px;
-      height: 180px;
-      display: block;
-    }
-
-    .chronik-abilities {
-      font-size: 11px;
-    }
-
-    .chronik-abilities-title {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--gold-bright);
-      margin-bottom: 4px;
-    }
-
-    .chronik-abilities-row {
-  margin-bottom: 4px;
-}
-
-.chronik-abilities-row b {
-  color: var(--gold-bright);
-}
-
-.chronik-abilities-row span {
-  color: var(--text-main);
-}
-
-/* Explosion Flash */
-#awakening-flash {
-  position: absolute;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,200,80,1), rgba(255,80,0,0.8), rgba(0,0,0,0));
-  opacity: 0;
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  left: 50%;
-  top: 50%;
-}
-
-/* KORREKTE Explosion */
-@keyframes awaken-explosion {
-  0%   { width: 0; height: 0; opacity: 0.9; }
-  40%  { width: 420px; height: 420px; opacity: 1; }
-  100% { width: 180px; height: 180px; opacity: 0; }
-}
-
-/* Erwecken-Button – UNDRA Arcane Gothic */
-.awaken-btn {
-  width: 100%;
-  padding: 14px 18px;
-  margin-top: 20px;
-
-  background: #1a0f1f;            /* dunkles violett-schwarz */
-  border: 1px solid #5a3b7a;      /* metallisch-violetter Rahmen */
-  color: #d8c9ff;                 /* helles mystisches Violett */
-  font-size: 1.1rem;
-  font-weight: 600;
-  letter-spacing: 1px;
-
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.25s ease, border-color 0.25s ease, opacity 0.25s ease;
-}
-
-/* deaktiviert */
-.awaken-btn:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-  border-color: #3a2a4a;
-  color: #8a7a9a;
-}
-
-/* hover (nur wenn aktiv) */
-.awaken-btn:not(:disabled):hover {
-  background: #2a1633;
-  border-color: #8b5cc4;
-}
-@keyframes flamepulse {
-  0%   { box-shadow: 0 0 12px rgba(255,80,0,0.8); }
-  50%  { box-shadow: 0 0 28px rgba(255,150,0,1); }
-  100% { box-shadow: 0 0 12px rgba(255,80,0,0.8); }
-}
-
-/* Footer */
-footer {
-  padding: 8px 10px;
-  border-top: 1px solid var(--gold-soft);
-  background: linear-gradient(180deg, rgba(10,2,14,0.9), rgba(4,0,8,0.98));
-  display: flex;
-  align-items: center;
   justify-content: space-between;
-  gap: 8px;
-  font-size: 11px;
 }
 
-.footer-left,
-.footer-right {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  .identity-summary b {
+    color: var(--gold-bright);
+  }
+
+  .identity-summary-label {
+    color: var(--text-muted);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+    text-align: center; /* ← NEU */
 }
 
-    .footer-center {
-      display: flex;
-      justify-content: center;
-      flex: 1;
-      text-align: center;
-      color: var(--text-muted);
-    }
+  .radar-box {
+    background: rgba(0,0,0,0.55);
+    border-radius: 10px;
+    border: 1px solid rgba(212,175,55,0.35);
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow:
+      inset 0 0 20px rgba(0,0,0,0.9),
+      0 0 10px rgba(100,0,140,0.6);
+  }
 
-    .footer-center span {
-      color: var(--gold-bright);
-      font-weight: 700;
-    }
+  #radarCanvas {
+    width: 220px;
+    height: 220px;
+    display: block;
+  }
 
-    .btn-main {
-      padding: 6px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(212,175,55,0.7);
-      background: linear-gradient(135deg, #4a0a2f, #1a0b22);
-      color: #fff;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      box-shadow: 0 0 12px rgba(180,0,60,0.7);
-      text-shadow: 0 0 6px rgba(0,0,0,0.9);
-      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, opacity 0.15s ease;
-      white-space: nowrap;
-    }
+  .attr-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 20px;
+    padding: 10px 12px 8px;
+  }
 
-    .btn-main:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 0 16px rgba(255,215,120,0.9);
-      background: linear-gradient(135deg, #7d1638, #2a1034);
+  @media (max-width: 720px) {
+    .attr-grid {
+      grid-template-columns: 1fr;
     }
+  }
 
-    .btn-main:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-      box-shadow: none;
+  .attr-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) auto 40px auto;
+    gap: 6px;
+    align-items: center;
+    font-size: 12px;
+    padding: 3px 4px;
+    border-bottom: 1px solid rgba(212,175,55,0.1);
+  }
+
+  .attr-name {
+    color: var(--text-main);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .val-box {
+    background: #000;
+    border-radius: 4px;
+    border: 1px solid rgba(248,231,176,0.5);
+    color: var(--gold-bright);
+    font-weight: bold;
+    text-align: center;
+    padding: 3px 0;
+    font-size: 12px;
+    box-shadow: 0 0 8px rgba(255,220,150,0.4);
+  }
+
+  .btn-step {
+    width: 22px;
+    height: 22px;
+    border-radius: 999px;
+    border: 1px solid rgba(212,175,55,0.4);
+    background: radial-gradient(circle at 30% 0%, #5b0d2a, #120612);
+    color: var(--gold-bright);
+    font-size: 11px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: box-shadow 0.15s ease, transform 0.15s ease, background 0.15s ease, opacity 0.15s ease;
+  }
+
+  .btn-step:hover {
+    box-shadow: 0 0 10px rgba(212,175,55,0.7);
+    transform: translateY(-1px);
+    background: radial-gradient(circle at 30% 0%, #7d1638, #1a0714);
+  }
+
+  .btn-step.disabled {
+    opacity: 0.25;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  .btn-plus {
+    background: radial-gradient(circle at 30% 0%, #4a165a, #14071a);
+  }
+
+  .btn-plus.glow {
+    box-shadow: 0 0 12px rgba(180,108,255,0.9);
+    border-color: rgba(248,231,176,0.8);
+  }
+
+  .origin-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1.1fr 1.1fr;
+    gap: 2px;
+    background: var(--gold);
+    border-top: 1px solid var(--gold-soft);
+    border-bottom: 1px solid var(--gold-soft);
+  }
+
+  @media (max-width: 860px) {
+    .origin-grid {
+      grid-template-columns: 1fr;
     }
+  }
 
-    .btn-ghost {
-      background: linear-gradient(135deg, #241329, #100613);
-      color: var(--text-muted);
-      box-shadow: 0 0 8px rgba(0,0,0,0.8);
-    }
+  .origin-col {
+    background:
+      radial-gradient(circle at top, rgba(50,10,50,0.85), rgba(12,4,16,0.95));
+    padding: 8px 8px 6px;
+    max-height: 360px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--gold) #000;
+  }
 
-    .btn-ghost:hover {
-      box-shadow: 0 0 12px rgba(160,100,240,0.7);
-      color: var(--gold-bright);
-    }
+  .origin-col h4 {
+    margin: 0 0 6px;
+    font-family: var(--font-header);
+    color: var(--gold-bright);
+    font-size: 12px;
+    text-align: center;
+    border-bottom: 1px solid rgba(212,175,55,0.3);
+    padding-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+  }
 
-    #transient-msg {
-      position: fixed;
-      left: 50%;
-      bottom: 20px;
-      transform: translateX(-50%);
-      background: linear-gradient(135deg, #2a102f, #130814);
-      color: var(--gold-bright);
-      padding: 6px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(212,175,55,0.6);
-      box-shadow: 0 0 18px rgba(0,0,0,0.9);
-      font-size: 11px;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.2s ease;
-      z-index: 2000;
-    }
+  .check-item {
+    display: block;
+    padding: 4px 6px;
+    cursor: pointer;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    margin-bottom: 3px;
+    font-size: 12px;
+    color: var(--text-main);
+    background: rgba(0,0,0,0.35);
+    transition: background 0.15s ease, border 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease;
+  }
 
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.88);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 1500;
-      backdrop-filter: blur(4px);
-    }
+  .check-item:hover {
+    background: rgba(212,175,55,0.12);
+    border-color: rgba(212,175,55,0.5);
+    box-shadow: 0 0 10px rgba(180,108,255,0.5);
+    transform: translateY(-1px);
+  }
 
-    .modal-box {
-      width: 320px;
-      max-width: calc(100% - 40px);
-      background:
-        linear-gradient(145deg, rgba(16,6,26,0.98), rgba(6,2,12,0.98));
-      border: 2px solid rgba(212,175,55,0.7);
-      border-radius: 12px;
-      padding: 18px 18px 14px;
-      box-shadow:
-        0 18px 40px rgba(0,0,0,0.9),
-        0 0 28px rgba(160,80,240,0.8);
-      text-align: center;
-    }
+  .check-item.active {
+    background: radial-gradient(circle at top, #7d1638, #180308);
+    border-color: var(--border-strong);
+    box-shadow: 0 0 12px rgba(255,215,120,0.7);
+  }
 
-    .modal-title {
-      font-family: var(--font-header);
-      color: var(--gold-bright);
+  footer {
+    padding: 8px 10px;
+    border-top: 1px solid var(--gold-soft);
+    background: linear-gradient(180deg, rgba(10,2,14,0.9), rgba(4,0,8,0.98));
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 11px;
+  }
+
+  .footer-left,
+  .footer-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .footer-center {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+  }
+
+  .btn-main {
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(212,175,55,0.7);
+    background: linear-gradient(135deg, #4a0a2f, #1a0b22);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 0 12px rgba(180,0,60,0.7);
+    text-shadow: 0 0 6px rgba(0,0,0,0.9);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, opacity 0.15s ease;
+    white-space: nowrap;
+  }
+
+  .btn-main:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 16px rgba(255,215,120,0.9);
+    background: linear-gradient(135deg, #7d1638, #2a1034);
+  }
+
+  .btn-main:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  .btn-ghost {
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(212,175,55,0.4);
+    background: linear-gradient(135deg, #241329, #100613);
+    color: var(--text-muted);
+    font-size: 11px;
+    cursor: pointer;
+    box-shadow: 0 0 8px rgba(0,0,0,0.8);
+  }
+
+  .btn-ghost:hover {
+    box-shadow: 0 0 12px rgba(160,100,240,0.7);
+    color: var(--gold-bright);
+  }
+
+  .footer-info {
+    color: var(--text-muted);
+  }
+
+  .footer-info span {
+    color: var(--gold-bright);
+    font-weight: 700;
+  }
+
+  .attr-footer {
+    padding: 8px 10px 10px;
+    border-top: 1px solid rgba(212,175,55,0.25);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    background: rgba(0,0,0,0.45);
+  }
+
+  .pool-label {
+    color: var(--text-muted);
+  }
+
+  .pool-value {
+    color: var(--gold-bright);
+    font-weight: bold;
+    margin-left: 4px;
+  }
+
+  .btn-roll {
+    padding: 5px 10px;
+    font-size: 11px;
+    border-radius: 999px;
+    border: 1px solid rgba(248,231,176,0.7);
+    background: radial-gradient(circle at 30% 0%, #7d1638, #26030a);
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(255,120,120,0.8);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+  }
+
+  .btn-roll:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 14px rgba(255,200,160,0.9);
+    background: radial-gradient(circle at 30% 0%, #a01d44, #3a050e);
+  }
+
+  .btn-roll:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  #transient-msg {
+    position: fixed;
+    left: 50%;
+    bottom: 20px;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #2a102f, #130814);
+    color: var(--gold-bright);
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(212,175,55,0.6);
+    box-shadow: 0 0 18px rgba(0,0,0,0.9);
+    font-size: 11px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 2000;
+  }
+
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.88);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1500;
+    backdrop-filter: blur(4px);
+  }
+
+  .modal-box {
+    width: 320px;
+    max-width: calc(100% - 40px);
+    background:
+      linear-gradient(145deg, rgba(16,6,26,0.98), rgba(6,2,12,0.98));
+    border: 2px solid rgba(212,175,55,0.7);
+    border-radius: 12px;
+    padding: 18px 18px 14px;
+    box-shadow:
+      0 18px 40px rgba(0,0,0,0.9),
+      0 0 28px rgba(160,80,240,0.8);
+    text-align: center;
+  }
+
+  .modal-title {
+    font-family: var(--font-header);
+    color: var(--gold-bright);
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    margin-bottom: 8px;
+  }
+
+  .modal-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+
+  .slot-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+
+  .slot-btn {
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(212,175,55,0.6);
+    background: radial-gradient(circle at 30% 0%, #4a165a, #150714);
+    color: var(--text-main);
+    cursor: pointer;
+    font-size: 11px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    transition: box-shadow 0.15s ease, transform 0.1s ease, background 0.15s ease;
+  }
+
+  .slot-btn:hover {
+    box-shadow: 0 0 14px rgba(248,231,176,0.9);
+    transform: translateY(-1px);
+    background: radial-gradient(circle at 30% 0%, #7f2a9f, #1e081f);
+  }
+
+  .slot-name {
+    font-weight: 600;
+    color: var(--gold-bright);
+  }
+
+  .slot-meta {
+    font-size: 10px;
+    color: var(--text-muted);
+  }
+
+  .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 4px;
+  }
+
+  .btn-small {
+    padding: 4px 10px;
+    font-size: 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(212,175,55,0.6);
+    background: linear-gradient(135deg, #221427, #0d050f);
+    color: var(--text-muted);
+    cursor: pointer;
+  }
+
+  .btn-small:hover {
+    color: var(--gold-bright);
+    box-shadow: 0 0 10px rgba(160,80,240,0.9);
+  }
+
+  @media (max-width: 720px) {
+    header h1 {
       font-size: 14px;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      margin-bottom: 8px;
+      letter-spacing: 0.24em;
     }
-
-    .modal-sub {
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-bottom: 12px;
+    #engine-tag {
+      display: none;
     }
-
-    .modal-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 8px;
-      margin-top: 4px;
-    }
-
-    .btn-small {
-      padding: 4px 10px;
-      font-size: 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(212,175,55,0.6);
-      background: linear-gradient(135deg, #221427, #0d050f);
-      color: var(--text-muted);
-      cursor: pointer;
-    }
-
-    .btn-small:hover {
-      color: var(--gold-bright);
-      box-shadow: 0 0 10px rgba(160,80,240,0.9);
-    }
+  }
   </style>
 </head>
+
 <body>
 <div id="app-shell">
   <header>
-    <div id="engine-tag">UNDRA‑ENGINE v2.0Beta</div>
-    <h1>Identität & Chronik</h1>
-    <div id="sub-title">Seite 2 – Merkmale, Geschichte, Schwächen</div>
-    <div id="page-indicator">Seite 2 von 3</div>
+    <div id="engine-tag">UNDRA‑ENGINE v2.0beta</div>
+    <h1>Ursprung & Blutlinien</h1>
+    <div id="sub-title">Genesis des Heldencharakters</div>
+    <div id="page-indicator">Seite 1 von 3</div>
   </header>
 
   <div id="content">
-    <!-- PANEL 1: Identität -->
+    <!-- PANEL 1: Portrait + Basisdaten + Radar -->
     <div class="panel">
       <div class="panel-header">
-        <div class="panel-title">Körperliche Merkmale & Präsentation</div>
-        <div class="panel-sub" id="header-sub-data">Lädt Charakterdaten...</div>
+        <div class="panel-title">Essenz & Antlitz</div>
+        <div class="panel-sub" id="hero-preview-sub">Noch ungeschrieben</div>
       </div>
-      <div class="top-grid">
-        <!-- Linke Seite -->
+
+      <div class="identity-grid">
+        <!-- Portrait -->
         <div>
-          <div class="id-grid">
-            <div class="id-field">
-              <span class="id-label">Alter</span>
-              <input type="text" class="id-input" id="id-age">
-            </div>
-            <div class="id-field">
-              <span class="id-label">Größe</span>
-              <input type="text" class="id-input" id="id-height">
-            </div>
-            <div class="id-field">
-              <span class="id-label">Gewicht</span>
-              <input type="text" class="id-input" id="id-weight">
-            </div>
-            <div class="id-field">
-              <span class="id-label">Augenfarbe</span>
-              <input type="text" class="id-input" id="id-eyes">
-            </div>
-            <div class="id-field">
-              <span class="id-label">Haarfarbe</span>
-              <input type="text" class="id-input" id="id-hair">
-            </div>
-            <div class="id-field">
-              <span class="id-label">Stimme</span>
-              <input type="text" class="id-input" id="id-voice">
-            </div>
-            <div class="id-field">
-              <span class="id-label">Kleidung / Rüstung</span>
-              <input type="text" class="id-input" id="id-clothes">
-            </div>
-            <div class="id-field">
-              <span class="id-label">Besondere Merkmale</span>
-              <input type="text" class="id-input" id="id-specialmarks">
-            </div>
+          <div class="portrait-frame">
+            <img id="preview" src="" alt="" style="display:none;">
+            <div id="placeholder" class="portrait-placeholder">PORTRAIT</div>
           </div>
-
-          <div class="id-headline">Kurzbeschreibung</div>
-          <textarea id="id-shortdesc" class="id-input id-textarea"
-                    placeholder="Eine knappe, prägnante Beschreibung, wie dein Charakter wahrgenommen wird."></textarea>
-
-          <div class="id-headline">Hintergrund / Vorgeschichte</div>
-          <textarea id="id-story" class="id-input id-textarea-long"
-                    placeholder="Hier kannst du die Geschichte, Herkunft, Wendepunkte und inneren Konflikte deines Charakters festhalten."></textarea>
+          <input type="file" id="upload" accept="image/*">
         </div>
 
-        <!-- Rechte Seite: Portrait + Zusammenfassung -->
-        <div>
-          <div class="preview-portrait-frame">
-            <img id="preview" src="" alt="" style="display:none;">
-            <div id="placeholder" class="preview-placeholder">PORTRAIT AUS SEITE 1</div>
-          </div>
-          <div class="preview-card" style="margin-top:6px;">
-            <div class="preview-name" id="preview-name-line">Namenlos – ohne Titel</div>
-            <div style="margin-bottom:4px;">
-              <b>Volk:</b> <span id="preview-race">–</span><br>
-              <b>Profession:</b> <span id="preview-prof">–</span><br>
-              <b>Gabe:</b> <span id="preview-spec" style="font-style:italic;">–</span>
+        <!-- Name / Titel / Zusammenfassung -->
+        <div class="identity-main">
+          <input type="text" id="in-name" class="name-input" placeholder="Name des Helden">
+          <input type="text" id="in-titel" class="title-input" placeholder="Zusatz / Titel (optional)">
+
+          <div class="identity-summary">
+            <div class="identity-summary-label">Vorschau</div>
+            <div>
+              <b id="sum-name">Namenlos</b>
+              <span id="sum-title">ohne Titel</span>
             </div>
             <div style="margin-top:4px;">
-              <span style="color:var(--text-muted); font-size:11px;">Kurzbeschreibung:</span><br>
-              <span id="preview-shortdesc" style="font-size:11px;">Noch keine Beschreibung vergeben.</span>
+              <b>Volk:</b> <span id="s-race">–</span>
+              <span id="s-sub-wrap" style="display:none;">(<span id="s-sub"></span>)</span><br>
+              <b>Profession:</b> <span id="s-prof">–</span><br>
+              <b>Besondere Gabe:</b>
+              <span id="s-spec" style="font-style:italic; color:var(--gold-bright);">
+                Wähle Rasse &amp; Beruf, um eine Gabe zu erhalten...
+              </span>
             </div>
           </div>
+        </div>
+
+        <!-- Radar -->
+        <div class="radar-box">
+          <canvas id="radarCanvas" width="220" height="220"></canvas>
         </div>
       </div>
     </div>
 
-    <!-- PANEL 2: Vorteile & Nachteile -->
+    <!-- PANEL 2: Attribute -->
     <div class="panel">
       <div class="panel-header">
-        <div class="panel-title">Charakterzüge</div>
-        <div class="panel-sub">
-          Wähle genau 2 Vorteile und 3 Nachteile. Ohne diese Auswahl kann die Seite nicht abgeschlossen werden.
-        </div>
+        <div class="panel-title">Basisattribute</div>
+        <div class="panel-sub">Punkte verteilen – Maximum 10 je Attribut</div>
       </div>
-      <div class="traits-grid">
-        <div class="traits-col">
-          <h4>Vorteile</h4>
-          <div class="traits-col-inner">
-            <div class="traits-search-bar">
-              <span>Suche:</span>
-              <input type="text" id="search-adv" placeholder="Vorteile durchsuchen...">
-            </div>
-            <div id="adv-list" class="check-list"></div>
-          </div>
-        </div>
-        <div class="traits-col">
-          <h4>Nachteile</h4>
-          <div class="traits-col-inner">
-            <div class="traits-search-bar">
-              <span>Suche:</span>
-              <input type="text" id="search-dis" placeholder="Nachteile durchsuchen...">
-            </div>
-            <div id="dis-list" class="check-list"></div>
-          </div>
-        </div>
-      </div>
-      <div class="traits-footer">
+
+      <div id="attr-grid-s1" class="attr-grid"></div>
+
+      <div class="attr-footer">
         <div>
-          <span>Vorteile: <b id="count-adv">0</b> / 2</span> •
-          <span>Nachteile: <b id="count-dis">0</b> / 3</span>
+          <span class="pool-label">Punktepool:</span>
+          <span class="pool-value" id="p-total">0</span>
+          <span class="pool-label">• Verteilte Punkte:</span>
+          <span class="pool-value" id="p-used">0</span>
+          <span class="pool-label">• Rest:</span>
+          <span class="pool-value" id="p-left">0</span>
         </div>
-        <button class="btn-reset" id="btn-reset-traits">Auswahl zurücksetzen</button>
+        <button class="btn-roll" id="roll-btn">Punkte auswürfeln</button>
       </div>
     </div>
 
-    <!-- PANEL 3: Chronik-Vorschau -->
+    <!-- PANEL 3: Herkunft -->
     <div class="panel">
       <div class="panel-header">
-        <div class="panel-title">Chronik – Auszug</div>
-        <div class="panel-sub">Automatisch erzeugte Zusammenfassung deiner Daten und Züge.</div>
+        <div class="panel-title">Herkunft & Berufung</div>
+        <div class="panel-sub">Rasse • Untergruppe • Profession</div>
       </div>
-      <div class="chronik-grid">
-        <div class="chronik-text">
-          <div id="chronik-text-block">
-            <p>Es wurden noch nicht genügend Daten erfasst, um eine Chronik zu erzeugen.</p>
-          </div>
+
+      <div class="origin-grid">
+        <div class="origin-col">
+          <h4>Rassen</h4>
+          <div id="race-list"></div>
         </div>
-        <div class="chronik-right">
-          <div class="chronik-radar-box">
-            <canvas id="chronikRadar" width="180" height="180"></canvas>
-          </div>
-          <div class="chronik-abilities">
-            <div class="chronik-abilities-title">Erwachte Fähigkeiten</div>
-            <div class="chronik-abilities-row">
-              <b>Rassenfähigkeit:</b><br>
-              <span id="ability-race">–</span>
-            </div>
-            <div class="chronik-abilities-row">
-              <b>Untergruppen-Fähigkeit:</b><br>
-              <span id="ability-sub">–</span>
-            </div>
-            <div class="chronik-abilities-row">
-              <b>Attributbonus +1:</b><br>
-              <span id="ability-attr">–</span>
-            </div>
-          </div>
+        <div class="origin-col">
+          <h4>Untergruppen</h4>
+          <div id="sub-list"></div>
+        </div>
+        <div class="origin-col">
+          <h4>Professionen</h4>
+          <div id="prof-list"></div>
         </div>
       </div>
     </div>
   </div>
-  
-  <!-- ORB-RITUAL-BEREICH -->
-<div id="orb-ritual-area">
-  
-  <!-- Startzustand: EKG-Null-Linie -->
-  <div id="orb-flatline" class="flatline"></div>
-
-  <!-- Orb-Container (unsichtbar bis Erweckung) -->
-  <div id="orb-container" class="orb-hidden">
-    <div class="orbit-wrapper">
-      <div class="orbit-core"></div>
-    </div>
-  </div>
-
-  <!-- Erwecken-Button -->
-  <button id="btn-erwecken" class="btn-erwecken" disabled>Erwecken</button>
-
-  <!-- Weiter-Button (unsichtbar bis Ritual abgeschlossen) -->
-  <button id="btn-to-page3" class="btn-to-page3" style="display:none;">Weiter zu Seite 3</button>
-
-</div>
 
   <!-- FOOTER -->
   <footer>
     <div class="footer-left">
-      <button class="btn-main" id="btn-refresh" onclick="übernehmenSeite2()">Werte übernehmen</button>
+      <button class="btn-ghost" id="btn-cloud-load">Cloud-Charakter laden</button>
     </div>
+
     <div class="footer-center">
-      Identität & Chronik – <span>UNDRA‑ENGINE v2.0beta</span>
+      <div class="footer-info">
+        Attributspiegel – <span>UNDRA‑ENGINE v2.0beta</span>
+      </div>
     </div>
+
     <div class="footer-right">
-      <button class="btn-main" id="btn-next">Weiter zur Spieloberfläche</button>
+      <button class="btn-ghost" id="btn-cloud-save">Cloud speichern</button>
+      <button class="btn-main" id="btn-next">Weiter</button>
     </div>
   </footer>
+</div>
 
-  <!-- TRANSIENT MSG -->
-  <div id="transient-msg"></div>
+<!-- TRANSIENT MESSAGE -->
+<div id="transient-msg"></div>
 
-  <!-- MODAL: Seite 2 verlassen -->
-  <div id="leave-modal" class="modal-overlay">
-    <div class="modal-box">
-      <div class="modal-title">Auswahl bestätigen</div>
-      <div class="modal-sub">
-        Bist du mit deiner Identität & Chronik zufrieden?<br>
-        Die getroffenen Entscheidungen werden als Grundlage für das Dashboard übernommen.
-      </div>
-      <div style="text-align:left; font-size:11px; margin:8px 0 10px;">
-        <b>Aktuelle Zusammenfassung:</b><br>
-        <span id="leave-summary" style="color:var(--gold-bright);"></span>
-      </div>
-      <div class="modal-actions">
-        <button class="btn-small" id="btn-leave-cancel">Zurück</button>
-        <button class="btn-small" id="btn-leave-confirm" style="color:#f8e7b0;">Ja, weiter zum Dashboard</button>
-      </div>
+<!-- MODAL: LOAD SLOTS -->
+<div id="load-modal" class="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-title">Charakter laden</div>
+    <div class="modal-sub">
+      Wähle einen UNDRA‑Slot. Nach dem Laden gelangst du direkt zum Dashboard (Seite 3).
+    </div>
+    <div class="slot-row">
+      <button class="slot-btn" data-slot="1">
+        <div>
+          <div class="slot-name" id="slot1-name">Slot 1 – leer</div>
+          <div class="slot-meta" id="slot1-meta">Noch kein Charakter gespeichert.</div>
+        </div>
+        <div>▶</div>
+      </button>
+      <button class="slot-btn" data-slot="2">
+        <div>
+          <div class="slot-name" id="slot2-name">Slot 2 – leer</div>
+          <div class="slot-meta" id="slot2-meta">Noch kein Charakter gespeichert.</div>
+        </div>
+        <div>▶</div>
+      </button>
+      <button class="slot-btn" data-slot="3">
+        <div>
+          <div class="slot-name" id="slot3-name">Slot 3 – leer</div>
+          <div class="slot-meta" id="slot3-meta">Noch kein Charakter gespeichert.</div>
+        </div>
+        <div>▶</div>
+      </button>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-small" id="btn-close-load">Schließen</button>
     </div>
   </div>
 </div>
 
-<script>
-/* ---------- KEYS ---------- */
-const KEY_CHAR = "undra15_character";
-const KEY_ID   = "undra15_identity";
-const KEY_DASH = "undra15_dashboard";
+<!-- MODAL: Profession bestätigen & Fähigkeiten wählen -->
+<div id="profession-modal" class="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-title">Berufung bestätigen</div>
+    <div class="modal-sub">
+      Wähle je eine Fähigkeit für Volk und Untergruppe.<br>
+      Die dritte Wahl gewährt dir einen <b>Attributbonus +1</b>.
+    </div>
 
-/* ---------- ATTRIBUTES (für Radar) ---------- */
+    <div style="text-align:left; font-size:11px; margin-bottom:10px;">
+      <div style="margin-bottom:6px;">
+        <b>Rassenfähigkeit:</b><br>
+        <input type="text" id="race-ability-input"
+               placeholder="z.B. Nachtsicht, Zähes Blut..."
+               style="width:100%; margin-top:3px; padding:4px; border-radius:6px;
+                      border:1px solid rgba(212,175,55,0.6); background:rgba(10,4,16,0.9); color:#f5efe6;">
+      </div>
+
+      <div style="margin-bottom:6px;">
+        <b>Untergruppen-Fähigkeit:</b><br>
+        <input type="text" id="sub-ability-input"
+               placeholder="z.B. Waldläufer-Trieb, Wüsteninstinkt..."
+               style="width:100%; margin-top:3px; padding:4px; border-radius:6px;
+                      border:1px solid rgba(212,175,55,0.6); background:rgba(10,4,16,0.9); color:#f5efe6;">
+      </div>
+
+      <div>
+        <b>Attributbonus +1:</b><br>
+        <select id="attr-bonus-select"
+                style="width:100%; margin-top:3px; padding:4px; border-radius:6px;
+                       border:1px solid rgba(212,175,55,0.6); background:rgba(10,4,16,0.9); color:#f5efe6;">
+          <option value="">Bitte Attribut wählen...</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-small" id="btn-prof-cancel">Zurück</button>
+      <button class="btn-small" id="btn-prof-confirm" style="color:#f8e7b0;">Bestätigen</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Seite 1 verlassen -->
+<div id="leave-modal" class="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-title">Auswahl bestätigen</div>
+    <div class="modal-sub">
+      Bist du mit deiner Auswahl auf dieser Seite zufrieden?<br>
+      Name, Rasse(n), Untergruppe, Profession und Attribute werden als Grundlage versiegelt.
+    </div>
+    <div style="text-align:left; font-size:11px; margin:8px 0 10px;">
+      <b>Aktuelle Zusammenfassung:</b><br>
+      <span id="leave-summary" style="color:var(--gold-bright);"></span>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-small" id="btn-leave-cancel">Zurück</button>
+      <button class="btn-small" id="btn-leave-confirm" style="color:#f8e7b0;">Ja, weiter und speichern</button>
+    </div>
+  </div>
+</div>
+
+<!-- BLOCK 1: Konstanten, State, globale DOM-Referenzen, Helfer -->
+<script>
+/* ---------- KONSTANTEN & DATEN ---------- */
 const ATTRIBUTES = [
   "Mut","Intelligenz","Fingerfertigkeit","Gewandtheit","Körperkraft",
   "Körperbewusstsein","Konstitution","Charisma","Sozialstatus",
@@ -1139,172 +929,131 @@ const ATTR_SHORT = [
   "FK","TC","TE"
 ];
 
-/* ---------- TRAIT POOLS ---------- */
-const advPool = [
-  "Anpassungsfähig", "Astralsinn", "Ausdauernd", "Balancegefühl", "Baumeisterblick",
-  "Blick für Details", "Diplomatisch", "Dunkelwahrnehmung", "Durchhaltewille",
-  "Energiespürer", "Einfühlsam", "Erinnerungsstark", "Feinmechanik", "Feinsinn",
-  "Fleißig", "Fokusreserve", "Gefahreninstinkt", "Geländekenner", "Geschickte Hände",
-  "Glücksgriff", "Harmoniesinn", "Hartnäckig", "Hitzetolerant", "Humorvoll",
-  "Improvisationstalent", "Improvisationsmut", "Inspirierend", "Intuitiv",
-  "Kälteresistent", "Knotenmeister", "Kraftfokus", "Kreativ", "Lagermeister",
-  "Lernfähig", "Leichtfüßig", "Logikdenker", "Manafluss‑Stabilität",
-  "Materialkenntnis", "Mentale Stabilität", "Mustererkennung", "Naturverbunden",
-  "Nachtaktiv", "Orientierungssinn", "Pflanzenkenntnis", "Präzisionsarbeit",
-  "Präzisionsgriff", "Redegewandt", "Runenverständnis", "Ritualgefühl",
-  "Ruhe in Gefahr", "Ruhepol", "Scharfes Gehör", "Schnelle Auffassung",
-  "Schneller Griff", "Schnellpacker", "Schmerzresistenz", "Selbstbeherrschung",
-  "Schildgefühl", "Schlafreduziert", "Spureninstinkt", "Spurenleser",
-  "Stabiler Stand", "Symbolkenntnis", "Taktisches Denken", "Tiervertraut",
-  "Trittsicher", "Verhandlungsgeschick", "Vertrauenswürdig", "Waffenkenntnis",
-  "Wasservertraut", "Weitblick", "Wettergefühl", "Willensstark", "Werkzeuggefühl",
-  "Zähes Leben", "Zielstrebig", "Zauberdisziplin", "Geistige Offenheit",
-  "Orientierung im Dunkeln", "Pfadfinder", "Sammlerblick", "Ausweichreflex",
-  "Trefferinstinkt", "Kampfintuition", "Taktgefühl", "Geduld", "Zäher Körper",
-  "Gelenkig", "Schnellreaktion", "Hitzeschutz", "Kälteschutz", "Dursttoleranz",
-  "Hungertoleranz"
-  // … Rest wie gehabt …
-];
-
-const disPool = [
-  "Astralblind", "Ausweichschwach", "Baumeisterblind", "Chaotischer Geist",
-  "Disharmonie", "Durstanfällig", "Empathielos", "Energieschwäche", "Faul",
-  "Geringe Belastbarkeit", "Geräuschempfindlich", "Geländeunsicher",
-  "Geistige Blockade", "Grobehändig", "Grobmotorischer Sinn", "Hitzeanfällig",
-  "Hungeranfällig", "Ideenlos", "Impulsiv", "Jähzornig", "Kälteanfällig",
-  "Knotenprobleme", "Kurzsichtig", "Langsame Auffassung", "Langsamer Griff",
-  "Langsame Reaktion", "Lernschwach", "Lichtempfindlich", "Materialblind",
-  "Mentale Instabilität", "Misstrauisch", "Nachtblind", "Naturfremd", "Nervös",
-  "Nachlässig", "Orientierungslos", "Panik in Gefahr", "Pechvogel",
-  "Pflanzenunkenntnis", "Reparaturschwach", "Runenblind", "Ritualunsicherheit",
-  "Schlafbedürftig", "Schlechte Ausweichreaktion", "Schlechte Kampfintuition",
-  "Schlechte Menschenkenntnis", "Schlechte Mustererkennung",
-  "Schlechte Spurenlesung", "Schlechte Waffenführung", "Schmerzempfindlich",
-  "Schwache Ausdauer", "Schwache Fokusreserve", "Schwache Orientierung",
-  "Schwacher Stand", "Schwerfällig", "Schwerhörig", "Spurenblind", "Steif",
-  "Symbolblind", "Taktlos", "Tierfurcht", "Übermut", "Übervorsichtig",
-  "Ungeduldig", "Ungeschickte Hände", "Unhöflich", "Unkonzentriert",
-  "Unorganisiert", "Unpräziser Griff", "Unüberzeugend", "Unsicherer Stand",
-  "Unaufmerksam", "Vergesslich", "Verwirrbar", "Waffenunsicher",
-  "Wackliger Stand", "Wasserfurcht", "Wetterempfindlich", "Willensschwach",
-  "Zerbrechlich", "Ziellos", "Schwindelanfällig", "Geräuschüberempfindlich",
-  "Schwache Improvisation", "Schwache Technikkenntnis", "Schwache Logik",
-  "Schwache Intuition", "Schwache Wahrnehmung", "Schwache Motorik",
-  "Schwache Konzentration", "Schwache Reaktion", "Schwache Präzision",
-  "Schwache Koordination", "Schwache Stabilität", "Schwache Resistenz",
-  "Schwache Willenskraft"
-  // … Rest wie gehabt …
-];
-
-/* ---------- STATE ---------- */
-let char = null;
-let identity = {
-  age: "",
-  height: "",
-  weight: "",
-  eyes: "",
-  hair: "",
-  voice: "",
-  clothes: "",
-  specialmarks: "",
-  shortdesc: "",
-  story: "",
-  adv: [],
-  dis: []
+const ORIGIN_DATA = {
+  "Mensch": { subs: ["Mittelländer", "Tulamiden", "Thorwaler"], profs: ["Ritter", "Dieb", "Händler", "Feuermagier", "Druide"] },
+  "Elf": { subs: ["Hochelf", "Waldelf", "Dunkelelf"], profs: ["Wildnisläufer", "Necromant", "Druide", "Sänger"] },
+  "Zwerg": { subs: ["Ambosszwerg", "Erzzwerg"], profs: ["Waffenschmied", "Bergmann"] },
+  "Ork": { subs: ["Schwarzpelz", "Zholochai"], profs: ["Krieger", "Schamane"] },
+  "Halbling": { subs: ["Auen-Halbling","Stadt-Halbling","Wald-Halbling"], profs: ["Späher","Dieb","Koch","Barde","Fernkämpfer"] },
+  "Gnom": { subs: ["Felsgnom","Waldgnom","Tüftlergnom"], profs: ["Illusionist","Alchemist","Tüftler","Mechanikus","Trickser"] },
+  "Troll": { subs: ["Bergtroll","Höhlentroll","Flusstroll","Felsentroll"], profs: ["Berserker","Schamane","Steinwerfer","Stammeskrieger"] },
+  "Goblin": { subs: ["Rotpelz","Stadtgoblin","Wildgoblin","Sumpfgoblin"], profs: ["Kundschafter","Dieb","Hexer","Speerträger","Saboteur"] },
+  "Drachengeborener": { subs: ["Flammenbrut","Frostschuppe","Sturmgeboren","Säureschuppe"], profs: ["Krieger","Kampfmagier","Paladin","Drachendisciple"] },
+  "Echsenmensch": { subs: ["Sumpfechse","Wüstenechse","Dschungelbrut","Tempelbrut"], profs: ["Speerträger","Schamane","Tempelwächter","Pirscher"] },
+  "Tabaxi": { subs: ["Wüsten-Tabaxi","Dschungel-Tabaxi","Schnee-Tabaxi","Steppen-Tabaxi"], profs: ["Jäger","Späher","Klingenmeister","Akrobat","Dieb"] }
 };
 
+const SPECIAL_POOL = [
+  "Göttlicher Funke","Schattenlauf","Manaschild","Eisenzorn",
+  "Blutrunen-Resonanz","Seelenfokus","Nachtschritt","Runenblick",
+  "Klingenwirbel","Schildstoß","Ausweichrolle","Kraftschlag",
+  "Präzisionshieb","Standfestigkeit","Waffenkenntnis","Kampfhaltung",
+  "Taktischer Rückzug","Schnellschritt","Flinke Hände","Schwerer Tritt",
+  "Ausdauerstoß","Fokussierter Angriff","Gegenschlag","Wuchtblock",
+  "Konzentrationsstoß","Körperbeherrschung","Ruhiger Atem","Spurensinn",
+  "Schleichtritt","Scharfer Blick","Schnellziehen","Balancehaltung",
+  "Widerstandswille","Klettergriff","Sprintkraft","Zielgenauigkeit",
+  "Waffenwechsel","Harter Griff","Schulterramme","Beinfege",
+  "Kampfintuition","Durchhaltewille","Schnellkonter","Fester Stand",
+  "Überblick","Wachsamkeit","Klingenparade","Rüstungskenntnis",
+  "Körperkraft","Zähigkeit","Sturmlauf","Schrittanalyse",
+  "Wurfgeschick","Grifftechnik","Stoßkraft","Trittsicherheit",
+  "Reaktionsschub","Kampfdisziplin"
+];
+
+const KEY_CHAR = "undra15_character";
+
+/* ---------- STATE ---------- */
+let char = {
+  name: "",
+  title: "",
+  attrs: {},
+  pool: 0,
+  used: 0,
+  race: "",
+  race2: "",
+  sub: "",
+  prof: "",
+  special: "",
+  portraitData: null,
+  raceAbility: "",
+  subAbility: "",
+  attrBonusNote: "",
+  bonusApplied: {}
+};
+
+let pendingProfession = "";
 let transientTimeout = null;
 
-/* ---------- CLOUD-ID / CLOUD-LOAD (optional) ---------- */
-function getCharacterId() {
-  const params = new URLSearchParams(window.location.search);
-  return params.get("id");
-}
+/* ---------- GLOBALE DOM-ELEMENTE ---------- */
+let raceSelect;
+let subraceSelect;
+let profSelect;
 
-async function loadCharacterFromCloud(id) {
-  try {
-    const res = await fetch(`https://undra.djdrear.workers.dev/load/${id}`);
-    if (!res.ok) {
-      console.error(await res.text());
-      alert("Fehler beim Laden aus der UNDRA‑Cloud.");
-      return null;
-    }
-    return await res.json();
-  } catch (err) {
-    console.error(err);
-    alert("Netzwerkfehler beim Cloud‑Laden.");
-    return null;
-  }
-}
+let idAge;
+let idHeight;
+let idWeight;
+let idEyes;
+let idHair;
+let idVoice;
+let idClothes;
+let idSpecialMarks;
+let idShortdesc;
+let idStory;
 
-/* ---------- DOM ---------- */
-const headerSubData = document.getElementById("header-sub-data");
+let inName;
+let inTitel;
+let sumName;
+let sumTitle;
+let sRace;
+let sSubWrap;
+let sSub;
+let sProf;
+let sSpec;
+let heroPreviewSub;
 
-const idAge = document.getElementById("id-age");
-const idHeight = document.getElementById("id-height");
-const idWeight = document.getElementById("id-weight");
-const idEyes = document.getElementById("id-eyes");
-const idHair = document.getElementById("id-hair");
-const idVoice = document.getElementById("id-voice");
-const idClothes = document.getElementById("id-clothes");
-const idSpecialMarks = document.getElementById("id-specialmarks");
-const idShortdesc = document.getElementById("id-shortdesc");
-const idStory = document.getElementById("id-story");
+let pTotal;
+let pUsed;
+let pLeft;
 
-const previewImg = document.getElementById("preview");
-const placeholder = document.getElementById("placeholder");
-const previewNameLine = document.getElementById("preview-name-line");
-const previewRace = document.getElementById("preview-race");
-const previewProf = document.getElementById("preview-prof");
-const previewSpec = document.getElementById("preview-spec");
-const previewShortdesc = document.getElementById("preview-shortdesc");
+let raceList;
+let subList;
+let profList;
 
-const advList = document.getElementById("adv-list");
-const disList = document.getElementById("dis-list");
-const searchAdv = document.getElementById("search-adv");
-const searchDis = document.getElementById("search-dis");
-const btnResetTraits = document.getElementById("btn-reset-traits");
-const countAdvSpan = document.getElementById("count-adv");
-const countDisSpan = document.getElementById("count-dis");
+let rollBtn;
+let btnNext;
 
-const chronikTextBlock = document.getElementById("chronik-text-block");
-const chronikRadarCanvas = document.getElementById("chronikRadar");
-const chronikRadarCtx = chronikRadarCanvas.getContext("2d");
+let previewImg;
+let placeholder;
+let uploadInput;
 
-const abilityRace = document.getElementById("ability-race");
-const abilitySub = document.getElementById("ability-sub");
-const abilityAttr = document.getElementById("ability-attr");
+let radarCanvas;
+let radarCtx;
 
-const btnBack = document.getElementById("btn-back");
-const btnNext = document.getElementById("btn-next");
-const btnSaveLocal = document.getElementById("btn-save-local");
+let transientMsgEl;
 
-const transientMsgEl = document.getElementById("transient-msg");
+let btnCloudLoad;
+let btnCloudSave;
 
-// Leave modal
-const leaveSummary = document.getElementById("leave-summary");
+let loadModal;
+let btnCloseLoad;
+let slotButtons;
 
-function updateLeaveSummary() {
-  if (!leaveSummary || !identity) return;
+let professionModal;
+let raceAbilityInput;
+let subAbilityInput;
+let attrBonusSelectEl;
+let btnProfCancel;
+let btnProfConfirm;
 
-  const race = identity.race || "–";
-  const sub = identity.subgroupAbility || "–";
-  const bonus = identity.attributeBonus || "–";
-  const shortdesc = identity.shortdesc || "Keine Kurzbeschreibung hinterlegt.";
+let leaveModal;
+let leaveSummary;
+let btnLeaveCancel;
+let btnLeaveConfirm;
 
-  leaveSummary.innerHTML = `
-    <b>Kurzbeschreibung:</b> ${shortdesc}<br>
-    <b>Rassenfähigkeit:</b> ${race}<br>
-    <b>Untergruppenfähigkeit:</b> ${sub}<br>
-    <b>Attributbonus:</b> ${bonus}
-  `;
-}
-
-const btnLeaveCancel = document.getElementById("btn-leave-cancel");
-const btnLeaveConfirm = document.getElementById("btn-leave-confirm");
-
-/* ---------- HELPER ---------- */
+/* ---------- HELFER ---------- */
 function showMsg(text, ms = 2200) {
+  if (!transientMsgEl) return;
   transientMsgEl.textContent = text;
   transientMsgEl.style.opacity = "1";
   if (transientTimeout) clearTimeout(transientTimeout);
@@ -1313,765 +1062,855 @@ function showMsg(text, ms = 2200) {
   }, ms);
 }
 
-/* ---------- LOAD FROM STORAGE ---------- */
-function loadCharacterFromStorage() {
-  const raw = localStorage.getItem(KEY_CHAR);
-  if (!raw) return;
-  try {
-    const data = JSON.parse(raw);
-    if (data && typeof data === "object") char = data;
-  } catch (e) {
-    console.error("Fehler beim Laden der Charakterdaten:", e);
+function randomFrom(arr) {
+  if (!arr || !arr.length) return "";
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function clearActiveIn(container) {
+  if (!container) return;
+  container.querySelectorAll(".check-item").forEach(c => c.classList.remove("active"));
+}
+</script>
+<!-- BLOCK 2: Attribute, Rassen/Sub/Profession, Profession-/Leave-Logik -->
+<script>
+/* ---------- ATTRIBUTE ---------- */
+function initAttributes() {
+  const grid = document.getElementById("attr-grid-s1");
+  if (!grid) return;
+
+  grid.innerHTML = "";
+
+  ATTRIBUTES.forEach(a => {
+    if (typeof char.attrs[a] !== "number") char.attrs[a] = 0;
+
+    const row = document.createElement("div");
+    row.className = "attr-row";
+
+    const nameSpan = document.createElement("span");
+    nameSpan.className = "attr-name";
+    nameSpan.textContent = a;
+
+    const btnMinus = document.createElement("button");
+    btnMinus.className = "btn-step";
+    btnMinus.textContent = "▼";
+    btnMinus.addEventListener("click", () => modAttr(a, -1));
+
+    const valBox = document.createElement("div");
+    valBox.className = "val-box";
+    valBox.id = "v-" + a;
+    valBox.textContent = String(char.attrs[a]);
+
+    const btnPlus = document.createElement("button");
+    btnPlus.className = "btn-step btn-plus";
+    btnPlus.id = "plus-" + a;
+    btnPlus.textContent = "▲";
+    btnPlus.addEventListener("click", () => modAttr(a, 1));
+
+    row.appendChild(nameSpan);
+    row.appendChild(btnMinus);
+    row.appendChild(valBox);
+    row.appendChild(btnPlus);
+    grid.appendChild(row);
+  });
+}
+
+function modAttr(a, delta) {
+  const current = char.attrs[a] || 0;
+
+  if (delta > 0) {
+    if (char.pool - char.used <= 0) return;
+    if (current >= 10) {
+      showMsg("Maximum von 10 Punkten in " + a + " erreicht.");
+      return;
+    }
+    char.attrs[a] = current + 1;
+    char.used += 1;
+  } else if (delta < 0) {
+    if (current <= 0) return;
+    char.attrs[a] = current - 1;
+    char.used -= 1;
   }
+
+  updateUI();
 }
 
-function loadIdentityFromStorage() {
-  const raw = localStorage.getItem(KEY_ID);
-  if (!raw) return;
-  try {
-    const data = JSON.parse(raw);
-    if (data && typeof data === "object") Object.assign(identity, data);
-  } catch (e) {
-    console.error("Fehler beim Laden der Identitätsdaten:", e);
+/* ---------- RASSEN / SUB / PROF ---------- */
+function initRaces() {
+  if (!raceList || !subList || !profList) return;
+
+  raceList.innerHTML = "";
+  Object.keys(ORIGIN_DATA).forEach(r => {
+    const el = document.createElement("div");
+    el.className = "check-item";
+    el.textContent = r;
+    el.dataset.value = r;
+    el.addEventListener("click", () => selectRace(r));
+    raceList.appendChild(el);
+  });
+
+  raceList.querySelectorAll(".check-item").forEach(el => {
+    const val = el.dataset.value;
+    if (val === char.race || val === char.race2) el.classList.add("active");
+  });
+
+  subList.innerHTML = "";
+  profList.innerHTML = "";
+
+  if (char.race) {
+    const subs = ORIGIN_DATA[char.race]?.subs || [];
+    subs.forEach(s => {
+      const el = document.createElement("div");
+      el.className = "check-item";
+      el.textContent = s;
+      el.dataset.value = s;
+      el.addEventListener("click", () => selectSub(s));
+      subList.appendChild(el);
+      if (s === char.sub) el.classList.add("active");
+    });
   }
+
+  if (!char.race && !char.race2) {
+    sSpec.textContent = "Wähle eine Hauptrasse und optional eine Zweitrasse (Mischwesen).";
+  } else if (!char.sub || !char.prof) {
+    sSpec.textContent = "Wähle eine Untergruppe und eine Profession...";
+  }
+  sSpec.style.color = "var(--gold-bright)";
+
+  updateUI();
 }
 
-
-
-/* ---------- INIT UI FROM DATA (FIXED) ---------- */
-function initIdentityFields() {
-  idAge.value           = identity.age           || char.age           || "";
-  idHeight.value        = identity.height        || char.height        || "";
-  idWeight.value        = identity.weight        || char.weight        || "";
-  idEyes.value          = identity.eyes          || char.eyes          || "";
-  idHair.value          = identity.hair          || char.hair          || "";
-  idVoice.value         = identity.voice         || char.voice         || "";
-  idClothes.value       = identity.clothes       || char.clothes       || "";
-  idSpecialMarks.value  = identity.specialmarks  || char.specialmarks  || "";
-  idShortdesc.value     = identity.shortdesc     || char.shortdesc     || "";
-  idStory.value         = identity.story         || char.story         || "";
-}
-function initCharacterPreview() {
-  if (!char) {
-    headerSubData.textContent = "Unbekannter Charakter";
-    previewNameLine.textContent = "Namenlos – ohne Titel";
-    previewRace.textContent = "–";
-    previewProf.textContent = "–";
-    previewSpec.textContent = "–";
-    abilityRace.textContent = "–";
-    abilitySub.textContent = "–";
-    abilityAttr.textContent = "–";
-    placeholder.style.display = "block";
-    if (previewImg) previewImg.style.display = "none";
+// Mischwesen-Logik: bis zu zwei Rassen
+function selectRace(r) {
+  if (!char.race && !char.race2) {
+    char.race = r;
+  } else if (char.race === r) {
+    char.race = char.race2;
+    char.race2 = "";
+  } else if (char.race2 === r) {
+    char.race2 = "";
+  } else if (!char.race2) {
+    char.race2 = r;
+  } else {
+    showMsg("Es können maximal zwei Rassen als Mischwesen gewählt werden.");
     return;
   }
 
-  const name = char.name || "Namenlos";
-  const title = char.title ? " – " + char.title : " – ohne Titel";
-  previewNameLine.textContent = name + title;
+  char.sub = "";
+  char.prof = "";
+  char.special = "";
+  char.raceAbility = "";
+  char.subAbility = "";
+  char.attrBonusNote = "";
+  char.bonusApplied = {};
 
-  let raceText = "–";
+  clearActiveIn(raceList);
+  clearActiveIn(subList);
+  clearActiveIn(profList);
+
+  raceList.querySelectorAll(".check-item").forEach(el => {
+    const val = el.dataset.value;
+    if (val === char.race || val === char.race2) el.classList.add("active");
+  });
+
+  subList.innerHTML = "";
+  profList.innerHTML = "";
+
+  if (char.race) {
+    const subs = ORIGIN_DATA[char.race]?.subs || [];
+    subs.forEach(s => {
+      const el = document.createElement("div");
+      el.className = "check-item";
+      el.textContent = s;
+      el.dataset.value = s;
+      el.addEventListener("click", () => selectSub(s));
+      subList.appendChild(el);
+    });
+  }
+
+  if (!char.race && !char.race2) {
+    sSpec.textContent = "Wähle eine Hauptrasse und optional eine Zweitrasse (Mischwesen).";
+  } else if (!char.sub || !char.prof) {
+    sSpec.textContent = "Wähle eine Untergruppe und eine Profession...";
+  }
+  sSpec.style.color = "var(--gold-bright)";
+
+  updateUI();
+}
+
+function selectSub(s) {
+  char.sub = s;
+
+  clearActiveIn(subList);
+  clearActiveIn(profList);
+
+  const chosen = subList.querySelector(`[data-value="${s}"]`);
+  if (chosen) chosen.classList.add("active");
+
+  profList.innerHTML = "";
+
+  if (char.race) {
+    const profs = ORIGIN_DATA[char.race]?.profs || [];
+    profs.forEach(p => {
+      const el = document.createElement("div");
+      el.className = "check-item";
+      el.textContent = p;
+      el.dataset.value = p;
+      el.addEventListener("click", () => openProfessionModal(p));
+      profList.appendChild(el);
+    });
+  }
+
+  sSpec.textContent = "Wähle eine Profession, um deine Gabe zu manifestieren.";
+  sSpec.style.color = "var(--gold-bright)";
+  updateUI();
+}
+
+/* ---------- PROFESSION-MODAL ---------- */
+function openProfessionModal(prof) {
+  pendingProfession = prof;
+
+  if (!professionModal) return;
+  professionModal.style.display = "flex";
+
+  if (raceAbilityInput) raceAbilityInput.value = char.raceAbility || "";
+  if (subAbilityInput) subAbilityInput.value = char.subAbility || "";
+  if (attrBonusSelectEl) attrBonusSelectEl.value = char.attrBonusNote || "";
+
+  checkProfessionReady();
+}
+
+function closeProfessionModal() {
+  if (professionModal) professionModal.style.display = "none";
+}
+
+/* ---------- LEAVE-MODAL ---------- */
+function openLeaveModal() {
+  const raceText = (char.race && char.race2)
+    ? char.race + " / " + char.race2 + " (Mischwesen)"
+    : (char.race || char.race2 || "–");
+
+  const parts = [];
+  parts.push((char.name || "Namenlos") + (char.title ? " – " + char.title : ""));
+  parts.push("Volk: " + raceText + (char.sub ? " (" + char.sub + ")" : ""));
+  parts.push("Profession: " + (char.prof || "–"));
+
+  if (leaveSummary) leaveSummary.textContent = parts.join(" • ");
+  if (leaveModal) leaveModal.style.display = "flex";
+}
+
+function closeLeaveModal() {
+  if (leaveModal) leaveModal.style.display = "none";
+}
+
+function sealCharacter() {
+  if (inName) inName.disabled = true;
+  if (inTitel) inTitel.disabled = true;
+  if (raceList) raceList.querySelectorAll(".check-item").forEach(el => el.style.pointerEvents = "none");
+  if (subList) subList.querySelectorAll(".check-item").forEach(el => el.style.pointerEvents = "none");
+  if (profList) profList.querySelectorAll(".check-item").forEach(el => el.style.pointerEvents = "none");
+  if (raceAbilityInput) raceAbilityInput.disabled = true;
+  if (subAbilityInput) subAbilityInput.disabled = true;
+  if (attrBonusSelectEl) attrBonusSelectEl.disabled = true;
+  if (rollBtn) rollBtn.disabled = true;
+  if (btnNext) btnNext.disabled = true;
+}
+</script>
+<!-- BLOCK 3: UI-Update, Radar, Pool, Identität, LocalStorage -->
+<script>
+/* ---------- UI-UPDATE ---------- */
+function updateUI() {
+  if (inName)  char.name  = inName.value.trim();
+  if (inTitel) char.title = inTitel.value.trim();
+
+  if (sumName) sumName.textContent = char.name || "Namenlos";
+  if (sumTitle) sumTitle.textContent = char.title ? ("– " + char.title) : "ohne Titel";
+
   if (char.race && char.race2) {
-    raceText = char.race + " / " + char.race2 + " (Mischwesen)";
+    sRace.textContent = char.race + " / " + char.race2 + " (Mischwesen)";
   } else if (char.race) {
-    raceText = char.race;
+    sRace.textContent = char.race;
   } else if (char.race2) {
-    raceText = char.race2;
-  }
-  if (char.sub) raceText += " (" + char.sub + ")";
-  previewRace.textContent = raceText;
-
-  previewProf.textContent = char.prof || "–";
-  previewSpec.textContent = char.special || "–";
-
-  if (char.portraitData) {
-    setPortrait(char.portraitData);
+    sRace.textContent = char.race2;
   } else {
-    setPortrait(null);
+    sRace.textContent = "–";
   }
 
-  headerSubData.textContent = name + " | " + (char.prof || "unbestimmte Profession");
+  if (char.sub) {
+    sSubWrap.style.display = "";
+    sSub.textContent = char.sub;
+  } else {
+    sSubWrap.style.display = "none";
+  }
 
-  abilityRace.textContent = char.raceAbility || "–";
-  abilitySub.textContent = char.subAbility || "–";
-  abilityAttr.textContent = char.attrBonusNote || "–";
+  sProf.textContent = char.prof || "–";
+
+  const poolLeft = char.pool - char.used;
+  pTotal.textContent = char.pool;
+  pUsed.textContent  = char.used;
+  pLeft.textContent  = poolLeft;
+
+  ATTRIBUTES.forEach(a => {
+    const val = char.attrs[a] || 0;
+
+    const box = document.getElementById("v-" + a);
+    if (box) box.textContent = val;
+
+    const plusBtn = document.getElementById("plus-" + a);
+    if (plusBtn) {
+      if (poolLeft <= 0 || val >= 10) {
+        plusBtn.classList.add("disabled");
+        plusBtn.classList.remove("glow");
+      } else {
+        plusBtn.classList.remove("disabled");
+        if (char.pool > 0) plusBtn.classList.add("glow");
+      }
+    }
+  });
+
+  const parts = [];
+  if (char.race && char.race2) parts.push(char.race + " / " + char.race2);
+  else if (char.race) parts.push(char.race);
+  else if (char.race2) parts.push(char.race2);
+
+  if (char.sub) parts.push("(" + char.sub + ")");
+  if (char.prof) parts.push("– " + char.prof);
+
+  if (heroPreviewSub) heroPreviewSub.textContent = parts.join(" ");
+
+  let extraLines = [];
+  if (char.special) extraLines.push("Spezial: " + char.special);
+  if (char.raceAbility) extraLines.push(char.raceAbility);
+  if (char.subAbility) extraLines.push(char.subAbility);
+  if (char.attrBonusNote) extraLines.push("+1 " + char.attrBonusNote);
+
+  if (extraLines.length > 0) {
+    sSpec.innerHTML = extraLines.join("<br>");
+    sSpec.style.color = "var(--gold-bright)";
+  } else {
+    sSpec.textContent = "Wähle Rasse & Beruf, um eine Gabe zu erhalten...";
+    sSpec.style.color = "var(--text-muted)";
+  }
+
+  const canProceed =
+    !!char.name &&
+    (char.race || char.race2) &&
+    !!char.prof &&
+    char.pool > 0 &&
+    char.used > 0;
+
+  if (btnNext) btnNext.disabled = !canProceed;
+
+  drawRadar();
 }
 
 /* ---------- RADAR ---------- */
-function drawChronikRadar() {
-  const canvas = chronikRadarCanvas;
-  const ctx = chronikRadarCtx;
-  const w = canvas.width;
-  const h = canvas.height;
+function drawRadar() {
+  if (!radarCanvas || !radarCtx) return;
+
+  const w = radarCanvas.width;
+  const h = radarCanvas.height;
   const cx = w / 2;
   const cy = h / 2;
-  const radius = Math.min(w, h) / 2 - 12;
+  const radius = Math.min(w, h) / 2 - 10;
 
-  ctx.clearRect(0, 0, w, h);
+  radarCtx.clearRect(0, 0, w, h);
 
-  if (!char || !char.attrs) {
-    const grad = ctx.createRadialGradient(cx, cy, 5, cx, cy, radius + 12);
-    grad.addColorStop(0, "rgba(180,108,255,0.08)");
-    grad.addColorStop(1, "rgba(0,0,0,0.0)");
-    ctx.fillStyle = grad;
-    ctx.beginPath();
-    ctx.arc(cx, cy, radius + 12, 0, Math.PI * 2);
-    ctx.fill();
-    return;
-  }
+  const grad = radarCtx.createRadialGradient(cx, cy, 10, cx, cy, radius + 10);
+  grad.addColorStop(0, "rgba(180,108,255,0.3)");
+  grad.addColorStop(1, "rgba(0,0,0,0.0)");
+  radarCtx.fillStyle = grad;
+  radarCtx.beginPath();
+  radarCtx.arc(cx, cy, radius + 10, 0, Math.PI * 2);
+  radarCtx.fill();
 
   const count = ATTRIBUTES.length;
   const step = (Math.PI * 2) / count;
 
-  ctx.strokeStyle = "rgba(212,175,55,0.18)";
-  ctx.lineWidth = 1;
+  radarCtx.strokeStyle = "rgba(212,175,55,0.25)";
+  radarCtx.lineWidth = 1;
+
   for (let i = 0; i < count; i++) {
     const angle = step * i - Math.PI / 2;
     const x = cx + Math.cos(angle) * radius;
     const y = cy + Math.sin(angle) * radius;
-    ctx.beginPath();
-    ctx.moveTo(cx, cy);
-    ctx.lineTo(x, y);
-    ctx.stroke();
 
-    const tx = cx + Math.cos(angle) * (radius + 3);
-    const ty = cy + Math.sin(angle) * (radius + 3);
-    ctx.fillStyle = "#f8e7b0";
-    ctx.font = "8px serif";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.fillText(ATTR_SHORT[i], tx, ty);
+    radarCtx.beginPath();
+    radarCtx.moveTo(cx, cy);
+    radarCtx.lineTo(x, y);
+    radarCtx.stroke();
+
+    const tx = cx + Math.cos(angle) * (radius + 12);
+    const ty = cy + Math.sin(angle) * (radius + 12);
+
+    radarCtx.fillStyle = "#f8e7b0";
+    radarCtx.font = "9px " + (getComputedStyle(document.body).getPropertyValue("font-family") || "serif");
+    radarCtx.textAlign = "center";
+    radarCtx.textBaseline = "middle";
+    radarCtx.fillText(ATTR_SHORT[i], tx, ty);
   }
 
-  ctx.beginPath();
-  ctx.arc(cx, cy, radius, 0, Math.PI * 2);
-  ctx.strokeStyle = "rgba(248,231,176,0.6)";
-  ctx.stroke();
+  radarCtx.beginPath();
+  radarCtx.arc(cx, cy, radius, 0, Math.PI * 2);
+  radarCtx.strokeStyle = "rgba(248,231,176,0.6)";
+  radarCtx.lineWidth = 1;
+  radarCtx.stroke();
 
-  ctx.beginPath();
+  radarCtx.beginPath();
   for (let i = 0; i < count; i++) {
-    const val = char.attrs[ATTRIBUTES[i]] || 0;
-    const factor = Math.max(0, Math.min(1, val / 20));
-    const r = radius * (0.1 + factor * 0.9);
-    const angle = step * i - Math.PI / 2;
-    const x = cx + Math.cos(angle) * r;
-    const y = cy + Math.sin(angle) * r;
-    if (i === 0) ctx.moveTo(x, y);
-    else ctx.lineTo(x, y);
+    const val    = char.attrs[ATTRIBUTES[i]] || 0;
+    const factor = val / 10;
+    const r      = radius * (0.1 + factor * 0.9);
+    const angle  = step * i - Math.PI / 2;
+    const x      = cx + Math.cos(angle) * r;
+    const y      = cy + Math.sin(angle) * r;
+    if (i === 0) radarCtx.moveTo(x, y);
+    else radarCtx.lineTo(x, y);
   }
-  ctx.closePath();
-  ctx.fillStyle = "rgba(208,70,70,0.35)";
-  ctx.strokeStyle = "#d4af37";
-  ctx.lineWidth = 2;
-  ctx.fill();
-  ctx.stroke();
+  radarCtx.closePath();
+  radarCtx.fillStyle   = "rgba(208,70,70,0.35)";
+  radarCtx.strokeStyle = "#d4af37";
+  radarCtx.lineWidth   = 2;
+  radarCtx.fill();
+  radarCtx.stroke();
 }
 
-/* ---------- TRAITS RENDERN ---------- */
-function renderTraits() {
-  advList.innerHTML = "";
-  disList.innerHTML = "";
-
-  advPool.forEach(name => {
-    const label = document.createElement("label");
-    label.className = "trait-item";
-    label.dataset.name = name.toLowerCase();
-    label.dataset.type = "adv";
-
-    const input = document.createElement("input");
-    input.type = "checkbox";
-    input.value = name;
-    input.checked = identity.adv.includes(name);
-
-    input.addEventListener("change", () => handleTraitChange("adv", name, input.checked));
-
-    label.appendChild(input);
-    label.appendChild(document.createTextNode(" " + name));
-    advList.appendChild(label);
-  });
-
-  disPool.forEach(name => {
-    const label = document.createElement("label");
-    label.className = "trait-item";
-    label.dataset.name = name.toLowerCase();
-    label.dataset.type = "dis";
-
-    const input = document.createElement("input");
-    input.type = "checkbox";
-    input.value = name;
-    input.checked = identity.dis.includes(name);
-
-    input.addEventListener("change", () => handleTraitChange("dis", name, input.checked));
-
-    label.appendChild(input);
-    label.appendChild(document.createTextNode(" " + name));
-    disList.appendChild(label);
-  });
-
-  updateTraitStateAndChronik();
-}
-
-/* ---------- TRAIT LOGIK (2/3 FIX) ---------- */
-function handleTraitChange(type, name, checked) {
-  if (type === "adv") {
-    if (checked) {
-      if (identity.adv.length >= 2) {
-        showMsg("Es dürfen genau 2 Vorteile gewählt werden.");
-        const cb = findTraitCheckbox("adv", name);
-        if (cb) cb.checked = false;
-        return;
-      }
-      identity.adv.push(name);
-    } else {
-      identity.adv = identity.adv.filter(t => t !== name);
-    }
-  } else if (type === "dis") {
-    if (checked) {
-      if (identity.dis.length >= 3) {
-        showMsg("Es dürfen genau 3 Nachteile gewählt werden.");
-        const cb = findTraitCheckbox("dis", name);
-        if (cb) cb.checked = false;
-        return;
-      }
-      identity.dis.push(name);
-    } else {
-      identity.dis = identity.dis.filter(t => t !== name);
-    }
-  }
-
-  updateTraitStateAndChronik();
-}
-
-function findTraitCheckbox(type, name) {
-  const container = type === "adv" ? advList : disList;
-  const inputs = container.querySelectorAll("input[type='checkbox']");
-  for (const cb of inputs) {
-    if (cb.value === name) return cb;
-  }
-  return null;
-}
-
-function updateTraitStateAndChronik() {
-  const advCount = identity.adv.length;
-  const disCount = identity.dis.length;
-  countAdvSpan.textContent = advCount;
-  countDisSpan.textContent = disCount;
-
-  updateTraitDisabling("adv", advCount >= 2);
-  updateTraitDisabling("dis", disCount >= 3);
-
-  updateChronik();
-  updateNextButtonState();
-}
-
-function updateTraitDisabling(type, shouldDisableOthers) {
-  const container = type === "adv" ? advList : disList;
-  const chosen = type === "adv" ? identity.adv : identity.dis;
-  const labels = container.querySelectorAll(".trait-item");
-
-  labels.forEach(label => {
-    const input = label.querySelector("input[type='checkbox']");
-    const isSelected = chosen.includes(input.value);
-
-    if (shouldDisableOthers && !isSelected) {
-      label.classList.add("disabled");
-      input.disabled = true;
-    } else {
-      label.classList.remove("disabled");
-      input.disabled = false;
-    }
-  });
-}
-
-function resetTraits() {
-  identity.adv = [];
-  identity.dis = [];
-
-  advList.querySelectorAll("input[type='checkbox']").forEach(cb => {
-    cb.checked = false;
-    cb.disabled = false;
-  });
-  disList.querySelectorAll("input[type='checkbox']").forEach(cb => {
-    cb.checked = false;
-    cb.disabled = false;
-  });
-
-  searchAdv.value = "";
-  searchDis.value = "";
-  applyTraitSearch("adv", "");
-  applyTraitSearch("dis", "");
-
-  updateTraitStateAndChronik();
-}
-
-/* ---------- TRAIT SUCHE ---------- */
-function applyTraitSearch(type, term) {
-  const container = type === "adv" ? advList : disList;
-  const lowerTerm = term.trim().toLowerCase();
-  const items = container.querySelectorAll(".trait-item");
-
-  items.forEach(label => {
-    const name = label.dataset.name || "";
-    if (!lowerTerm || name.includes(lowerTerm)) {
-      label.style.display = "";
-    } else {
-      label.style.display = "none";
-    }
-  });
-}
-
-/* ---------- CHRONIK ---------- */
-function updateChronik() {
-  const advSelected = identity.adv;
-  const disSelected = identity.dis;
-
-  const name = char?.name || "Namenlos";
-  const title = char?.title || "";
-  const racePart = (() => {
-    if (!char) return "Unbekanntes Volk";
-    if (char.race && char.race2) return char.race + " / " + char.race2 + " (Mischwesen)";
-    if (char.race) return char.race;
-    if (char.race2) return char.race2;
-    return "Unbekanntes Volk";
-  })();
-  const subPart = char?.sub ? " (" + char.sub + ")" : "";
-  const profPart = char?.prof || "Unbekannter Beruf";
-
-  chronikTextBlock.innerHTML = `
-    <p>
-      <b>${name}</b>${title ? ", " + title : ""}<br>
-      Volk: ${racePart}${subPart}<br>
-      Beruf: ${profPart}
-    </p>
-    <div class="chronik-grid-small">
-      <div><span>Alter:</span> ${identity.age || "-"}</div>
-      <div><span>Größe:</span> ${identity.height || "-"}</div>
-      <div><span>Gewicht:</span> ${identity.weight || "-"}</div>
-      <div><span>Augenfarbe:</span> ${identity.eyes || "-"}</div>
-      <div><span>Haarfarbe:</span> ${identity.hair || "-"}</div>
-      <div><span>Stimme:</span> ${identity.voice || "-"}</div>
-      <div><span>Kleidung:</span> ${identity.clothes || "-"}</div>
-      <div><span>Merkmale:</span> ${identity.specialmarks || "-"}</div>
-    </div>
-    <p style="margin-top:8px;"><b>Kurzbeschreibung:</b><br>${identity.shortdesc || "-"}</p>
-    <p style="margin-top:4px;"><b>Vorteile:</b> ${advSelected.join(", ") || "-"}</p>
-    <p style="margin-top:2px;"><b>Nachteile:</b> ${disSelected.join(", ") || "-"}</p>
-  `;
-
-  // --- Attribute-Kurzvorschau erzeugen ---
-let attrPreview = "";
-if (char && char.attrs) {
-  attrPreview = ATTR_SHORT.map(short => {
-    const full = ATTRIBUTES[ATTR_SHORT.indexOf(short)];
-    const val = char.attrs[full] ?? "-";
-    return `${short} ${val}`;
-  }).join(" • ");
-} else {
-  attrPreview = "Keine Attribute geladen.";
-}
-
-// --- Vorschau-Container füllen ---
-previewShortdesc.innerHTML = `
-  <div style="margin-bottom:6px;">
-    <b style="color:var(--gold-bright);">Name:</b> ${char?.name || "Namenlos"}<br>
-    <b style="color:var(--gold-bright);">Titel:</b> ${char?.title || "–"}<br>
-    <b style="color:var(--gold-bright);">Volk:</b> ${previewRace.textContent}<br>
-    <b style="color:var(--gold-bright);">Profession:</b> ${char?.prof || "–"}<br>
-    <b style="color:var(--gold-bright);">Gabe:</b> ${char?.special || "–"}<br>
-    <b style="color:var(--gold-bright);">Rassenfähigkeit:</b> ${char?.raceAbility || "–"}<br>
-    <b style="color:var(--gold-bright);">Untergruppen-Fähigkeit:</b> ${char?.subAbility || "–"}<br>
-    <b style="color:var(--gold-bright);">Attributbonus +1:</b> ${char?.attrBonusNote || "–"}
-  </div>
-
-  <div style="margin-top:6px; color:var(--text-muted); font-size:10px;">
-    <span style="color:var(--gold-bright);">Attribute:</span><br>
-    ${attrPreview}
-  </div>
-`;
-
-  drawChronikRadar();
-}
-
-/* ---------- SAVE / LOAD IDENTITY ---------- */
-function saveIdentity() {
-  const data = {
-    age: idAge.value.trim(),
-    height: idHeight.value.trim(),
-    weight: idWeight.value.trim(),
-    eyes: idEyes.value.trim(),
-    hair: idHair.value.trim(),
-    voice: idVoice.value.trim(),
-    clothes: idClothes.value.trim(),
-    specialmarks: idSpecialMarks.value.trim(),
-    shortdesc: idShortdesc.value.trim(),
-    story: idStory.value.trim(),
-    adv: identity.adv,
-    dis: identity.dis
-  };
-  identity = data;
-  try {
-    localStorage.setItem(KEY_ID, JSON.stringify(data));
-    showMsg("Identität & Chronik gespeichert.");
-  } catch (e) {
-    console.error(e);
-    showMsg("Fehler beim Speichern der Identität.");
-  }
-}
-
-function initIdentityFields() {
-  if (idAge) idAge.value = identity.age || char.age || "";
-  if (idHeight) idHeight.value = identity.height || char.height || "";
-  if (idWeight) idWeight.value = identity.weight || char.weight || "";
-  if (idEyes) idEyes.value = identity.eyes || char.eyes || "";
-  if (idHair) idHair.value = identity.hair || char.hair || "";
-  if (idVoice) idVoice.value = identity.voice || char.voice || "";
-  if (idClothes) idClothes.value = identity.clothes || char.clothes || "";
-  if (idSpecialMarks) idSpecialMarks.value = identity.specialmarks || char.specialmarks || "";
-
-  if (idShortdesc) idShortdesc.value = identity.shortdesc || char.shortdesc || "";
-  if (idStory) idStory.value = identity.story || char.story || "";
-}
-/* ---------- NAVIGATION ---------- */
-function goBackToPage1() {
-  saveIdentity();
-  window.location.href = "UNDRA-ENGINE-1.5-Seite1.html";
-}
-
-function goToPage3() {
-  saveIdentity();
-  window.location.href = "UNDRA-ENGINE-1.5-Seite3.html";
-}
-
-function openLeaveModal() {
-  const name = char?.name || "Namenlos";
-  const title = char?.title ? " – " + char.title : "";
-  const racePart = (() => {
-    if (!char) return "Unbekanntes Volk";
-    if (char.race && char.race2) return char.race + " / " + char.race2 + " (Mischwesen)";
-    if (char.race) return char.race;
-    if (char.race2) return char.race2;
-    return "Unbekanntes Volk";
-  })();
-  const subPart = char?.sub ? " (" + char.sub + ")" : "";
-  const profPart = char?.prof || "Unbekannter Beruf";
-
-  const summary = [
-    name + title,
-    "Volk: " + racePart + subPart,
-    "Profession: " + profPart,
-    "Vorteile: " + (identity.adv.join(", ") || "-"),
-    "Nachteile: " + (identity.dis.join(", ") || "-")
-  ].join(" • ");
-
-  leaveSummary.textContent = summary;
-  leaveModal.style.display = "flex";
-}
-
-function closeLeaveModal() {
-  leaveModal.style.display = "none";
-}
-
-/* ---------- BUTTON-STATE ---------- */
-function updateNextButtonState() {
-  const traitsValid = (identity.adv.length === 2 && identity.dis.length === 3);
-
-  const fieldsValid =
-    identity.age &&
-    identity.height &&
-    identity.weight &&
-    identity.eyes &&
-    identity.hair &&
-    identity.voice &&
-    identity.clothes &&
-    identity.specialmarks &&
-    identity.shortdesc &&
-    identity.story;
-
-  const page2Complete = traitsValid && fieldsValid;
-
-  // Weiter-Button bleibt deaktiviert, bis der Orb erwacht ist
-  btnNext.disabled = true;
-
-  // Wenn Seite 2 vollständig ist → Erwecken-Button anzeigen
-  if (page2Complete) {
-    enableAwakening();
-  }
-}
-/* ---------- PORTRAIT FIX ---------- */
-function setPortrait(src) {
-  if (!previewImg) return;
-
-  if (!src) {
-    previewImg.style.display = "none";
-    placeholder.style.display = "block";
+/* ---------- POOL WURF ---------- */
+function rollPool() {
+  if (char.pool > 0) {
+    showMsg("Punkte wurden bereits ausgewürfelt.");
     return;
   }
 
-  previewImg.onload = () => {
-    previewImg.style.display = "block";
-    placeholder.style.display = "none";
-  };
+  const pool = Math.floor(Math.random() * (60 - 20 + 1)) + 20;
+  char.pool = pool;
+  char.used = 0;
 
-  previewImg.onerror = () => {
-    previewImg.style.display = "none";
-    placeholder.style.display = "block";
-    console.warn("Portrait konnte nicht geladen werden:", src);
-  };
+  Object.keys(char.attrs).forEach(a => (char.attrs[a] = 0));
 
-  previewImg.src = src;
+  showMsg("Du erhältst " + pool + " Attributpunkte.");
+  updateUI();
 }
 
-/* ---------- RADAR FIX ---------- */
-(function patchRadar() {
-  const oldDraw = drawChronikRadar;
-  drawChronikRadar = function () {
-    chronikRadarCanvas.width = 180;
-    chronikRadarCanvas.height = 180;
+/* ---------- IDENTITÄT (Seite 2) ---------- */
+function saveIdentity() {
+  if (!idAge) return;
+  char.age           = idAge.value.trim();
+  char.height        = idHeight.value.trim();
+  char.weight        = idWeight.value.trim();
+  char.eyes          = idEyes.value.trim();
+  char.hair          = idHair.value.trim();
+  char.voice         = idVoice.value.trim();
+  char.clothes       = idClothes.value.trim();
+  char.specialmarks  = idSpecialMarks.value.trim();
+  char.shortdesc     = idShortdesc.value.trim();
+  char.story         = idStory.value.trim();
+}
 
-    if (!char) char = {};
-    if (!char.attrs || typeof char.attrs !== "object") {
-      char.attrs = {};
-      ATTRIBUTES.forEach(k => char.attrs[k] = 0);
-    }
+/* ---------- LOKAL SPEICHERN ---------- */
+function saveCharacterLocal() {
+  saveIdentity();
 
-    oldDraw();
+  const data = {
+    name: char.name,
+    title: char.title,
+    race: char.race,
+    race2: char.race2,
+    sub: char.sub,
+    prof: char.prof,
+    special: char.special,
+    attrs: char.attrs,
+    pool: char.pool,
+    used: char.used,
+    portraitData: char.portraitData || null,
+    raceAbility: char.raceAbility || "",
+    subAbility: char.subAbility || "",
+    attrBonusNote: char.attrBonusNote || "",
+    bonusApplied: char.bonusApplied || {},
+
+    age: char.age || "",
+    height: char.height || "",
+    weight: char.weight || "",
+    eyes: char.eyes || "",
+    hair: char.hair || "",
+    voice: char.voice || "",
+    clothes: char.clothes || "",
+    specialmarks: char.specialmarks || "",
+    shortdesc: char.shortdesc || "",
+    story: char.story || ""
   };
-})();
 
-/* ---------- AWAKENING ELEMENTS (GLOBAL) ---------- */
-const btnAwaken = document.getElementById("btn-awaken");
-const flash = document.getElementById("awakening-flash");
-const orbWrapper = document.querySelector(".orbit-wrapper");
-
-/* Wird aufgerufen, wenn Seite 1 + Seite 2 vollständig sind */
-function enableAwakening() {
-  if (!btnAwaken) return;
-  btnAwaken.disabled = false;   // Button aktivieren
+  try {
+    localStorage.setItem(KEY_CHAR, JSON.stringify(data));
+    showMsg("Charakterdaten lokal gespeichert.");
+  } catch (e) {
+    console.error(e);
+    showMsg("Fehler beim lokalen Speichern.");
+  }
 }
 
-/* Erwecken */
-if (btnAwaken) {
-  btnAwaken.addEventListener("click", () => {
-    // Button deaktivieren (oder ausblenden, wenn du willst)
-    btnAwaken.disabled = true;
+/* ---------- LOKAL LADEN ---------- */
+function loadCharacterLocal() {
+  try {
+    const raw = localStorage.getItem(KEY_CHAR);
+    if (!raw) return;
 
-    // Explosion starten
-    flash.style.animation = "awaken-explosion 0.7s ease-out forwards";
+    const data = JSON.parse(raw);
+    if (!data || typeof data !== "object") return;
 
-    // Orb nach Explosion einblenden
-    setTimeout(() => {
-      orbWrapper.classList.remove("hidden");
-      stats.hp = 1.0;
-      updateVitalOrbit();
+    char.name         = data.name || "";
+    char.title        = data.title || "";
+    char.race         = data.race || "";
+    char.race2        = data.race2 || "";
+    char.sub          = data.sub || "";
+    char.prof         = data.prof || "";
+    char.special      = data.special || "";
+    char.attrs        = data.attrs || {};
+    char.pool         = data.pool || 0;
+    char.used         = data.used || 0;
 
-      // Weiter-Button freischalten
-      if (btnNext) btnNext.disabled = false;
-    }, 650);
-  });
-}
-/* ---------- INIT PAGE 2 ---------- */
-async function initPage2() {
-  // 1) Charakter laden: zuerst lokal, dann optional Cloud
-  loadCharacterFromStorage();
-  if (!char) {
-    const id = getCharacterId();
-    if (id) {
-      const cloudChar = await loadCharacterFromCloud(id);
-      if (cloudChar) {
-        char = cloudChar;
-        try {
-          localStorage.setItem(KEY_CHAR, JSON.stringify(char));
-        } catch (e) {
-          console.warn("Konnte Cloud-Char nicht lokal cachen:", e);
-        }
+    char.age           = data.age || "";
+    char.height        = data.height || "";
+    char.weight        = data.weight || "";
+    char.eyes          = data.eyes || "";
+    char.hair          = data.hair || "";
+    char.voice         = data.voice || "";
+    char.clothes       = data.clothes || "";
+    char.specialmarks  = data.specialmarks || "";
+    char.shortdesc     = data.shortdesc || "";
+    char.story         = data.story || "";
+
+    char.portraitData = data.portraitData || null;
+    char.raceAbility  = data.raceAbility || "";
+    char.subAbility   = data.subAbility || "";
+    char.attrBonusNote = data.attrBonusNote || "";
+    char.bonusApplied  = data.bonusApplied || {};
+
+    if (inName)  inName.value  = char.name;
+    if (inTitel) inTitel.value = char.title;
+
+    if (previewImg && placeholder) {
+      if (char.portraitData) {
+        previewImg.src = char.portraitData;
+        previewImg.style.display = "block";
+        placeholder.style.display = "none";
+      } else {
+        previewImg.style.display = "none";
+        placeholder.style.display = "block";
       }
     }
+
+    ATTRIBUTES.forEach(a => {
+      if (typeof char.attrs[a] !== "number") char.attrs[a] = 0;
+    });
+
+    initRaces();
+setTimeout(() => {
+  if (char.race) selectRace(char.race);
+  if (char.race2 && char.race2 !== char.race) selectRace(char.race2);
+  if (char.sub) selectSub(char.sub);
+  if (char.prof) {
+    const chosen = profList.querySelector(`[data-value="${char.prof}"]`);
+    if (chosen) chosen.classList.add("active");
+  }
+  updateUI();
+}, 30);
+
+    initAttributes();
+    updateUI();
+
+    showMsg("Lokale Charakterdaten geladen.");
+  } catch (e) {
+    console.error(e);
+  }
+}
+</script>
+<!-- BLOCK 4: Cloud-Speicher & -Laden -->
+<script>
+/* ---------- CLOUD ---------- */
+async function saveCharacterToCloud() {
+  const id = `undra_${(char.name || "namenlos").trim().toLowerCase()}_${(char.title || "ohne").trim().toLowerCase()}`
+              .replace(/\s+/g, "_");
+
+  try {
+    const res = await fetch(`https://undra.djdrear.workers.dev/save/${id}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(char)
+    });
+
+    if (!res.ok) {
+      showMsg("Fehler beim Cloud‑Speichern.");
+      console.error(await res.text());
+      return;
+    }
+
+    showMsg("Charakter in der UNDRA‑Cloud gespeichert.");
+  } catch (err) {
+    console.error(err);
+    showMsg("Netzwerkfehler beim Cloud‑Speichern.");
+  }
+}
+
+async function loadCharacterFromCloudPrompt() {
+  const name  = prompt("Name des Helden für Cloud‑Laden?");
+  if (name === null) return;
+
+  const title = prompt("Titel / Zusatz (oder leer lassen)?") || "";
+
+  const id = `undra_${(name || "namenlos").trim().toLowerCase()}_${(title || "ohne").trim().toLowerCase()}`
+              .replace(/\s+/g, "_");
+
+  try {
+    const res = await fetch(`https://undra.djdrear.workers.dev/load/${id}`);
+
+    if (!res.ok) {
+      showMsg("Charakter nicht gefunden.");
+      console.error(await res.text());
+      return;
+    }
+
+    const data = await res.json();
+    Object.assign(char, data);
+
+    if (inName)  inName.value  = char.name || "";
+    if (inTitel) inTitel.value = char.title || "";
+
+    if (previewImg && placeholder) {
+      if (char.portraitData) {
+        previewImg.src = char.portraitData;
+        previewImg.style.display = "block";
+        placeholder.style.display = "none";
+      } else {
+        previewImg.style.display = "none";
+        placeholder.style.display = "block";
+      }
+    }
+
+    ATTRIBUTES.forEach(a => {
+      if (typeof char.attrs[a] !== "number") char.attrs[a] = 0;
+    });
+
+    initRaces();
+
+    if (char.race) selectRace(char.race);
+    if (char.race2 && char.race2 !== char.race) selectRace(char.race2);
+    if (char.sub) selectSub(char.sub);
+
+    if (char.prof) {
+      if (!char.special) char.special = randomFrom(SPECIAL_POOL);
+      clearActiveIn(profList);
+      const chosen = profList.querySelector(`[data-value="${char.prof}"]`);
+      if (chosen) chosen.classList.add("active");
+    }
+
+    initAttributes();
+    updateUI();
+
+    showMsg("Cloud‑Charakter geladen.");
+  } catch (err) {
+    console.error(err);
+    showMsg("Fehler beim Cloud‑Laden.");
+  }
+}
+</script>
+<!-- BLOCK 5: Load-Modal, Upload, Profession-Ready, Init & Events -->
+<script>
+/* ---------- LOAD-MODAL (Slots Platzhalter) ---------- */
+function openLoadModal() {
+  if (loadModal) loadModal.style.display = "flex";
+}
+
+function closeLoadModal() {
+  if (loadModal) loadModal.style.display = "none";
+}
+
+function loadFromSlot(slot) {
+  showMsg("Slot-" + slot + " Laden ist noch nicht implementiert.");
+}
+
+/* ---------- PORTRAIT UPLOAD ---------- */
+function handleUploadChange(e) {
+  const file = e.target.files && e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const dataUrl = ev.target.result;
+    if (previewImg && placeholder) {
+      previewImg.src = dataUrl;
+      previewImg.style.display = "block";
+      placeholder.style.display = "none";
+    }
+    char.portraitData = dataUrl;
+    saveCharacterLocal();
+  };
+  reader.readAsDataURL(file);
+}
+
+/* ---------- PROFESSION READY ---------- */
+function checkProfessionReady() {
+  if (!btnProfConfirm) return;
+  const ready =
+    pendingProfession &&
+    raceAbilityInput &&
+    subAbilityInput &&
+    attrBonusSelectEl &&
+    raceAbilityInput.value.trim() &&
+    subAbilityInput.value.trim() &&
+    attrBonusSelectEl.value;
+
+  btnProfConfirm.disabled = !ready;
+}
+
+/* ---------- EVENT BINDING / INIT ---------- */
+document.addEventListener("DOMContentLoaded", () => {
+  inName         = document.getElementById("in-name");
+  inTitel        = document.getElementById("in-titel");
+  sumName        = document.getElementById("sum-name");
+  sumTitle       = document.getElementById("sum-title");
+  sRace          = document.getElementById("s-race");
+  sSubWrap       = document.getElementById("s-sub-wrap");
+  sSub           = document.getElementById("s-sub");
+  sProf          = document.getElementById("s-prof");
+  sSpec          = document.getElementById("s-spec");
+  heroPreviewSub = document.getElementById("hero-preview-sub");
+
+  pTotal = document.getElementById("p-total");
+  pUsed  = document.getElementById("p-used");
+  pLeft  = document.getElementById("p-left");
+
+  raceList = document.getElementById("race-list");
+  subList  = document.getElementById("sub-list");
+  profList = document.getElementById("prof-list");
+
+  rollBtn = document.getElementById("roll-btn");
+  btnNext = document.getElementById("btn-next");
+
+  previewImg  = document.getElementById("preview");
+  placeholder = document.getElementById("placeholder");
+  uploadInput = document.getElementById("upload");
+
+  radarCanvas = document.getElementById("radarCanvas");
+  radarCtx    = radarCanvas ? radarCanvas.getContext("2d") : null;
+
+  transientMsgEl = document.getElementById("transient-msg");
+
+  btnCloudLoad = document.getElementById("btn-cloud-load");
+  btnCloudSave = document.getElementById("btn-cloud-save");
+
+  loadModal    = document.getElementById("load-modal");
+  btnCloseLoad = document.getElementById("btn-close-load");
+  slotButtons  = loadModal ? loadModal.querySelectorAll(".slot-btn") : [];
+
+  professionModal   = document.getElementById("profession-modal");
+  raceAbilityInput  = document.getElementById("race-ability-input");
+  subAbilityInput   = document.getElementById("sub-ability-input");
+  attrBonusSelectEl = document.getElementById("attr-bonus-select");
+  btnProfCancel     = document.getElementById("btn-prof-cancel");
+  btnProfConfirm    = document.getElementById("btn-prof-confirm");
+
+  leaveModal     = document.getElementById("leave-modal");
+  leaveSummary   = document.getElementById("leave-summary");
+  btnLeaveCancel = document.getElementById("btn-leave-cancel");
+  btnLeaveConfirm= document.getElementById("btn-leave-confirm");
+
+  idAge          = document.getElementById("idAge");
+  idHeight       = document.getElementById("idHeight");
+  idWeight       = document.getElementById("idWeight");
+  idEyes         = document.getElementById("idEyes");
+  idHair         = document.getElementById("idHair");
+  idVoice        = document.getElementById("idVoice");
+  idClothes      = document.getElementById("idClothes");
+  idSpecialMarks = document.getElementById("idSpecialMarks");
+  idShortdesc    = document.getElementById("idShortdesc");
+  idStory        = document.getElementById("idStory");
+
+  raceSelect    = document.getElementById("raceSelect");
+  subraceSelect = document.getElementById("subraceSelect");
+  profSelect    = document.getElementById("profSelect");
+
+  if (attrBonusSelectEl) {
+    ATTRIBUTES.forEach(a => {
+      const opt = document.createElement("option");
+      opt.value = a;
+      opt.textContent = a;
+      attrBonusSelectEl.appendChild(opt);
+    });
   }
 
-  // 2) Identity laden
-  loadIdentityFromStorage();
+  initAttributes();
+  initRaces();
+  loadCharacterLocal();
+  updateUI();
+  drawRadar();
 
-  // 3) UI initialisieren
-  initIdentityFields();
-  initCharacterPreview();
-  renderTraits();
-  updateChronik();
-  drawChronikRadar();
-  updateNextButtonState();
+  if (rollBtn) rollBtn.addEventListener("click", rollPool);
+  if (inName)  inName.addEventListener("input", updateUI);
+  if (inTitel) inTitel.addEventListener("input", updateUI);
 
-  // 4) Events binden
-  [
-    [idAge,   "age"],
-    [idHeight,"height"],
-    [idWeight,"weight"],
-    [idEyes,  "eyes"],
-    [idHair,  "hair"],
-    [idVoice, "voice"],
-    [idClothes,"clothes"],
-    [idSpecialMarks,"specialmarks"]
-  ].forEach(([el, key]) => {
-    if (!el) return;
-    el.addEventListener("input", () => {
-      identity[key] = el.value.trim();
-      updateChronik();
-      updateNextButtonState();
-    });
+  if (uploadInput) uploadInput.addEventListener("change", handleUploadChange);
+
+  window.addEventListener("resize", drawRadar);
+
+  if (raceAbilityInput) raceAbilityInput.addEventListener("input", checkProfessionReady);
+  if (subAbilityInput)  subAbilityInput.addEventListener("input", checkProfessionReady);
+  if (attrBonusSelectEl) attrBonusSelectEl.addEventListener("change", checkProfessionReady);
+
+  if (btnProfCancel) btnProfCancel.addEventListener("click", closeProfessionModal);
+
+  if (btnProfConfirm) btnProfConfirm.addEventListener("click", () => {
+    if (!pendingProfession) {
+      closeProfessionModal();
+      return;
+    }
+
+    char.prof = pendingProfession;
+    char.special = randomFrom(SPECIAL_POOL);
+
+    char.raceAbility = raceAbilityInput ? raceAbilityInput.value.trim() : "";
+    char.subAbility  = subAbilityInput ? subAbilityInput.value.trim() : "";
+    const bonusAttr  = attrBonusSelectEl ? (attrBonusSelectEl.value || "") : "";
+    char.attrBonusNote = bonusAttr;
+
+    if (!char.bonusApplied) char.bonusApplied = {};
+    if (bonusAttr && char.attrs[bonusAttr] != null) {
+      if (!char.bonusApplied[bonusAttr]) {
+        char.attrs[bonusAttr] += 1;
+        char.bonusApplied[bonusAttr] = true;
+      }
+    }
+
+    clearActiveIn(profList);
+    const chosen = profList ? profList.querySelector(`[data-value="${pendingProfession}"]`) : null;
+    if (chosen) chosen.classList.add("active");
+
+    updateUI();
+    showMsg("Berufung und Fähigkeiten bestätigt.");
+    closeProfessionModal();
   });
 
-  if (idShortdesc) {
-    idShortdesc.addEventListener("input", () => {
-      identity.shortdesc = idShortdesc.value.trim();
-      updateChronik();
-      updateNextButtonState();
-    });
-  }
-
-  if (idStory) {
-    idStory.addEventListener("input", () => {
-      identity.story = idStory.value.trim();
-      updateNextButtonState();
-    });
-  }
-
-  if (searchAdv) {
-    searchAdv.addEventListener("input", () => {
-      applyTraitSearch("adv", searchAdv.value);
-    });
-  }
-
-  if (searchDis) {
-    searchDis.addEventListener("input", () => {
-      applyTraitSearch("dis", searchDis.value);
-    });
-  }
-
-  if (btnResetTraits) btnResetTraits.addEventListener("click", resetTraits);
-
-  function refreshFromPage1() {
-    loadCharacterFromStorage();
-    initCharacterPreview();
-    updateChronik();
-    drawChronikRadar();
-    showMsg("Werte aus Seite 1 übernommen.");
-  }
-
-  if (btnSaveLocal) btnSaveLocal.addEventListener("click", applyValuesToUI);
   if (btnNext) btnNext.addEventListener("click", openLeaveModal);
-
   if (btnLeaveCancel) btnLeaveCancel.addEventListener("click", closeLeaveModal);
   if (btnLeaveConfirm) btnLeaveConfirm.addEventListener("click", () => {
-    closeLeaveModal();
-    goToPage3();
+    sealCharacter();
+    saveCharacterLocal();
+    window.location.href = "https://djdrear.github.io/Seite-2/";
   });
 
-  window.addEventListener("resize", drawChronikRadar);
-}
+  if (btnCloudSave) btnCloudSave.addEventListener("click", saveCharacterToCloud);
+  if (btnCloudLoad) btnCloudLoad.addEventListener("click", loadCharacterFromCloudPrompt);
 
-document.addEventListener("DOMContentLoaded", () => {
-  initPage2();
+  if (btnCloseLoad) btnCloseLoad.addEventListener("click", closeLoadModal);
+  if (slotButtons && slotButtons.forEach) {
+    slotButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const slot = btn.dataset.slot;
+        loadFromSlot(slot);
+      });
+    });
+  }
 });
-
-
-
-
-/* Prüfen ob Seite 1 vollständig ist */
-function isPage1Complete() {
-  return (
-    char.name &&
-    char.title &&
-    char.pool > 0 &&
-    char.used === char.pool &&
-    (char.race || char.race2) &&
-    char.sub &&
-    char.prof &&
-    char.raceAbility &&
-    char.subAbility &&
-    char.attrBonusNote &&
-    char.bonusApplied?.[char.attrBonusNote]
-  );
-}
-
-/* Prüfen ob Seite 2 vollständig ist */
-function isPage2Complete() {
-  return (
-    char.vorteile?.length === 2 &&
-    char.nachteile?.length === 3
-  );
-}
-
-/* Button aktivieren wenn beide Seiten fertig */
-function updateErweckenButton() {
-  const btn = document.getElementById("btn-erwecken");
-  if (!btn) return;
-
-  const ready = isPage1Complete() && isPage2Complete();
-
-  btn.disabled = !ready;
-  btn.classList.toggle("active", ready);
-  btn.textContent = ready ? "Erwecken" : "Erwecken (nicht bereit)";
-}
-
-/* Seite 2 speichern */
-function übernehmenSeite2() {
-
-  const feldMap = {
-    age: "alter",
-    weight: "gewicht",
-    height: "groesse",
-    eyes: "augenfarbe",
-    hair: "haarfarbe",
-    voice: "stimme",
-    clothes: "kleidung",
-    story: "hintergrund"
-  };
-
-  // Felder speichern
-  Object.entries(feldMap).forEach(([key, id]) => {
-    const el = document.getElementById(id);
-    if (el) char[key] = el.value;
-  });
-
-  // Vorteile / Nachteile speichern
-  char.vorteile = [...document.querySelectorAll('.vorteil.active')].map(el => el.dataset.value);
-  char.nachteile = [...document.querySelectorAll('.nachteil.active')].map(el => el.dataset.value);
-
-  // Seite 2 vollständig?
-  char["Seite 2"] = isPage2Complete();
-
-  // Speichern
-  localStorage.setItem("undra_char", JSON.stringify(char));
-
-  updateErweckenButton();
-}
-
-/* Explosion + Orb Erwecken */
-function triggerOrbAwakening() {
-  const flat = document.getElementById("orb-flatline");
-  const orb = document.getElementById("orb-container");
-  const btnErw = document.getElementById("btn-erwecken");
-  const btnNext = document.getElementById("btn-to-page3");
-
-  const flash = document.createElement("div");
-  flash.className = "flash-explosion";
-  document.getElementById("orb-ritual-area").appendChild(flash);
-
-  flat.style.display = "none";
-
-  setTimeout(() => orb.classList.remove("orb-hidden"), 300);
-
-  btnErw.style.display = "none";
-
-  setTimeout(() => btnNext.style.display = "block", 800);
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  const btn = document.getElementById("btn-erwecken");
-  if (btn) btn.addEventListener("click", triggerOrbAwakening);
-
-  updateErweckenButton();
-});
-
-
 </script>
 </body>
 </html>
