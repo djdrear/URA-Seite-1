@@ -244,15 +244,19 @@
   }
 
   .identity-summary {
-    margin-top: 10px;
-    font-size: 12px;
-    border-radius: 8px;
-    border: 1px solid rgba(212,175,55,0.35);
-    background:
-      radial-gradient(circle at top, rgba(80,0,80,0.35), transparent 60%),
-      rgba(0,0,0,0.6);
-    padding: 8px 10px;
-  }
+  margin-top: 10px;
+  font-size: 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(212,175,55,0.35);
+  background:
+    radial-gradient(circle at top, rgba(80,0,80,0.35), transparent 60%),
+    rgba(0,0,0,0.6);
+  padding: 8px 10px;
+  min-height: 160px; /* ← NEU */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
   .identity-summary b {
     color: var(--gold-bright);
@@ -264,7 +268,8 @@
     text-transform: uppercase;
     letter-spacing: 0.1em;
     margin-bottom: 4px;
-  }
+    text-align: center; /* ← NEU */
+}
 
   .radar-box {
     background: rgba(0,0,0,0.55);
@@ -1292,12 +1297,15 @@ function sealCharacter() {
 
 /* ---------- UI-UPDATE ---------- */
 function updateUI() {
+  /* --- NAME & TITEL --- */
   char.name  = inName.value.trim();
   char.title = inTitel.value.trim();
 
   sumName.textContent = char.name || "Namenlos";
   sumTitle.textContent = char.title ? ("– " + char.title) : "ohne Titel";
 
+
+  /* --- RASSE / MISCHWESEN --- */
   if (char.race && char.race2) {
     sRace.textContent = char.race + " / " + char.race2 + " (Mischwesen)";
   } else if (char.race) {
@@ -1308,6 +1316,8 @@ function updateUI() {
     sRace.textContent = "–";
   }
 
+
+  /* --- UNTERGRUPPE --- */
   if (char.sub) {
     sSubWrap.style.display = "";
     sSub.textContent = char.sub;
@@ -1315,13 +1325,12 @@ function updateUI() {
     sSubWrap.style.display = "none";
   }
 
+
+  /* --- PROFESSION --- */
   sProf.textContent = char.prof || "–";
 
-  if (char.special) {
-    sSpec.textContent = char.special;
-    sSpec.style.color = "var(--gold-bright)";
-  }
 
+  /* --- ATTRIBUTE & POOL --- */
   const poolLeft = char.pool - char.used;
   pTotal.textContent = char.pool;
   pUsed.textContent  = char.used;
@@ -1329,6 +1338,7 @@ function updateUI() {
 
   ATTRIBUTES.forEach(a => {
     const val = char.attrs[a] || 0;
+
     const box = document.getElementById("v-" + a);
     if (box) box.textContent = val;
 
@@ -1344,14 +1354,45 @@ function updateUI() {
     }
   });
 
+
+  /* --- HERO PREVIEW (unter dem Namen) --- */
   const parts = [];
   if (char.race && char.race2) parts.push(char.race + " / " + char.race2);
   else if (char.race) parts.push(char.race);
   else if (char.race2) parts.push(char.race2);
+
   if (char.sub) parts.push("(" + char.sub + ")");
   if (char.prof) parts.push("– " + char.prof);
+
   heroPreviewSub.textContent = parts.join(" ");
 
+
+  /* --- ERWEITERTE VORSCHAU: Spezial + Freitexte + +1 Bonus --- */
+  let extraLines = [];
+
+  if (char.special) {
+    extraLines.push("Spezial: " + char.special);
+  }
+  if (char.raceAbility) {
+    extraLines.push(char.raceAbility);
+  }
+  if (char.subAbility) {
+    extraLines.push(char.subAbility);
+  }
+  if (char.attrBonusNote) {
+    extraLines.push("+1 " + char.attrBonusNote);
+  }
+
+  if (extraLines.length > 0) {
+    sSpec.innerHTML = extraLines.join("<br>");
+    sSpec.style.color = "var(--gold-bright)";
+  } else {
+    sSpec.textContent = "Wähle Rasse & Beruf, um eine Gabe zu erhalten...";
+    sSpec.style.color = "var(--text-muted)";
+  }
+
+
+  /* --- WEITER-BUTTON --- */
   const canProceed =
     !!char.name &&
     (char.race || char.race2) &&
@@ -1361,6 +1402,8 @@ function updateUI() {
 
   btnNext.disabled = !canProceed;
 
+
+  /* --- RADAR --- */
   drawRadar();
 }
 
@@ -1525,6 +1568,7 @@ function loadCharacterLocal() {
       const chosen = profList.querySelector(`[data-value="${char.prof}"]`);
       if (chosen) chosen.classList.add("active");
     }
+    // UI sauber wiederherstellen
 
     initAttributes();
     updateUI();
@@ -1533,6 +1577,22 @@ function loadCharacterLocal() {
     console.error(e);
   }
 }
+
+// --- Erweiterte Vorschau unterhalb von sSpec ---
+let extraLines = [];
+
+if (char.special) {
+  extraLines.push("Spezial: " + char.special);
+}
+if (char.raceAbility) {
+  extraLines.push(char.raceAbility);
+}
+if (char.subAbility) {
+  extraLines.push(char.subAbility);
+}
+
+sSpec.innerHTML = extraLines.join("<br>");
+sSpec.style.color = "var(--gold-bright)";
 
 /* ---------- CLOUD ---------- */
 
@@ -1597,20 +1657,48 @@ async function loadCharacterFromCloudPrompt() {
       if (typeof char.attrs[a] !== "number") char.attrs[a] = 0;
     });
 
-    initRaces();
-    if (char.race) selectRace(char.race);
-    if (char.race2 && char.race2 !== char.race) selectRace(char.race2);
-    if (char.sub) selectSub(char.sub);
+initRaces();
 
-    if (char.prof) {
-      char.special = char.special || randomFrom(SPECIAL_POOL);
-      clearActiveIn(profList);
-      const chosen = profList.querySelector(`[data-value="${char.prof}"]`);
-      if (chosen) chosen.classList.add("active");
-    }
+// --- Dropdown-Werte setzen ---
+if (raceSelect && char.race) {
+  raceSelect.value = char.race;
+}
+if (subraceSelect && char.sub) {
+  subraceSelect.value = char.sub;
+}
+if (profSelect && char.prof) {
+  profSelect.value = char.prof;
+}
 
-    initAttributes();
-    updateUI();
+// --- UNDRA-Logik auslösen ---
+if (char.race) {
+  selectRace(char.race);
+}
+
+if (char.race2 && char.race2 !== char.race) {
+  selectRace(char.race2);
+}
+
+if (char.sub) {
+  selectSub(char.sub);
+}
+
+if (char.prof) {
+  // Spezialfähigkeit nur setzen, wenn sie fehlt
+  if (!char.special) {
+    char.special = randomFrom(SPECIAL_POOL);
+  }
+  clearActiveIn(profList);
+
+  const chosen = profList.querySelector(`[data-value="${char.prof}"]`);
+  if (chosen) {
+    chosen.classList.add("active");
+    chosen.dispatchEvent(new Event("click")); // Profession vollständig laden
+  }
+}
+
+initAttributes();
+updateUI();
 
     showMsg("Cloud‑Charakter geladen.");
   } catch (err) {
