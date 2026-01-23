@@ -692,7 +692,7 @@
 <body>
 <div id="app-shell">
   <header>
-    <div id="engine-tag">UNDRA‑ENGINE v1.8</div>
+    <div id="engine-tag">UNDRA‑ENGINE v2.0beta</div>
     <h1>Ursprung & Blutlinien</h1>
     <div id="sub-title">Genesis des Heldencharakters</div>
     <div id="page-indicator">Seite 1 von 3</div>
@@ -800,7 +800,7 @@
 
     <div class="footer-center">
       <div class="footer-info">
-        Attributspiegel – <span>UNDRA‑ENGINE v1.8</span>
+        Attributspiegel – <span>UNDRA‑ENGINE v2.0beta</span>
       </div>
     </div>
 
@@ -912,8 +912,245 @@
   </div>
 </div>
 
+
+<script>
+/* ============================================
+   UNDRA – CLOUD SAVE / LOAD (GLOBAL)
+   Kompatibel mit Seite 1, 2 und neuer Seite 3
+============================================ */
+
+window.undra = window.undra || {};
+
+/* --------------------------------------------
+   CLOUD SAVE
+   Übergibt den kompletten UNDRA-State an Server
+-------------------------------------------- */
+undra.cloudSave = async function(data) {
+    try {
+        const payload = JSON.stringify(data);
+
+        const res = await fetch("/undra/cloud/save", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: payload
+        });
+
+        if (!res.ok) {
+            alert("Cloud‑Speichern fehlgeschlagen.");
+            return false;
+        }
+
+        alert("Cloud‑Speichern erfolgreich.");
+        return true;
+
+    } catch (err) {
+        console.error("Cloud‑Save Fehler:", err);
+        alert("Cloud‑Speichern nicht möglich.");
+        return false;
+    }
+};
+
+
+/* --------------------------------------------
+   CLOUD LOAD
+   Lädt UNDRA‑State vom Server
+   Muss ein Promise zurückgeben → Seite 3 erwartet das
+-------------------------------------------- */
+undra.cloudLoad = async function() {
+    try {
+        const res = await fetch("/undra/cloud/load", {
+            method: "GET",
+            headers: { "Accept": "application/json" }
+        });
+
+        if (!res.ok) {
+            alert("Cloud‑Laden fehlgeschlagen.");
+            return null;
+        }
+
+        const data = await res.json();
+
+        if (!data) {
+            alert("Keine Cloud‑Daten gefunden.");
+            return null;
+        }
+
+        alert("Cloud‑Daten geladen.");
+        return data;
+
+    } catch (err) {
+        console.error("Cloud‑Load Fehler:", err);
+        alert("Cloud‑Laden nicht möglich.");
+        return null;
+    }
+};
+</script>
+
 <!-- BLOCK 1: Konstanten, State, globale DOM-Referenzen, Helfer -->
 <script>
+    window.undra = window.undra || {};
+
+undra.state = {
+    /* ============================
+       META / CHARAKTERDATEN
+    ============================ */
+    meta: {
+        name: "",
+        title: "",
+        race: "",
+        subrace: "",
+        profession: "",
+        special: "",
+        portrait: ""
+    },
+
+    /* ============================
+       ATTRIBUTE
+    ============================ */
+    attributes: {},
+
+    /* ============================
+       VITALWERTE
+    ============================ */
+    vitals: {
+        hp: 0,
+        stamina: 0,
+        ae: 0,
+        sgp: 0,
+        armorTotal: 0,
+        gg: 0,
+        tc: 0
+    },
+
+    /* ============================
+       VITAL-BONUS (7 Kristalle)
+    ============================ */
+    vitalBonus: {
+        LE: 0,
+        RUEST: 0,
+        DYN: 0,
+        GG: 0,
+        TC: 0
+    },
+
+    /* ============================
+       KAMPF
+    ============================ */
+    combat: {
+        attack: 0,
+        defense: 0,
+        counter: 0,
+        ranged: 0,
+        technique: 0,
+        status: "",
+        adjustments: ""
+    },
+
+    /* ============================
+       RÜSTUNG / ZONEN
+    ============================ */
+    armor: {
+        selected: 1,
+        zones: {
+            1:{max:0,cur:0,type:null},
+            2:{max:0,cur:0,type:null},
+            3:{max:0,cur:0,type:null},
+            4:{max:0,cur:0,type:null},
+            5:{max:0,cur:0,type:null},
+            6:{max:0,cur:0,type:null},
+            7:{max:0,cur:0,type:null},
+            8:{max:0,cur:0,type:null}
+        }
+    },
+
+    /* ============================
+       INVENTAR
+    ============================ */
+    inventory: {
+        small: Array(10).fill(""),
+        medium: Array(10).fill(""),
+        large: Array(10).fill("")
+    },
+
+    /* ============================
+       WÄHRUNG
+    ============================ */
+    currency: {
+        gold: 0,
+        silver: 0,
+        copper: 0
+    },
+
+    /* ============================
+       TIMELINE
+       story = 60 Tage oben
+       tasks = TAP-Checkboxen
+    ============================ */
+    timeline: {
+        story: {
+            currentDay: 1,
+            checked: []
+        },
+        tasks: {
+            boxes: Array(60).fill(0),
+            value: 0
+        }
+    },
+
+    /* ============================
+       TAGESABSCHLUSS
+    ============================ */
+    day: {
+        finalized: false,
+        hiddenSP: 0,
+        totalSP: 0,
+        tp: 0
+    }
+};
+function undraSyncMetaFromPage1() {
+    const S = undra.state;
+
+    S.meta.name = document.getElementById("in-name")?.value || "";
+    S.meta.title = document.getElementById("in-titel")?.value || "";
+    S.meta.race = document.getElementById("s-race")?.textContent || "";
+    S.meta.subrace = document.getElementById("s-sub")?.textContent || "";
+    S.meta.profession = document.getElementById("s-prof")?.textContent || "";
+    S.meta.special = document.getElementById("spec-summary")?.innerText || "";
+} 
+function undraSyncPortraitFromPage1() {
+    const src = document.querySelector("#portrait-box img");
+    undra.state.meta.portrait = src ? src.src : "";
+}
+function undraSyncAttributesFromPage1() {
+    const S = undra.state.attributes;
+
+    document.querySelectorAll("[data-attr]").forEach(el => {
+        const key = el.dataset.attr;
+        const val = parseInt(el.value || "0", 10);
+        S[key] = val;
+    });
+}
+function undraSyncMerkmaleFromPage1() {
+    const S = undra.state.meta;
+
+    S.age = document.getElementById("ageInput")?.value || "";
+    S.height = document.getElementById("heightInput")?.value || "";
+    S.weight = document.getElementById("weightInput")?.value || "";
+    S.eyes = document.getElementById("eyesInput")?.value || "";
+    S.hair = document.getElementById("hairInput")?.value || "";
+    S.voice = document.getElementById("voiceInput")?.value || "";
+    S.armorDesc = document.getElementById("armorInput")?.value || "";
+    S.specialDesc = document.getElementById("specialInput")?.value || "";
+}
+function undraSyncPage1() {
+    undraSyncMetaFromPage1();
+    undraSyncPortraitFromPage1();
+    undraSyncAttributesFromPage1();
+    undraSyncMerkmaleFromPage1();
+}
+document.addEventListener("input", () => {
+    undraSyncPage1();
+});
 /* ---------- KONSTANTEN & DATEN ---------- */
 const ATTRIBUTES = [
   "Mut","Intelligenz","Fingerfertigkeit","Gewandtheit","Körperkraft",
@@ -1072,7 +1309,42 @@ function clearActiveIn(container) {
   container.querySelectorAll(".check-item").forEach(c => c.classList.remove("active"));
 }
 </script>
-<!-- BLOCK 2: Attribute, Rassen/Sub/Profession, Profession-/Leave-Logik -->
+
+<script>
+    /* ---------- SYNC PAGE 1 → GLOBAL UNDRA STATE ---------- */
+function undraSyncPage1ToGlobalState() {
+    const S = undra.state;
+
+    /* --- META-DATEN --- */
+    S.meta.name = inName?.value?.trim() || "";
+    S.meta.title = inTitel?.value?.trim() || "";
+
+    S.meta.race = char.race || "";
+    S.meta.subrace = char.sub || "";
+    S.meta.profession = char.prof || "";
+    S.meta.special = char.special || "";
+
+    /* --- FÄHIGKEITEN --- */
+    S.meta.raceAbility = char.raceAbility || "";
+    S.meta.subAbility = char.subAbility || "";
+
+    /* --- PORTRAIT --- */
+    if (previewImg && previewImg.src) {
+        S.meta.portrait = previewImg.src;
+    }
+
+    /* --- ATTRIBUTE --- */
+    S.attributes = {};
+    ATTRIBUTES.forEach(a => {
+        S.attributes[a] = char.attrs[a] || 0;
+    });
+
+    /* --- BONUS-NOTIZ --- */
+    S.meta.attrBonusNote = char.attrBonusNote || "";
+    S.meta.bonusApplied = char.bonusApplied || {};
+}
+</script>
+
 <script>
 /* ---------- ATTRIBUTE ---------- */
 function initAttributes() {
@@ -1627,8 +1899,43 @@ setTimeout(() => {
 </script>
 <!-- BLOCK 4: Cloud-Speicher & -Laden -->
 <script>
+    
+    /* ---------- SYNC PAGE 1 → GLOBAL UNDRA STATE ---------- */
+function undraSyncPage1ToGlobalState() {
+    const S = undra.state;
+
+    /* --- META-DATEN --- */
+    S.meta.name = inName?.value?.trim() || "";
+    S.meta.title = inTitel?.value?.trim() || "";
+
+    S.meta.race = char.race || "";
+    S.meta.subrace = char.sub || "";
+    S.meta.profession = char.prof || "";
+    S.meta.special = char.special || "";
+
+    /* --- FÄHIGKEITEN --- */
+    S.meta.raceAbility = char.raceAbility || "";
+    S.meta.subAbility = char.subAbility || "";
+
+    /* --- PORTRAIT --- */
+    if (previewImg && previewImg.src) {
+        S.meta.portrait = previewImg.src;
+    }
+
+    /* --- ATTRIBUTE --- */
+    S.attributes = {};
+    ATTRIBUTES.forEach(a => {
+        S.attributes[a] = char.attrs[a] || 0;
+    });
+
+    /* --- BONUS-NOTIZ --- */
+    S.meta.attrBonusNote = char.attrBonusNote || "";
+    S.meta.bonusApplied = char.bonusApplied || {};
+}
+
 /* ---------- CLOUD ---------- */
 async function saveCharacterToCloud() {
+    undraSyncPage1ToGlobalState();
   const id = `undra_${(char.name || "namenlos").trim().toLowerCase()}_${(char.title || "ohne").trim().toLowerCase()}`
               .replace(/\s+/g, "_");
 
@@ -1890,6 +2197,10 @@ document.addEventListener("DOMContentLoaded", () => {
     closeProfessionModal();
   });
 
+  function goToPage2() {
+    undraSyncPage1ToGlobalState();
+    window.location.href = "UNDRA-ENGINE-1.5-Seite2.html";
+}
   if (btnNext) btnNext.addEventListener("click", openLeaveModal);
   if (btnLeaveCancel) btnLeaveCancel.addEventListener("click", closeLeaveModal);
   if (btnLeaveConfirm) btnLeaveConfirm.addEventListener("click", () => {
