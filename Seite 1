@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>UNDRA-ENGINE v1.5 – Seite 1 – Ursprung & Blutlinien</title>
+  <title>UNDRA-ENGINE v2.0 – Seite 1 – Ursprung & Blutlinien</title>
 
   <style>
   :root {
@@ -586,21 +586,28 @@
     justify-content: center;
     z-index: 1500;
     backdrop-filter: blur(4px);
-  }
+}
 
-  .modal-box {
-    width: 320px;
-    max-width: calc(100% - 40px);
-    background:
-      linear-gradient(145deg, rgba(16,6,26,0.98), rgba(6,2,12,0.98));
-    border: 2px solid rgba(212,175,55,0.7);
-    border-radius: 12px;
-    padding: 18px 18px 14px;
-    box-shadow:
-      0 18px 40px rgba(0,0,0,0.9),
-      0 0 28px rgba(160,80,240,0.8);
-    text-align: center;
-  }
+  .modal-field {
+  margin: 12px 0;
+  text-align: left;
+}
+
+.modal-field label {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--gold-bright);
+  font-size: 14px;
+}
+
+.modal-input {
+  width: 100%;
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(212,175,55,0.4);
+  background: rgba(20,10,30,0.8);
+  color: #f8e7b0;
+}
 
   .modal-title {
     font-family: var(--font-header);
@@ -690,468 +697,246 @@
 </head>
 
 <body>
-<div id="app-shell">
-  <header>
-    <div id="engine-tag">UNDRA‑ENGINE v2.0beta</div>
-    <h1>Ursprung & Blutlinien</h1>
-    <div id="sub-title">Genesis des Heldencharakters</div>
-    <div id="page-indicator">Seite 1 von 3</div>
-  </header>
+  <div id="app-shell">
 
-  <div id="content">
-    <!-- PANEL 1: Portrait + Basisdaten + Radar -->
-    <div class="panel">
-      <div class="panel-header">
-        <div class="panel-title">Essenz & Antlitz</div>
-        <div class="panel-sub" id="hero-preview-sub">Noch ungeschrieben</div>
-      </div>
+    <!-- HEADER -->
+    <header>
+      <div id="engine-tag">UNDRA‑ENGINE v2.0beta</div>
+      <h1>Ursprung &amp; Blutlinien</h1>
+      <div id="sub-title">Genesis des Heldencharakters</div>
+      <div id="page-indicator">Seite 1 von 3</div>
+    </header>
 
-      <div class="identity-grid">
-        <!-- Portrait -->
-        <div>
-          <div class="portrait-frame">
-            <img id="preview" src="" alt="" style="display:none;">
-            <div id="placeholder" class="portrait-placeholder">PORTRAIT</div>
-          </div>
-          <input type="file" id="upload" accept="image/*">
+    <!-- CONTENT -->
+    <div id="content">
+
+      <!-- PANEL 1: Essenz & Antlitz -->
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">Essenz &amp; Antlitz</div>
+          <div class="panel-sub" id="hero-preview-sub">Noch ungeschrieben</div>
         </div>
 
-        <!-- Name / Titel / Zusammenfassung -->
-        <div class="identity-main">
-          <input type="text" id="in-name" class="name-input" placeholder="Name des Helden">
-          <input type="text" id="in-titel" class="title-input" placeholder="Zusatz / Titel (optional)">
+        <div class="identity-grid">
 
-          <div class="identity-summary">
-            <div class="identity-summary-label">Vorschau</div>
-            <div>
-              <b id="sum-name">Namenlos</b>
-              <span id="sum-title">ohne Titel</span>
+          <!-- Portrait -->
+          <div>
+            <div class="portrait-frame">
+              <img id="preview" src="" alt="" style="display:none;">
+              <div id="placeholder" class="portrait-placeholder">PORTRAIT</div>
             </div>
-            <div style="margin-top:4px;">
-              <b>Volk:</b> <span id="s-race">–</span>
-              <span id="s-sub-wrap" style="display:none;">(<span id="s-sub"></span>)</span><br>
-              <b>Profession:</b> <span id="s-prof">–</span><br>
-              <b>Besondere Gabe:</b>
-              <span id="s-spec" style="font-style:italic; color:var(--gold-bright);">
-                Wähle Rasse &amp; Beruf, um eine Gabe zu erhalten...
-              </span>
+            <input type="file" id="upload" accept="image/*">
+          </div>
+
+          <!-- Name / Titel / Vorschau -->
+          <div class="identity-main">
+            <input type="text" id="in-name" class="name-input" placeholder="Name des Helden">
+            <input type="text" id="in-titel" class="title-input" placeholder="Zusatz / Titel (optional)">
+
+            <div class="identity-summary">
+              <div class="identity-summary-label">Vorschau</div>
+
+              <div>
+                <b id="sum-name">Namenlos</b>
+                <span id="sum-title">ohne Titel</span>
+              </div>
+
+              <div style="margin-top:4px;">
+                <b>Volk:</b> <span id="s-race">–</span>
+                <span id="s-sub-wrap" style="display:none;">(<span id="s-sub"></span>)</span><br>
+
+                <b>Profession:</b> <span id="s-prof">–</span><br>
+
+                <b>Besondere Gabe:</b>
+                <span id="s-spec" style="font-style:italic; color:var(--gold-bright);">
+                  Wähle Rasse &amp; Beruf, um eine Gabe zu erhalten...
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-
-        <!-- Radar -->
+          
+              <!-- Radar -->
         <div class="radar-box">
           <canvas id="radarCanvas" width="220" height="220"></canvas>
         </div>
-      </div>
-    </div>
 
-    <!-- PANEL 2: Attribute -->
-    <div class="panel">
-      <div class="panel-header">
-        <div class="panel-title">Basisattribute</div>
-        <div class="panel-sub">Punkte verteilen – Maximum 10 je Attribut</div>
-      </div>
+        </div> <!-- /identity-grid -->
 
-      <div id="attr-grid-s1" class="attr-grid"></div>
+    
 
-      <div class="attr-footer">
-        <div>
-          <span class="pool-label">Punktepool:</span>
-          <span class="pool-value" id="p-total">0</span>
-          <span class="pool-label">• Verteilte Punkte:</span>
-          <span class="pool-value" id="p-used">0</span>
-          <span class="pool-label">• Rest:</span>
-          <span class="pool-value" id="p-left">0</span>
+      </div> <!-- /PANEL 1 -->
+
+      <!-- PANEL 2: Basisattribute -->
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">Basisattribute</div>
+          <div class="panel-sub">Punkte verteilen – Maximum 16 je Attribut</div>
         </div>
-        <button class="btn-roll" id="roll-btn">Punkte auswürfeln</button>
-      </div>
-    </div>
 
-    <!-- PANEL 3: Herkunft -->
-    <div class="panel">
-      <div class="panel-header">
-        <div class="panel-title">Herkunft & Berufung</div>
-        <div class="panel-sub">Rasse • Untergruppe • Profession</div>
+        <div id="attr-grid-s1" class="attr-grid"></div>
+
+        <div class="attr-footer">
+          <div class="pool-info">
+            <span class="pool-label">Punktepool:</span>
+            <span class="pool-value" id="p-total">0</span>
+
+            <span class="pool-label">• Verteilte Punkte:</span>
+            <span class="pool-value" id="p-used">0</span>
+
+            <span class="pool-label">• Rest:</span>
+            <span class="pool-value" id="p-left">0</span>
+          </div>
+
+          <button class="btn-roll" id="roll-btn">Punkte auswürfeln</button>
+        </div>
+      </div> <!-- /PANEL 2 -->
+
+      <!-- PANEL 3: Herkunft & Berufung -->
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">Herkunft &amp; Berufung</div>
+          <div class="panel-sub">Rasse • Untergruppe • Profession</div>
+        </div>
+
+        <div class="origin-grid">
+          <div class="origin-col">
+            <h4>Rassen</h4>
+            <div id="race-list" class="check-list"></div>
+          </div>
+
+          <div class="origin-col">
+            <h4>Untergruppen</h4>
+            <div id="sub-list" class="check-list"></div>
+          </div>
+
+          <div class="origin-col">
+            <h4>Professionen</h4>
+            <div id="prof-list" class="check-list"></div>
+          </div>
+        </div>
+      </div> <!-- /PANEL 3 -->
+
+    </div> <!-- /content -->
+
+    <!-- FOOTER -->
+    <footer id="page-footer">
+      <div class="footer-left">
+        <button class="btn-ghost" id="btn-cloud-load">Cloud laden</button>
       </div>
 
-      <div class="origin-grid">
-        <div class="origin-col">
-          <h4>Rassen</h4>
-          <div id="race-list"></div>
+      <div class="footer-center">
+        <div class="footer-info">
+          Attributspiegel – <span>UNDRA‑ENGINE v2.0beta</span>
         </div>
-        <div class="origin-col">
-          <h4>Untergruppen</h4>
-          <div id="sub-list"></div>
-        </div>
-        <div class="origin-col">
-          <h4>Professionen</h4>
-          <div id="prof-list"></div>
-        </div>
+      </div>
+
+      <div class="footer-right">
+        <button class="btn-ghost" id="btn-cloud-save">Cloud speichern</button>
+        <button class="btn-main" id="btn-next" disabled>Weiter</button>
+      </div>
+    </footer>
+
+  </div> <!-- /app-shell -->
+
+  <!-- MODAL: PROFESSION -->
+  <div id="profession-modal" class="modal-overlay" style="display:none;">
+    <div class="modal-box">
+      <div class="modal-title">Berufung wählen</div>
+
+      <div class="modal-field">
+        <label>Rassenfähigkeit</label>
+        <input id="race-ability-input" type="text" class="modal-input">
+      </div>
+
+      <div class="modal-field">
+        <label>Unterklassen‑Fähigkeit</label>
+        <input id="sub-ability-input" type="text" class="modal-input">
+      </div>
+
+      <div class="modal-field">
+        <label>Bonus‑Attribut</label>
+        <select id="attr-bonus-select" class="modal-input"></select>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-ghost" id="btn-prof-cancel">Abbrechen</button>
+        <button class="btn-main" id="btn-prof-confirm">Bestätigen</button>
       </div>
     </div>
   </div>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-left">
-      <button class="btn-ghost" id="btn-cloud-load">Cloud-Charakter laden</button>
-    </div>
+  <!-- MODAL: LEAVE -->
+  <div id="leave-modal" class="modal-overlay" style="display:none;">
+    <div class="modal-body">
+      <div class="modal-title">Charakter verlassen?</div>
+      <div class="modal-sub">Dein aktueller Stand wird nicht gespeichert.</div>
+      <div class="modal-preview">
+  <div><b>HP:</b> <span id="popup-hp">–</span></div>
+  <div><b>Attributressourcen:</b> <span id="popup-resource">–</span></div>
+  <div><b>SP:</b> <span id="popup-sp">–</span></div>
+  <div><b>Abwehr:</b> <span id="popup-abwehr">–</span></div>
 
-    <div class="footer-center">
-      <div class="footer-info">
-        Attributspiegel – <span>UNDRA‑ENGINE v2.0beta</span>
-      </div>
-    </div>
-
-    <div class="footer-right">
-      <button class="btn-ghost" id="btn-cloud-save">Cloud speichern</button>
-      <button class="btn-main" id="btn-next">Weiter</button>
-    </div>
-  </footer>
+  <!-- Diese drei Zeilen waren bisher komplett fehlend -->
+  <div><b>Rüstung:</b> <span id="popup-armor">–</span></div>
+  <div><b>Geistige Gesundheit:</b> <span id="popup-gg">–</span></div>
+  <div><b>Trefferchance:</b> <span id="popup-tc">–</span></div>
 </div>
 
-<!-- TRANSIENT MESSAGE -->
-<div id="transient-msg"></div>
-
-<!-- MODAL: LOAD SLOTS -->
-<div id="load-modal" class="modal-overlay">
-  <div class="modal-box">
-    <div class="modal-title">Charakter laden</div>
-    <div class="modal-sub">
-      Wähle einen UNDRA‑Slot. Nach dem Laden gelangst du direkt zum Dashboard (Seite 3).
-    </div>
-    <div class="slot-row">
-      <button class="slot-btn" data-slot="1">
-        <div>
-          <div class="slot-name" id="slot1-name">Slot 1 – leer</div>
-          <div class="slot-meta" id="slot1-meta">Noch kein Charakter gespeichert.</div>
-        </div>
-        <div>▶</div>
-      </button>
-      <button class="slot-btn" data-slot="2">
-        <div>
-          <div class="slot-name" id="slot2-name">Slot 2 – leer</div>
-          <div class="slot-meta" id="slot2-meta">Noch kein Charakter gespeichert.</div>
-        </div>
-        <div>▶</div>
-      </button>
-      <button class="slot-btn" data-slot="3">
-        <div>
-          <div class="slot-name" id="slot3-name">Slot 3 – leer</div>
-          <div class="slot-meta" id="slot3-meta">Noch kein Charakter gespeichert.</div>
-        </div>
-        <div>▶</div>
-      </button>
-    </div>
-    <div class="modal-actions">
-      <button class="btn-small" id="btn-close-load">Schließen</button>
+      <div class="modal-actions">
+        <button class="btn-ghost" id="btn-leave-cancel">Zurück</button>
+        <button class="btn-main" id="btn-leave-confirm">Verlassen</button>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- MODAL: Profession bestätigen & Fähigkeiten wählen -->
-<div id="profession-modal" class="modal-overlay">
-  <div class="modal-box">
-    <div class="modal-title">Berufung bestätigen</div>
-    <div class="modal-sub">
-      Wähle je eine Fähigkeit für Volk und Untergruppe.<br>
-      Die dritte Wahl gewährt dir einen <b>Attributbonus +1</b>.
-    </div>
+  <!-- MODAL: LOAD -->
+  <div id="load-modal" class="modal-overlay" style="display:none;">
+    <div class="modal-body">
+      <div class="modal-title">Charakter laden</div>
 
-    <div style="text-align:left; font-size:11px; margin-bottom:10px;">
-      <div style="margin-bottom:6px;">
-        <b>Rassenfähigkeit:</b><br>
-        <input type="text" id="race-ability-input"
-               placeholder="z.B. Nachtsicht, Zähes Blut..."
-               style="width:100%; margin-top:3px; padding:4px; border-radius:6px;
-                      border:1px solid rgba(212,175,55,0.6); background:rgba(10,4,16,0.9); color:#f5efe6;">
+      <div class="modal-field">
+        <label>Name</label>
+        <input id="load-name" type="text">
       </div>
 
-      <div style="margin-bottom:6px;">
-        <b>Untergruppen-Fähigkeit:</b><br>
-        <input type="text" id="sub-ability-input"
-               placeholder="z.B. Waldläufer-Trieb, Wüsteninstinkt..."
-               style="width:100%; margin-top:3px; padding:4px; border-radius:6px;
-                      border:1px solid rgba(212,175,55,0.6); background:rgba(10,4,16,0.9); color:#f5efe6;">
+      <div class="modal-field">
+        <label>Titel (optional)</label>
+        <input id="load-title" type="text">
       </div>
 
-      <div>
-        <b>Attributbonus +1:</b><br>
-        <select id="attr-bonus-select"
-                style="width:100%; margin-top:3px; padding:4px; border-radius:6px;
-                       border:1px solid rgba(212,175,55,0.6); background:rgba(10,4,16,0.9); color:#f5efe6;">
-          <option value="">Bitte Attribut wählen...</option>
-        </select>
+      <div class="modal-actions">
+        <button class="btn-ghost" id="btn-close-load">Abbrechen</button>
+        <button class="btn-main" id="btn-load-confirm">Laden</button>
       </div>
-    </div>
-
-    <div class="modal-actions">
-      <button class="btn-small" id="btn-prof-cancel">Zurück</button>
-      <button class="btn-small" id="btn-prof-confirm" style="color:#f8e7b0;">Bestätigen</button>
     </div>
   </div>
-</div>
 
-<!-- MODAL: Seite 1 verlassen -->
-<div id="leave-modal" class="modal-overlay">
-  <div class="modal-box">
-    <div class="modal-title">Auswahl bestätigen</div>
-    <div class="modal-sub">
-      Bist du mit deiner Auswahl auf dieser Seite zufrieden?<br>
-      Name, Rasse(n), Untergruppe, Profession und Attribute werden als Grundlage versiegelt.
-    </div>
-    <div style="text-align:left; font-size:11px; margin:8px 0 10px;">
-      <b>Aktuelle Zusammenfassung:</b><br>
-      <span id="leave-summary" style="color:var(--gold-bright);"></span>
-    </div>
-    <div class="modal-actions">
-      <button class="btn-small" id="btn-leave-cancel">Zurück</button>
-      <button class="btn-small" id="btn-leave-confirm" style="color:#f8e7b0;">Ja, weiter und speichern</button>
-    </div>
-  </div>
-</div>
-
+  <!-- TRANSIENT MESSAGE -->
+  <div id="transient-msg" class="transient-msg"></div>
 
 <script>
 /* ============================================
-   UNDRA – CLOUD SAVE / LOAD (GLOBAL)
-   Kompatibel mit Seite 1, 2 und neuer Seite 3
+   UNDRA 2.0 – GLOBALER CHAR-STATE & KONSTANTEN
 ============================================ */
 
-window.undra = window.undra || {};
+window.char = {
+  name: "", title: "",
+  race: "", race2: "", sub: "", prof: "", special: "",
+  raceAbility: "", subAbility: "",
+  portraitData: null,
 
-/* --------------------------------------------
-   CLOUD SAVE
-   Übergibt den kompletten UNDRA-State an Server
--------------------------------------------- */
-undra.cloudSave = async function(data) {
-    try {
-        const payload = JSON.stringify(data);
+  attrs: {},
+  bonusApplied: {},
+  attrBonusNote: "",
 
-        const res = await fetch("/undra/cloud/save", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: payload
-        });
+  hp: 0, resource: 0, sp: 0, defense: 0,
 
-        if (!res.ok) {
-            alert("Cloud‑Speichern fehlgeschlagen.");
-            return false;
-        }
-
-        alert("Cloud‑Speichern erfolgreich.");
-        return true;
-
-    } catch (err) {
-        console.error("Cloud‑Save Fehler:", err);
-        alert("Cloud‑Speichern nicht möglich.");
-        return false;
-    }
+  age: "", height: "", weight: "",
+  eyes: "", hair: "", voice: "",
+  armorDesc: "", specialDesc: "",
+  locked: false
 };
 
-
-/* --------------------------------------------
-   CLOUD LOAD
-   Lädt UNDRA‑State vom Server
-   Muss ein Promise zurückgeben → Seite 3 erwartet das
--------------------------------------------- */
-undra.cloudLoad = async function() {
-    try {
-        const res = await fetch("/undra/cloud/load", {
-            method: "GET",
-            headers: { "Accept": "application/json" }
-        });
-
-        if (!res.ok) {
-            alert("Cloud‑Laden fehlgeschlagen.");
-            return null;
-        }
-
-        const data = await res.json();
-
-        if (!data) {
-            alert("Keine Cloud‑Daten gefunden.");
-            return null;
-        }
-
-        alert("Cloud‑Daten geladen.");
-        return data;
-
-    } catch (err) {
-        console.error("Cloud‑Load Fehler:", err);
-        alert("Cloud‑Laden nicht möglich.");
-        return null;
-    }
-};
-</script>
-
-<!-- BLOCK 1: Konstanten, State, globale DOM-Referenzen, Helfer -->
-<script>
-    window.undra = window.undra || {};
-
-undra.state = {
-    /* ============================
-       META / CHARAKTERDATEN
-    ============================ */
-    meta: {
-        name: "",
-        title: "",
-        race: "",
-        subrace: "",
-        profession: "",
-        special: "",
-        portrait: ""
-    },
-
-    /* ============================
-       ATTRIBUTE
-    ============================ */
-    attributes: {},
-
-    /* ============================
-       VITALWERTE
-    ============================ */
-    vitals: {
-        hp: 0,
-        stamina: 0,
-        ae: 0,
-        sgp: 0,
-        armorTotal: 0,
-        gg: 0,
-        tc: 0
-    },
-
-    /* ============================
-       VITAL-BONUS (7 Kristalle)
-    ============================ */
-    vitalBonus: {
-        LE: 0,
-        RUEST: 0,
-        DYN: 0,
-        GG: 0,
-        TC: 0
-    },
-
-    /* ============================
-       KAMPF
-    ============================ */
-    combat: {
-        attack: 0,
-        defense: 0,
-        counter: 0,
-        ranged: 0,
-        technique: 0,
-        status: "",
-        adjustments: ""
-    },
-
-    /* ============================
-       RÜSTUNG / ZONEN
-    ============================ */
-    armor: {
-        selected: 1,
-        zones: {
-            1:{max:0,cur:0,type:null},
-            2:{max:0,cur:0,type:null},
-            3:{max:0,cur:0,type:null},
-            4:{max:0,cur:0,type:null},
-            5:{max:0,cur:0,type:null},
-            6:{max:0,cur:0,type:null},
-            7:{max:0,cur:0,type:null},
-            8:{max:0,cur:0,type:null}
-        }
-    },
-
-    /* ============================
-       INVENTAR
-    ============================ */
-    inventory: {
-        small: Array(10).fill(""),
-        medium: Array(10).fill(""),
-        large: Array(10).fill("")
-    },
-
-    /* ============================
-       WÄHRUNG
-    ============================ */
-    currency: {
-        gold: 0,
-        silver: 0,
-        copper: 0
-    },
-
-    /* ============================
-       TIMELINE
-       story = 60 Tage oben
-       tasks = TAP-Checkboxen
-    ============================ */
-    timeline: {
-        story: {
-            currentDay: 1,
-            checked: []
-        },
-        tasks: {
-            boxes: Array(60).fill(0),
-            value: 0
-        }
-    },
-
-    /* ============================
-       TAGESABSCHLUSS
-    ============================ */
-    day: {
-        finalized: false,
-        hiddenSP: 0,
-        totalSP: 0,
-        tp: 0
-    }
-};
-function undraSyncMetaFromPage1() {
-    const S = undra.state;
-
-    S.meta.name = document.getElementById("in-name")?.value || "";
-    S.meta.title = document.getElementById("in-titel")?.value || "";
-    S.meta.race = document.getElementById("s-race")?.textContent || "";
-    S.meta.subrace = document.getElementById("s-sub")?.textContent || "";
-    S.meta.profession = document.getElementById("s-prof")?.textContent || "";
-    S.meta.special = document.getElementById("spec-summary")?.innerText || "";
-} 
-function undraSyncPortraitFromPage1() {
-    const src = document.querySelector("#portrait-box img");
-    undra.state.meta.portrait = src ? src.src : "";
-}
-function undraSyncAttributesFromPage1() {
-    const S = undra.state.attributes;
-
-    document.querySelectorAll("[data-attr]").forEach(el => {
-        const key = el.dataset.attr;
-        const val = parseInt(el.value || "0", 10);
-        S[key] = val;
-    });
-}
-function undraSyncMerkmaleFromPage1() {
-    const S = undra.state.meta;
-
-    S.age = document.getElementById("ageInput")?.value || "";
-    S.height = document.getElementById("heightInput")?.value || "";
-    S.weight = document.getElementById("weightInput")?.value || "";
-    S.eyes = document.getElementById("eyesInput")?.value || "";
-    S.hair = document.getElementById("hairInput")?.value || "";
-    S.voice = document.getElementById("voiceInput")?.value || "";
-    S.armorDesc = document.getElementById("armorInput")?.value || "";
-    S.specialDesc = document.getElementById("specialInput")?.value || "";
-}
-function undraSyncPage1() {
-    undraSyncMetaFromPage1();
-    undraSyncPortraitFromPage1();
-    undraSyncAttributesFromPage1();
-    undraSyncMerkmaleFromPage1();
-}
-document.addEventListener("input", () => {
-    undraSyncPage1();
-});
-/* ---------- KONSTANTEN & DATEN ---------- */
 const ATTRIBUTES = [
   "Mut","Intelligenz","Fingerfertigkeit","Gewandtheit","Körperkraft",
   "Körperbewusstsein","Konstitution","Charisma","Sozialstatus",
@@ -1198,97 +983,94 @@ const SPECIAL_POOL = [
   "Reaktionsschub","Kampfdisziplin"
 ];
 
-const KEY_CHAR = "undra15_character";
+/* ---------- CLOUD SAVE / LOAD ---------- */
+window.undra = window.undra || {};
 
-/* ---------- STATE ---------- */
-let char = {
-  name: "",
-  title: "",
-  attrs: {},
-  pool: 0,
-  used: 0,
-  race: "",
-  race2: "",
-  sub: "",
-  prof: "",
-  special: "",
-  portraitData: null,
-  raceAbility: "",
-  subAbility: "",
-  attrBonusNote: "",
-  bonusApplied: {}
+undra.save = async function (char) {
+  const id = `undra_${(char.name || "namenlos").trim().toLowerCase()}_${(char.title || "ohne").trim().toLowerCase()}`
+    .replace(/\s+/g, "_");
+
+  try {
+    const res = await fetch(`https://undra.djdrear.workers.dev/save/${id}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(char)
+    });
+
+    if (!res.ok) {
+      console.error("Cloud‑Speichern fehlgeschlagen:", await res.text());
+      return false;
+    }
+    return true;
+  } catch (err) {
+    console.error("Cloud‑Save Fehler:", err);
+    return false;
+  }
 };
+
+undra.load = async function (name, title = "") {
+  const id = `undra_${(name || "namenlos").trim().toLowerCase()}_${(title || "ohne").trim().toLowerCase()}`
+    .replace(/\s+/g, "_");
+
+  try {
+    const res = await fetch(`https://undra.djdrear.workers.dev/load/${id}`);
+    if (!res.ok) {
+      console.error("Cloud‑Laden fehlgeschlagen:", await res.text());
+      return null;
+    }
+    const data = await res.json();
+    return data || null;
+  } catch (err) {
+    console.error("Cloud‑Load Fehler:", err);
+    return null;
+  }
+};
+const confirmLoad = async () => {
+  const name  = document.getElementById("load-name")?.value.trim();
+  const title = document.getElementById("load-title")?.value.trim();
+
+  if (!name) {
+    showMsg("Bitte einen Namen eingeben.");
+    return;
+  }
+
+  if (!window.undra || typeof undra.load !== "function") {
+    showMsg("Cloud‑Laden ist hier nicht verfügbar.");
+    return;
+  }
+
+  const data = await undra.load(name, title);
+
+  if (!data) {
+    showMsg("Kein Charakter gefunden.");
+    return;
+  }
+
+  Object.assign(char, data);
+
+  updateUI();
+  if (loadModal) loadModal.style.display = "none";
+  showMsg("Charakter geladen.");
+};
+/* ============================================
+   UNDRA 2.0 – DOM-REFERENZEN & HELFER
+============================================ */
+
+let inName, inTitel, sumName, sumTitle, sRace, sSubWrap, sSub, sProf, sSpec, heroPreviewSub;
+let pTotal, pUsed, pLeft;
+let raceList, subList, profList;
+let rollBtn, btnNext;
+let previewImg, placeholder, uploadInput;
+let radarCanvas, radarCtx;
+let transientMsgEl;
+let btnCloudLoad, btnCloudSave;
+let loadModal, btnCloseLoad;
+let professionModal, raceAbilityInput, subAbilityInput, attrBonusSelectEl, btnProfCancel, btnProfConfirm;
+let leaveModal, btnLeaveCancel, btnLeaveConfirm;
 
 let pendingProfession = "";
 let transientTimeout = null;
 
-/* ---------- GLOBALE DOM-ELEMENTE ---------- */
-let raceSelect;
-let subraceSelect;
-let profSelect;
-
-let idAge;
-let idHeight;
-let idWeight;
-let idEyes;
-let idHair;
-let idVoice;
-let idClothes;
-let idSpecialMarks;
-let idShortdesc;
-let idStory;
-
-let inName;
-let inTitel;
-let sumName;
-let sumTitle;
-let sRace;
-let sSubWrap;
-let sSub;
-let sProf;
-let sSpec;
-let heroPreviewSub;
-
-let pTotal;
-let pUsed;
-let pLeft;
-
-let raceList;
-let subList;
-let profList;
-
-let rollBtn;
-let btnNext;
-
-let previewImg;
-let placeholder;
-let uploadInput;
-
-let radarCanvas;
-let radarCtx;
-
-let transientMsgEl;
-
-let btnCloudLoad;
-let btnCloudSave;
-
-let loadModal;
-let btnCloseLoad;
-let slotButtons;
-
-let professionModal;
-let raceAbilityInput;
-let subAbilityInput;
-let attrBonusSelectEl;
-let btnProfCancel;
-let btnProfConfirm;
-
-let leaveModal;
-let leaveSummary;
-let btnLeaveCancel;
-let btnLeaveConfirm;
-
-/* ---------- HELFER ---------- */
 function showMsg(text, ms = 2200) {
   if (!transientMsgEl) return;
   transientMsgEl.textContent = text;
@@ -1308,76 +1090,193 @@ function clearActiveIn(container) {
   if (!container) return;
   container.querySelectorAll(".check-item").forEach(c => c.classList.remove("active"));
 }
-</script>
 
-<script>
-    /* ---------- SYNC PAGE 1 → GLOBAL UNDRA STATE ---------- */
-function undraSyncPage1ToGlobalState() {
-    const S = undra.state;
+function handleUploadChange(e) {
+  const file = e.target.files?.[0];
+  if (!file) {
+    showMsg("Kein Bild ausgewählt.");
+    return;
+  }
 
-    /* --- META-DATEN --- */
-    S.meta.name = inName?.value?.trim() || "";
-    S.meta.title = inTitel?.value?.trim() || "";
-
-    S.meta.race = char.race || "";
-    S.meta.subrace = char.sub || "";
-    S.meta.profession = char.prof || "";
-    S.meta.special = char.special || "";
-
-    /* --- FÄHIGKEITEN --- */
-    S.meta.raceAbility = char.raceAbility || "";
-    S.meta.subAbility = char.subAbility || "";
-
-    /* --- PORTRAIT --- */
-    if (previewImg && previewImg.src) {
-        S.meta.portrait = previewImg.src;
+  const reader = new FileReader();
+  reader.onload = () => {
+    const data = reader.result;
+    if (previewImg) {
+      previewImg.src = data;
+      previewImg.style.display = "block";
     }
-
-    /* --- ATTRIBUTE --- */
-    S.attributes = {};
-    ATTRIBUTES.forEach(a => {
-        S.attributes[a] = char.attrs[a] || 0;
-    });
-
-    /* --- BONUS-NOTIZ --- */
-    S.meta.attrBonusNote = char.attrBonusNote || "";
-    S.meta.bonusApplied = char.bonusApplied || {};
+    if (placeholder) placeholder.style.display = "none";
+    char.portraitData = data;
+    showMsg("Portrait übernommen.");
+  };
+  reader.readAsDataURL(file);
 }
-</script>
 
-<script>
-/* ---------- ATTRIBUTE ---------- */
+/* ---------- VITALWERTE ---------- */
+function calculateHP(char) {
+  const base = 20;
+  const kon = char.attrs?.Konstitution || 0;
+  const kk  = char.attrs?.Körperkraft || 0;
+  return base + kon * 2 + kk;
+}
+
+function calculateDefense(char) {
+  const base = 0;
+  const gew  = char.attrs?.Gewandtheit || 0;
+  const int  = char.attrs?.Intuition || 0;
+  return base + Math.floor((gew + int) / 4);
+}
+
+function calculateSP(char) {
+  const base = 10;
+  const int  = char.attrs?.Intelligenz || 0;
+  const tec  = char.attrs?.Technik || 0;
+  return base + Math.floor((int + tec) / 3);
+}
+
+function calculateResource(char) {
+  const base = 5;
+  const mut  = char.attrs?.Mut || 0;
+  return base + Math.floor(mut / 2);
+}
+
+function syncVitals() {
+  char.hp       = calculateHP(char);
+  char.defense  = calculateDefense(char);
+  char.sp       = calculateSP(char);
+  char.resource = calculateResource(char);
+}
+
+function assignArmorFromProfession() {
+  const prof = char.prof;
+  if (!prof) return;
+
+  const recommended = PROF_ARMOR_MAP[prof] || "Stoff";
+  char.recommendedArmor = recommended;
+  char.armor = ARMOR_MATERIALS[recommended] || 0;
+
+  // Seite 1: noch keine echte Ausrüstung → kein Malus
+  char.armorPenalty = false;
+
+  // Trefferchance bleibt 100% auf Seite 1
+  char.hitChance = 100;
+}
+/* ============================================
+   RÜSTUNGSSYSTEM – MATERIAL & PROFESSION-MAP
+============================================ */
+
+const ARMOR_MATERIALS = {
+  "Stoff": 0,
+  "Leder": 1,
+  "Gehärtetes Leder": 2,
+  "Kette": 3,
+  "Schuppe": 4,
+  "Platte": 5,
+  "Runenplatte": 6,
+  "Drachenhaut": 7
+};
+
+const PROF_ARMOR_MAP = {
+  "Feuermagier": "Stoff",
+  "Druide": "Stoff",
+  "Illusionist": "Stoff",
+  "Alchemist": "Stoff",
+  "Necromant": "Stoff",
+  "Sänger": "Stoff",
+  "Hexer": "Stoff",
+  "Kampfmagier": "Leder",
+
+  "Dieb": "Leder",
+  "Späher": "Leder",
+  "Kundschafter": "Leder",
+  "Saboteur": "Leder",
+  "Trickser": "Leder",
+  "Akrobat": "Leder",
+
+  "Wildnisläufer": "Gehärtetes Leder",
+  "Jäger": "Gehärtetes Leder",
+  "Pirscher": "Gehärtetes Leder",
+  "Fernkämpfer": "Gehärtetes Leder",
+
+  "Krieger": "Kette",
+  "Stammeskrieger": "Kette",
+  "Speerträger": "Kette",
+  "Waffenschmied": "Kette",
+
+  "Ritter": "Platte",
+  "Paladin": "Platte",
+  "Berserker": "Schuppe",
+
+  "Drachendisciple": "Schuppe",
+  "Sturmgeboren": "Schuppe",
+  "Frostschuppe": "Schuppe"
+};
+
+function fillLeavePopup() {
+  // immer vor Anzeige alles neu berechnen
+  calculateExtendedVitals();
+  assignArmorFromProfession();
+
+  const elHP      = document.getElementById("popup-hp");
+  const elRes     = document.getElementById("popup-resource");
+  const elSP      = document.getElementById("popup-sp");
+  const elAbwehr  = document.getElementById("popup-abwehr");
+  const elArmor   = document.getElementById("popup-armor");
+  const elGG      = document.getElementById("popup-gg");
+  const elTC      = document.getElementById("popup-tc");
+
+  if (elHP)     elHP.textContent     = char.hp;
+  if (elRes)    elRes.textContent    = char.attributeResources;
+  if (elSP)     elSP.textContent     = char.sp;
+  if (elAbwehr) elAbwehr.textContent = char.defense;
+
+  if (elArmor)  elArmor.textContent  = char.recommendedArmor || "–";
+  if (elGG)     elGG.textContent     = char.mentalHealth + "%";
+  if (elTC)     elTC.textContent     = char.hitChance + "%";
+}
+
+function sealCharacter() {
+  char.locked = true;
+  showMsg("Charakter versiegelt.");
+}
+/* ============================================
+   UNDRA 2.0 – RASSEN / SUB / PROF & PROF-MODAL
+============================================ */
+
 function initAttributes() {
   const grid = document.getElementById("attr-grid-s1");
   if (!grid) return;
 
+  if (!char.attrs) char.attrs = {};
   grid.innerHTML = "";
 
-  ATTRIBUTES.forEach(a => {
-    if (typeof char.attrs[a] !== "number") char.attrs[a] = 0;
+  ATTRIBUTES.forEach(attrName => {
+    if (typeof char.attrs[attrName] !== "number") {
+      char.attrs[attrName] = 0;
+    }
 
     const row = document.createElement("div");
     row.className = "attr-row";
 
     const nameSpan = document.createElement("span");
     nameSpan.className = "attr-name";
-    nameSpan.textContent = a;
+    nameSpan.textContent = attrName;
 
     const btnMinus = document.createElement("button");
     btnMinus.className = "btn-step";
     btnMinus.textContent = "▼";
-    btnMinus.addEventListener("click", () => modAttr(a, -1));
+    btnMinus.addEventListener("click", () => modAttr(attrName, -1));
 
     const valBox = document.createElement("div");
     valBox.className = "val-box";
-    valBox.id = "v-" + a;
-    valBox.textContent = String(char.attrs[a]);
+    valBox.id = "v-" + attrName;
+    valBox.textContent = String(char.attrs[attrName]);
 
     const btnPlus = document.createElement("button");
     btnPlus.className = "btn-step btn-plus";
-    btnPlus.id = "plus-" + a;
+    btnPlus.id = "plus-" + attrName;
     btnPlus.textContent = "▲";
-    btnPlus.addEventListener("click", () => modAttr(a, 1));
+    btnPlus.addEventListener("click", () => modAttr(attrName, 1));
 
     row.appendChild(nameSpan);
     row.appendChild(btnMinus);
@@ -1387,43 +1286,46 @@ function initAttributes() {
   });
 }
 
-function modAttr(a, delta) {
-  const current = char.attrs[a] || 0;
+function modAttr(attrName, delta) {
+  const current = char.attrs[attrName] || 0;
 
   if (delta > 0) {
-    if (char.pool - char.used <= 0) return;
+    const left = (char.pool || 0) - (char.used || 0);
+    if (left <= 0) return;
     if (current >= 10) {
-      showMsg("Maximum von 10 Punkten in " + a + " erreicht.");
+      showMsg("Maximum von 10 Punkten in " + attrName + " erreicht.");
       return;
     }
-    char.attrs[a] = current + 1;
-    char.used += 1;
+    char.attrs[attrName] = current + 1;
+    char.used = (char.used || 0) + 1;
   } else if (delta < 0) {
     if (current <= 0) return;
-    char.attrs[a] = current - 1;
-    char.used -= 1;
+    char.attrs[attrName] = current - 1;
+    char.used = Math.max(0, (char.used || 0) - 1);
   }
 
   updateUI();
 }
 
-/* ---------- RASSEN / SUB / PROF ---------- */
+/* ---------- RASSEN ---------- */
 function initRaces() {
   if (!raceList || !subList || !profList) return;
 
   raceList.innerHTML = "";
-  Object.keys(ORIGIN_DATA).forEach(r => {
+  Object.keys(ORIGIN_DATA).forEach(race => {
     const el = document.createElement("div");
     el.className = "check-item";
-    el.textContent = r;
-    el.dataset.value = r;
-    el.addEventListener("click", () => selectRace(r));
+    el.textContent = race;
+    el.dataset.value = race;
+    el.addEventListener("click", () => selectRace(race));
     raceList.appendChild(el);
   });
 
   raceList.querySelectorAll(".check-item").forEach(el => {
     const val = el.dataset.value;
-    if (val === char.race || val === char.race2) el.classList.add("active");
+    if (val === char.race || val === char.race2) {
+      el.classList.add("active");
+    }
   });
 
   subList.innerHTML = "";
@@ -1431,14 +1333,14 @@ function initRaces() {
 
   if (char.race) {
     const subs = ORIGIN_DATA[char.race]?.subs || [];
-    subs.forEach(s => {
+    subs.forEach(sub => {
       const el = document.createElement("div");
       el.className = "check-item";
-      el.textContent = s;
-      el.dataset.value = s;
-      el.addEventListener("click", () => selectSub(s));
+      el.textContent = sub;
+      el.dataset.value = sub;
+      el.addEventListener("click", () => selectSub(sub));
+      if (sub === char.sub) el.classList.add("active");
       subList.appendChild(el);
-      if (s === char.sub) el.classList.add("active");
     });
   }
 
@@ -1452,17 +1354,16 @@ function initRaces() {
   updateUI();
 }
 
-// Mischwesen-Logik: bis zu zwei Rassen
-function selectRace(r) {
+function selectRace(race) {
   if (!char.race && !char.race2) {
-    char.race = r;
-  } else if (char.race === r) {
+    char.race = race;
+  } else if (char.race === race) {
     char.race = char.race2;
     char.race2 = "";
-  } else if (char.race2 === r) {
+  } else if (char.race2 === race) {
     char.race2 = "";
   } else if (!char.race2) {
-    char.race2 = r;
+    char.race2 = race;
   } else {
     showMsg("Es können maximal zwei Rassen als Mischwesen gewählt werden.");
     return;
@@ -1482,7 +1383,9 @@ function selectRace(r) {
 
   raceList.querySelectorAll(".check-item").forEach(el => {
     const val = el.dataset.value;
-    if (val === char.race || val === char.race2) el.classList.add("active");
+    if (val === char.race || val === char.race2) {
+      el.classList.add("active");
+    }
   });
 
   subList.innerHTML = "";
@@ -1490,13 +1393,23 @@ function selectRace(r) {
 
   if (char.race) {
     const subs = ORIGIN_DATA[char.race]?.subs || [];
-    subs.forEach(s => {
+    subs.forEach(sub => {
       const el = document.createElement("div");
       el.className = "check-item";
-      el.textContent = s;
-      el.dataset.value = s;
-      el.addEventListener("click", () => selectSub(s));
+      el.textContent = sub;
+      el.dataset.value = sub;
+      el.addEventListener("click", () => selectSub(sub));
       subList.appendChild(el);
+    });
+
+    const profs = ORIGIN_DATA[char.race]?.profs || [];
+    profs.forEach(prof => {
+      const el = document.createElement("div");
+      el.className = "check-item";
+      el.textContent = prof;
+      el.dataset.value = prof;
+      el.addEventListener("click", () => openProfessionModal(prof));
+      profList.appendChild(el);
     });
   }
 
@@ -1510,31 +1423,32 @@ function selectRace(r) {
   updateUI();
 }
 
-function selectSub(s) {
-  char.sub = s;
+function selectSub(sub) {
+  char.sub = sub;
 
   clearActiveIn(subList);
   clearActiveIn(profList);
 
-  const chosen = subList.querySelector(`[data-value="${s}"]`);
+  const chosen = subList.querySelector(`[data-value="${sub}"]`);
   if (chosen) chosen.classList.add("active");
 
   profList.innerHTML = "";
 
   if (char.race) {
     const profs = ORIGIN_DATA[char.race]?.profs || [];
-    profs.forEach(p => {
+    profs.forEach(prof => {
       const el = document.createElement("div");
       el.className = "check-item";
-      el.textContent = p;
-      el.dataset.value = p;
-      el.addEventListener("click", () => openProfessionModal(p));
+      el.textContent = prof;
+      el.dataset.value = prof;
+      el.addEventListener("click", () => openProfessionModal(prof));
       profList.appendChild(el);
     });
   }
 
   sSpec.textContent = "Wähle eine Profession, um deine Gabe zu manifestieren.";
   sSpec.style.color = "var(--gold-bright)";
+
   updateUI();
 }
 
@@ -1542,118 +1456,159 @@ function selectSub(s) {
 function openProfessionModal(prof) {
   pendingProfession = prof;
 
-  if (!professionModal) return;
-  professionModal.style.display = "flex";
+  if (professionModal)
+    professionModal.style.display = "flex";
 
-  if (raceAbilityInput) raceAbilityInput.value = char.raceAbility || "";
-  if (subAbilityInput) subAbilityInput.value = char.subAbility || "";
+  if (raceAbilityInput)  raceAbilityInput.value  = char.raceAbility || "";
+  if (subAbilityInput)   subAbilityInput.value   = char.subAbility  || "";
   if (attrBonusSelectEl) attrBonusSelectEl.value = char.attrBonusNote || "";
 
   checkProfessionReady();
 }
 
 function closeProfessionModal() {
-  if (professionModal) professionModal.style.display = "none";
+  if (professionModal)
+    professionModal.style.display = "none";
 }
 
-/* ---------- LEAVE-MODAL ---------- */
-function openLeaveModal() {
-  const raceText = (char.race && char.race2)
-    ? char.race + " / " + char.race2 + " (Mischwesen)"
-    : (char.race || char.race2 || "–");
+function checkProfessionReady() {
+  const raceReady  = raceAbilityInput?.value.trim().length > 0;
+  const subReady   = subAbilityInput?.value.trim().length > 0;
+  const bonusReady = attrBonusSelectEl?.value.length > 0;
 
-  const parts = [];
-  parts.push((char.name || "Namenlos") + (char.title ? " – " + char.title : ""));
-  parts.push("Volk: " + raceText + (char.sub ? " (" + char.sub + ")" : ""));
-  parts.push("Profession: " + (char.prof || "–"));
+  const allReady = raceReady && subReady && bonusReady;
 
-  if (leaveSummary) leaveSummary.textContent = parts.join(" • ");
-  if (leaveModal) leaveModal.style.display = "flex";
+  if (btnProfConfirm)
+    btnProfConfirm.disabled = !allReady;
 }
 
-function closeLeaveModal() {
-  if (leaveModal) leaveModal.style.display = "none";
+function confirmProfession() {
+  if (!pendingProfession) {
+    closeProfessionModal();
+    return;
+  }
+
+  char.prof          = pendingProfession;
+  char.special       = char.special || randomFrom(SPECIAL_POOL);
+  char.raceAbility   = raceAbilityInput?.value.trim() || "";
+  char.subAbility    = subAbilityInput?.value.trim()  || "";
+  char.attrBonusNote = attrBonusSelectEl?.value || "";
+
+  if (!char.bonusApplied) char.bonusApplied = {};
+  if (
+    char.attrBonusNote &&
+    char.attrs[char.attrBonusNote] != null &&
+    !char.bonusApplied[char.attrBonusNote]
+  ) {
+    char.attrs[char.attrBonusNote] += 1;
+    char.bonusApplied[char.attrBonusNote] = true;
+  }
+
+  updateUI();
+  showMsg("Berufung und Fähigkeiten bestätigt.");
+  closeProfessionModal();
 }
 
-function sealCharacter() {
-  if (inName) inName.disabled = true;
-  if (inTitel) inTitel.disabled = true;
-  if (raceList) raceList.querySelectorAll(".check-item").forEach(el => el.style.pointerEvents = "none");
-  if (subList) subList.querySelectorAll(".check-item").forEach(el => el.style.pointerEvents = "none");
-  if (profList) profList.querySelectorAll(".check-item").forEach(el => el.style.pointerEvents = "none");
-  if (raceAbilityInput) raceAbilityInput.disabled = true;
-  if (subAbilityInput) subAbilityInput.disabled = true;
-  if (attrBonusSelectEl) attrBonusSelectEl.disabled = true;
-  if (rollBtn) rollBtn.disabled = true;
-  if (btnNext) btnNext.disabled = true;
+function markCurrentProfession() {
+  if (!char?.prof || !profList) return;
+  clearActiveIn(profList);
+  const current = profList.querySelector(`[data-value="${char.prof}"]`);
+  if (current) current.classList.add("active");
 }
-</script>
-<!-- BLOCK 3: UI-Update, Radar, Pool, Identität, LocalStorage -->
-<script>
-/* ---------- UI-UPDATE ---------- */
+/* ============================================
+   UNDRA 2.0 – UI, RADAR, POOL, FINAL VALUES
+============================================ */
+
+function updateCharFromPage1() {
+  char.name    = inName?.value.trim()  || "";
+  char.title   = inTitel?.value.trim() || "";
+
+  if (!char.attrs) char.attrs = {};
+  document.querySelectorAll("[data-attr]").forEach(el => {
+    const key = el.dataset.attr;
+    const val = parseInt(el.value || "0", 10);
+    char.attrs[key] = val;
+  });
+
+  char.age         = document.getElementById("ageInput")?.value.trim() || "";
+  char.height      = document.getElementById("heightInput")?.value.trim() || "";
+  char.weight      = document.getElementById("weightInput")?.value.trim() || "";
+  char.eyes        = document.getElementById("eyesInput")?.value.trim() || "";
+  char.hair        = document.getElementById("hairInput")?.value.trim() || "";
+  char.voice       = document.getElementById("voiceInput")?.value.trim() || "";
+  char.armorDesc   = document.getElementById("armorInput")?.value.trim() || "";
+  char.specialDesc = document.getElementById("specialInput")?.value.trim() || "";
+
+  const img = previewImg || document.querySelector("#portrait-box img");
+  char.portraitData = img ? img.src : "";
+}
+
 function updateUI() {
   if (inName)  char.name  = inName.value.trim();
   if (inTitel) char.title = inTitel.value.trim();
 
-  if (sumName) sumName.textContent = char.name || "Namenlos";
+  if (sumName)  sumName.textContent  = char.name || "Namenlos";
   if (sumTitle) sumTitle.textContent = char.title ? ("– " + char.title) : "ohne Titel";
 
-  if (char.race && char.race2) {
-    sRace.textContent = char.race + " / " + char.race2 + " (Mischwesen)";
-  } else if (char.race) {
-    sRace.textContent = char.race;
-  } else if (char.race2) {
-    sRace.textContent = char.race2;
-  } else {
-    sRace.textContent = "–";
+  if (sRace) {
+    if (char.race && char.race2) {
+      sRace.textContent = `${char.race} / ${char.race2} (Mischwesen)`;
+    } else if (char.race) {
+      sRace.textContent = char.race;
+    } else if (char.race2) {
+      sRace.textContent = char.race2;
+    } else {
+      sRace.textContent = "–";
+    }
   }
 
-  if (char.sub) {
-    sSubWrap.style.display = "";
-    sSub.textContent = char.sub;
-  } else {
-    sSubWrap.style.display = "none";
+  if (sSubWrap && sSub) {
+    if (char.sub) {
+      sSubWrap.style.display = "";
+      sSub.textContent = char.sub;
+    } else {
+      sSubWrap.style.display = "none";
+    }
   }
 
-  sProf.textContent = char.prof || "–";
+  if (sProf) sProf.textContent = char.prof || "–";
 
-  const poolLeft = char.pool - char.used;
-  pTotal.textContent = char.pool;
-  pUsed.textContent  = char.used;
-  pLeft.textContent  = poolLeft;
+  markCurrentProfession();
 
-  ATTRIBUTES.forEach(a => {
-    const val = char.attrs[a] || 0;
+  const pool = char.pool || 0;
+  const used = char.used || 0;
+  const poolLeft = pool - used;
 
-    const box = document.getElementById("v-" + a);
+  if (pTotal) pTotal.textContent = pool;
+  if (pUsed)  pUsed.textContent  = used;
+  if (pLeft)  pLeft.textContent  = poolLeft;
+
+  ATTRIBUTES.forEach(attr => {
+    const val = char.attrs[attr] || 0;
+
+    const box = document.getElementById("v-" + attr);
     if (box) box.textContent = val;
 
-    const plusBtn = document.getElementById("plus-" + a);
+    const plusBtn = document.getElementById("plus-" + attr);
     if (plusBtn) {
-      if (poolLeft <= 0 || val >= 10) {
-        plusBtn.classList.add("disabled");
-        plusBtn.classList.remove("glow");
-      } else {
-        plusBtn.classList.remove("disabled");
-        if (char.pool > 0) plusBtn.classList.add("glow");
-      }
+      const disabled = (poolLeft <= 0 || val >= 10);
+      plusBtn.classList.toggle("disabled", disabled);
+      plusBtn.classList.toggle("glow", !disabled && pool > 0);
     }
   });
 
   const parts = [];
-  if (char.race && char.race2) parts.push(char.race + " / " + char.race2);
-  else if (char.race) parts.push(char.race);
-  else if (char.race2) parts.push(char.race2);
-
-  if (char.sub) parts.push("(" + char.sub + ")");
-  if (char.prof) parts.push("– " + char.prof);
-
+  if (char.race && char.race2) parts.push(`${char.race} / ${char.race2}`);
+  else if (char.race)          parts.push(char.race);
+  else if (char.race2)         parts.push(char.race2);
+  if (char.sub)  parts.push(`(${char.sub})`);
+  if (char.prof) parts.push(`– ${char.prof}`);
   if (heroPreviewSub) heroPreviewSub.textContent = parts.join(" ");
 
-  let extraLines = [];
-  if (char.special) extraLines.push("Spezial: " + char.special);
-  if (char.raceAbility) extraLines.push(char.raceAbility);
-  if (char.subAbility) extraLines.push(char.subAbility);
+  const extraLines = [];
+  if (char.special)       extraLines.push("Spezial: " + char.special);
+  if (char.raceAbility)   extraLines.push(char.raceAbility);
+  if (char.subAbility)    extraLines.push(char.subAbility);
   if (char.attrBonusNote) extraLines.push("+1 " + char.attrBonusNote);
 
   if (extraLines.length > 0) {
@@ -1668,15 +1623,14 @@ function updateUI() {
     !!char.name &&
     (char.race || char.race2) &&
     !!char.prof &&
-    char.pool > 0 &&
-    char.used > 0;
+    (char.pool || 0) > 0 &&
+    (char.used || 0) > 0;
 
   if (btnNext) btnNext.disabled = !canProceed;
 
   drawRadar();
 }
 
-/* ---------- RADAR ---------- */
 function drawRadar() {
   if (!radarCanvas || !radarCtx) return;
 
@@ -1689,8 +1643,8 @@ function drawRadar() {
   radarCtx.clearRect(0, 0, w, h);
 
   const grad = radarCtx.createRadialGradient(cx, cy, 10, cx, cy, radius + 10);
-  grad.addColorStop(0, "rgba(180,108,255,0.3)");
-  grad.addColorStop(1, "rgba(0,0,0,0.0)");
+  grad.addColorStop(0, "rgba(180,108,255,0.30)");
+  grad.addColorStop(1, "rgba(0,0,0,0.00)");
   radarCtx.fillStyle = grad;
   radarCtx.beginPath();
   radarCtx.arc(cx, cy, radius + 10, 0, Math.PI * 2);
@@ -1730,347 +1684,82 @@ function drawRadar() {
 
   radarCtx.beginPath();
   for (let i = 0; i < count; i++) {
-    const val    = char.attrs[ATTRIBUTES[i]] || 0;
+    const val = char.attrs[ATTRIBUTES[i]] || 0;
     const factor = val / 10;
-    const r      = radius * (0.1 + factor * 0.9);
-    const angle  = step * i - Math.PI / 2;
-    const x      = cx + Math.cos(angle) * r;
-    const y      = cy + Math.sin(angle) * r;
+    const r = radius * (0.1 + factor * 0.9);
+    const angle = step * i - Math.PI / 2;
+
+    const x = cx + Math.cos(angle) * r;
+    const y = cy + Math.sin(angle) * r;
+
     if (i === 0) radarCtx.moveTo(x, y);
     else radarCtx.lineTo(x, y);
   }
   radarCtx.closePath();
-  radarCtx.fillStyle   = "rgba(208,70,70,0.35)";
+
+  radarCtx.fillStyle = "rgba(208,70,70,0.35)";
   radarCtx.strokeStyle = "#d4af37";
-  radarCtx.lineWidth   = 2;
+  radarCtx.lineWidth = 2;
   radarCtx.fill();
   radarCtx.stroke();
 }
 
-/* ---------- POOL WURF ---------- */
 function rollPool() {
   if (char.pool > 0) {
     showMsg("Punkte wurden bereits ausgewürfelt.");
     return;
   }
 
-  const pool = Math.floor(Math.random() * (60 - 20 + 1)) + 20;
+  const pool = Math.floor(Math.random() * 41) + 20;
   char.pool = pool;
   char.used = 0;
 
-  Object.keys(char.attrs).forEach(a => (char.attrs[a] = 0));
+  Object.keys(char.attrs).forEach(a => {
+    char.attrs[a] = 0;
+  });
 
   showMsg("Du erhältst " + pool + " Attributpunkte.");
   updateUI();
 }
 
-/* ---------- IDENTITÄT (Seite 2) ---------- */
-function saveIdentity() {
-  if (!idAge) return;
-  char.age           = idAge.value.trim();
-  char.height        = idHeight.value.trim();
-  char.weight        = idWeight.value.trim();
-  char.eyes          = idEyes.value.trim();
-  char.hair          = idHair.value.trim();
-  char.voice         = idVoice.value.trim();
-  char.clothes       = idClothes.value.trim();
-  char.specialmarks  = idSpecialMarks.value.trim();
-  char.shortdesc     = idShortdesc.value.trim();
-  char.story         = idStory.value.trim();
+function calculateExtendedVitals() {
+  if (!char.attrs) char.attrs = {};
+  const a = char.attrs;
+
+  const KK = a["Körperkraft"]       || 0;
+  const GE = a["Gewandtheit"]       || 0;
+  const KB = a["Körperbewusstsein"] || 0;
+  const KO = a["Konstitution"]      || 0;
+  const TE = a["Technik"]           || 0;
+  const AS = a["Abwehr"] || a["Abwehrschlag"] || 0;
+
+  const hpBase  = 20;
+  const hpBonus = Math.round((KK + GE + KB + KO + TE + AS) / 1.75);
+  char.hp = hpBase + hpBonus;
+
+  // Attributressourcen = Summe aller vergebenen Attributpunkte
+  char.attributeResources = Object.values(a).reduce(
+    (sum, v) => sum + (typeof v === "number" ? v : 0),
+    0
+  );
+
+  const nameLen = (char.name || "").replace(/\s+/g, "").length;
+  const attrSum = char.attributeResources;
+
+  // SP = Schicksalspunkte
+  char.sp = 500 + nameLen + attrSum + char.hp + AS;
+
+  const IT = a["Intuition"] || 0;
+  char.defense = Math.floor((GE + IT) / 4);
+
+  if (typeof char.armor !== "number") char.armor = 0;
+  char.mentalHealth = 100;
+  if (typeof char.hitChance !== "number") char.hitChance = 100;
 }
+/* ============================================
+   UNDRA 2.0 – INIT & EVENTS (SEITE 1)
+============================================ */
 
-/* ---------- LOKAL SPEICHERN ---------- */
-function saveCharacterLocal() {
-  saveIdentity();
-
-  const data = {
-    name: char.name,
-    title: char.title,
-    race: char.race,
-    race2: char.race2,
-    sub: char.sub,
-    prof: char.prof,
-    special: char.special,
-    attrs: char.attrs,
-    pool: char.pool,
-    used: char.used,
-    portraitData: char.portraitData || null,
-    raceAbility: char.raceAbility || "",
-    subAbility: char.subAbility || "",
-    attrBonusNote: char.attrBonusNote || "",
-    bonusApplied: char.bonusApplied || {},
-
-    age: char.age || "",
-    height: char.height || "",
-    weight: char.weight || "",
-    eyes: char.eyes || "",
-    hair: char.hair || "",
-    voice: char.voice || "",
-    clothes: char.clothes || "",
-    specialmarks: char.specialmarks || "",
-    shortdesc: char.shortdesc || "",
-    story: char.story || ""
-  };
-
-  try {
-    localStorage.setItem(KEY_CHAR, JSON.stringify(data));
-    showMsg("Charakterdaten lokal gespeichert.");
-  } catch (e) {
-    console.error(e);
-    showMsg("Fehler beim lokalen Speichern.");
-  }
-}
-
-/* ---------- LOKAL LADEN ---------- */
-function loadCharacterLocal() {
-  try {
-    const raw = localStorage.getItem(KEY_CHAR);
-    if (!raw) return;
-
-    const data = JSON.parse(raw);
-    if (!data || typeof data !== "object") return;
-
-    char.name         = data.name || "";
-    char.title        = data.title || "";
-    char.race         = data.race || "";
-    char.race2        = data.race2 || "";
-    char.sub          = data.sub || "";
-    char.prof         = data.prof || "";
-    char.special      = data.special || "";
-    char.attrs        = data.attrs || {};
-    char.pool         = data.pool || 0;
-    char.used         = data.used || 0;
-
-    char.age           = data.age || "";
-    char.height        = data.height || "";
-    char.weight        = data.weight || "";
-    char.eyes          = data.eyes || "";
-    char.hair          = data.hair || "";
-    char.voice         = data.voice || "";
-    char.clothes       = data.clothes || "";
-    char.specialmarks  = data.specialmarks || "";
-    char.shortdesc     = data.shortdesc || "";
-    char.story         = data.story || "";
-
-    char.portraitData = data.portraitData || null;
-    char.raceAbility  = data.raceAbility || "";
-    char.subAbility   = data.subAbility || "";
-    char.attrBonusNote = data.attrBonusNote || "";
-    char.bonusApplied  = data.bonusApplied || {};
-
-    if (inName)  inName.value  = char.name;
-    if (inTitel) inTitel.value = char.title;
-
-    if (previewImg && placeholder) {
-      if (char.portraitData) {
-        previewImg.src = char.portraitData;
-        previewImg.style.display = "block";
-        placeholder.style.display = "none";
-      } else {
-        previewImg.style.display = "none";
-        placeholder.style.display = "block";
-      }
-    }
-
-    ATTRIBUTES.forEach(a => {
-      if (typeof char.attrs[a] !== "number") char.attrs[a] = 0;
-    });
-
-    initRaces();
-setTimeout(() => {
-  if (char.race) selectRace(char.race);
-  if (char.race2 && char.race2 !== char.race) selectRace(char.race2);
-  if (char.sub) selectSub(char.sub);
-  if (char.prof) {
-    const chosen = profList.querySelector(`[data-value="${char.prof}"]`);
-    if (chosen) chosen.classList.add("active");
-  }
-  updateUI();
-}, 30);
-
-    initAttributes();
-    updateUI();
-
-    showMsg("Lokale Charakterdaten geladen.");
-  } catch (e) {
-    console.error(e);
-  }
-}
-</script>
-<!-- BLOCK 4: Cloud-Speicher & -Laden -->
-<script>
-    
-    /* ---------- SYNC PAGE 1 → GLOBAL UNDRA STATE ---------- */
-function undraSyncPage1ToGlobalState() {
-    const S = undra.state;
-
-    /* --- META-DATEN --- */
-    S.meta.name = inName?.value?.trim() || "";
-    S.meta.title = inTitel?.value?.trim() || "";
-
-    S.meta.race = char.race || "";
-    S.meta.subrace = char.sub || "";
-    S.meta.profession = char.prof || "";
-    S.meta.special = char.special || "";
-
-    /* --- FÄHIGKEITEN --- */
-    S.meta.raceAbility = char.raceAbility || "";
-    S.meta.subAbility = char.subAbility || "";
-
-    /* --- PORTRAIT --- */
-    if (previewImg && previewImg.src) {
-        S.meta.portrait = previewImg.src;
-    }
-
-    /* --- ATTRIBUTE --- */
-    S.attributes = {};
-    ATTRIBUTES.forEach(a => {
-        S.attributes[a] = char.attrs[a] || 0;
-    });
-
-    /* --- BONUS-NOTIZ --- */
-    S.meta.attrBonusNote = char.attrBonusNote || "";
-    S.meta.bonusApplied = char.bonusApplied || {};
-}
-
-/* ---------- CLOUD ---------- */
-async function saveCharacterToCloud() {
-    undraSyncPage1ToGlobalState();
-  const id = `undra_${(char.name || "namenlos").trim().toLowerCase()}_${(char.title || "ohne").trim().toLowerCase()}`
-              .replace(/\s+/g, "_");
-
-  try {
-    const res = await fetch(`https://undra.djdrear.workers.dev/save/${id}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(char)
-    });
-
-    if (!res.ok) {
-      showMsg("Fehler beim Cloud‑Speichern.");
-      console.error(await res.text());
-      return;
-    }
-
-    showMsg("Charakter in der UNDRA‑Cloud gespeichert.");
-  } catch (err) {
-    console.error(err);
-    showMsg("Netzwerkfehler beim Cloud‑Speichern.");
-  }
-}
-
-async function loadCharacterFromCloudPrompt() {
-  const name  = prompt("Name des Helden für Cloud‑Laden?");
-  if (name === null) return;
-
-  const title = prompt("Titel / Zusatz (oder leer lassen)?") || "";
-
-  const id = `undra_${(name || "namenlos").trim().toLowerCase()}_${(title || "ohne").trim().toLowerCase()}`
-              .replace(/\s+/g, "_");
-
-  try {
-    const res = await fetch(`https://undra.djdrear.workers.dev/load/${id}`);
-
-    if (!res.ok) {
-      showMsg("Charakter nicht gefunden.");
-      console.error(await res.text());
-      return;
-    }
-
-    const data = await res.json();
-    Object.assign(char, data);
-
-    if (inName)  inName.value  = char.name || "";
-    if (inTitel) inTitel.value = char.title || "";
-
-    if (previewImg && placeholder) {
-      if (char.portraitData) {
-        previewImg.src = char.portraitData;
-        previewImg.style.display = "block";
-        placeholder.style.display = "none";
-      } else {
-        previewImg.style.display = "none";
-        placeholder.style.display = "block";
-      }
-    }
-
-    ATTRIBUTES.forEach(a => {
-      if (typeof char.attrs[a] !== "number") char.attrs[a] = 0;
-    });
-
-    initRaces();
-
-    if (char.race) selectRace(char.race);
-    if (char.race2 && char.race2 !== char.race) selectRace(char.race2);
-    if (char.sub) selectSub(char.sub);
-
-    if (char.prof) {
-      if (!char.special) char.special = randomFrom(SPECIAL_POOL);
-      clearActiveIn(profList);
-      const chosen = profList.querySelector(`[data-value="${char.prof}"]`);
-      if (chosen) chosen.classList.add("active");
-    }
-
-    initAttributes();
-    updateUI();
-
-    showMsg("Cloud‑Charakter geladen.");
-  } catch (err) {
-    console.error(err);
-    showMsg("Fehler beim Cloud‑Laden.");
-  }
-}
-</script>
-<!-- BLOCK 5: Load-Modal, Upload, Profession-Ready, Init & Events -->
-<script>
-/* ---------- LOAD-MODAL (Slots Platzhalter) ---------- */
-function openLoadModal() {
-  if (loadModal) loadModal.style.display = "flex";
-}
-
-function closeLoadModal() {
-  if (loadModal) loadModal.style.display = "none";
-}
-
-function loadFromSlot(slot) {
-  showMsg("Slot-" + slot + " Laden ist noch nicht implementiert.");
-}
-
-/* ---------- PORTRAIT UPLOAD ---------- */
-function handleUploadChange(e) {
-  const file = e.target.files && e.target.files[0];
-  if (!file) return;
-
-  const reader = new FileReader();
-  reader.onload = ev => {
-    const dataUrl = ev.target.result;
-    if (previewImg && placeholder) {
-      previewImg.src = dataUrl;
-      previewImg.style.display = "block";
-      placeholder.style.display = "none";
-    }
-    char.portraitData = dataUrl;
-    saveCharacterLocal();
-  };
-  reader.readAsDataURL(file);
-}
-
-/* ---------- PROFESSION READY ---------- */
-function checkProfessionReady() {
-  if (!btnProfConfirm) return;
-  const ready =
-    pendingProfession &&
-    raceAbilityInput &&
-    subAbilityInput &&
-    attrBonusSelectEl &&
-    raceAbilityInput.value.trim() &&
-    subAbilityInput.value.trim() &&
-    attrBonusSelectEl.value;
-
-  btnProfConfirm.disabled = !ready;
-}
-
-/* ---------- EVENT BINDING / INIT ---------- */
 document.addEventListener("DOMContentLoaded", () => {
   inName         = document.getElementById("in-name");
   inTitel        = document.getElementById("in-titel");
@@ -2108,7 +1797,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   loadModal    = document.getElementById("load-modal");
   btnCloseLoad = document.getElementById("btn-close-load");
-  slotButtons  = loadModal ? loadModal.querySelectorAll(".slot-btn") : [];
 
   professionModal   = document.getElementById("profession-modal");
   raceAbilityInput  = document.getElementById("race-ability-input");
@@ -2117,110 +1805,137 @@ document.addEventListener("DOMContentLoaded", () => {
   btnProfCancel     = document.getElementById("btn-prof-cancel");
   btnProfConfirm    = document.getElementById("btn-prof-confirm");
 
-  leaveModal     = document.getElementById("leave-modal");
-  leaveSummary   = document.getElementById("leave-summary");
-  btnLeaveCancel = document.getElementById("btn-leave-cancel");
-  btnLeaveConfirm= document.getElementById("btn-leave-confirm");
-
-  idAge          = document.getElementById("idAge");
-  idHeight       = document.getElementById("idHeight");
-  idWeight       = document.getElementById("idWeight");
-  idEyes         = document.getElementById("idEyes");
-  idHair         = document.getElementById("idHair");
-  idVoice        = document.getElementById("idVoice");
-  idClothes      = document.getElementById("idClothes");
-  idSpecialMarks = document.getElementById("idSpecialMarks");
-  idShortdesc    = document.getElementById("idShortdesc");
-  idStory        = document.getElementById("idStory");
-
-  raceSelect    = document.getElementById("raceSelect");
-  subraceSelect = document.getElementById("subraceSelect");
-  profSelect    = document.getElementById("profSelect");
+  leaveModal      = document.getElementById("leave-modal");
+  btnLeaveCancel  = document.getElementById("btn-leave-cancel");
+  btnLeaveConfirm = document.getElementById("btn-leave-confirm");
 
   if (attrBonusSelectEl) {
+    attrBonusSelectEl.innerHTML = "";
     ATTRIBUTES.forEach(a => {
       const opt = document.createElement("option");
       opt.value = a;
       opt.textContent = a;
       attrBonusSelectEl.appendChild(opt);
     });
+    if (!char.attrBonusNote) attrBonusSelectEl.value = ATTRIBUTES[0];
+    else attrBonusSelectEl.value = char.attrBonusNote;
   }
 
   initAttributes();
   initRaces();
-  loadCharacterLocal();
   updateUI();
-  drawRadar();
 
-  if (rollBtn) rollBtn.addEventListener("click", rollPool);
   if (inName)  inName.addEventListener("input", updateUI);
   if (inTitel) inTitel.addEventListener("input", updateUI);
 
-  if (uploadInput) uploadInput.addEventListener("change", handleUploadChange);
-
+  if (rollBtn) rollBtn.addEventListener("click", rollPool);
   window.addEventListener("resize", drawRadar);
 
-  if (raceAbilityInput) raceAbilityInput.addEventListener("input", checkProfessionReady);
-  if (subAbilityInput)  subAbilityInput.addEventListener("input", checkProfessionReady);
-  if (attrBonusSelectEl) attrBonusSelectEl.addEventListener("change", checkProfessionReady);
+  if (uploadInput)
+    uploadInput.addEventListener("change", handleUploadChange);
 
-  if (btnProfCancel) btnProfCancel.addEventListener("click", closeProfessionModal);
+  if (char.portraitData && previewImg) {
+    previewImg.src = char.portraitData;
+    previewImg.style.display = "block";
+    if (placeholder) placeholder.style.display = "none";
+  }
 
-  if (btnProfConfirm) btnProfConfirm.addEventListener("click", () => {
-    if (!pendingProfession) {
-      closeProfessionModal();
+  if (raceAbilityInput)
+    raceAbilityInput.addEventListener("input", checkProfessionReady);
+  if (subAbilityInput)
+    subAbilityInput.addEventListener("input", checkProfessionReady);
+  if (attrBonusSelectEl)
+    attrBonusSelectEl.addEventListener("change", checkProfessionReady);
+
+  if (btnProfCancel)
+    btnProfCancel.addEventListener("click", closeProfessionModal);
+  if (btnProfConfirm)
+    btnProfConfirm.addEventListener("click", confirmProfession);
+
+  async function saveCharacterToCloud() {
+    updateCharFromPage1();
+    syncVitals();
+    calculateExtendedVitals();
+    const ok = await undra.save(char);
+    showMsg(ok ? "Charakter in der UNDRA‑Cloud gespeichert." : "Fehler beim Cloud‑Speichern.");
+  }
+
+  async function confirmLoad() {
+    const name  = document.getElementById("load-name")?.value.trim();
+    const title = document.getElementById("load-title")?.value.trim();
+
+    if (!name) {
+      showMsg("Bitte einen Namen eingeben.");
       return;
     }
 
-    char.prof = pendingProfession;
-    char.special = randomFrom(SPECIAL_POOL);
-
-    char.raceAbility = raceAbilityInput ? raceAbilityInput.value.trim() : "";
-    char.subAbility  = subAbilityInput ? subAbilityInput.value.trim() : "";
-    const bonusAttr  = attrBonusSelectEl ? (attrBonusSelectEl.value || "") : "";
-    char.attrBonusNote = bonusAttr;
-
-    if (!char.bonusApplied) char.bonusApplied = {};
-    if (bonusAttr && char.attrs[bonusAttr] != null) {
-      if (!char.bonusApplied[bonusAttr]) {
-        char.attrs[bonusAttr] += 1;
-        char.bonusApplied[bonusAttr] = true;
-      }
+    const data = await undra.load(name, title);
+    if (!data) {
+      showMsg("Kein Charakter gefunden.");
+      return;
     }
 
-    clearActiveIn(profList);
-    const chosen = profList ? profList.querySelector(`[data-value="${pendingProfession}"]`) : null;
-    if (chosen) chosen.classList.add("active");
+    Object.assign(char, data);
 
+    if (inName)  inName.value  = char.name  || "";
+    if (inTitel) inTitel.value = char.title || "";
+
+    if (previewImg && char.portraitData) {
+      previewImg.src = char.portraitData;
+      previewImg.style.display = "block";
+      if (placeholder) placeholder.style.display = "none";
+    }
+
+    initAttributes();
+    initRaces();
     updateUI();
-    showMsg("Berufung und Fähigkeiten bestätigt.");
-    closeProfessionModal();
-  });
 
-  function goToPage2() {
-    undraSyncPage1ToGlobalState();
-    window.location.href = "UNDRA-ENGINE-1.5-Seite2.html";
-}
-  if (btnNext) btnNext.addEventListener("click", openLeaveModal);
-  if (btnLeaveCancel) btnLeaveCancel.addEventListener("click", closeLeaveModal);
-  if (btnLeaveConfirm) btnLeaveConfirm.addEventListener("click", () => {
-    sealCharacter();
-    saveCharacterLocal();
-    window.location.href = "https://djdrear.github.io/Seite-2/";
-  });
+    if (loadModal) loadModal.style.display = "none";
+    showMsg("Charakter geladen.");
+  }
 
-  if (btnCloudSave) btnCloudSave.addEventListener("click", saveCharacterToCloud);
-  if (btnCloudLoad) btnCloudLoad.addEventListener("click", loadCharacterFromCloudPrompt);
+  const openLoadModal = () => {
+    if (loadModal) loadModal.style.display = "flex";
+  };
+  const closeLoadModal = () => {
+    if (loadModal) loadModal.style.display = "none";
+  };
 
-  if (btnCloseLoad) btnCloseLoad.addEventListener("click", closeLoadModal);
-  if (slotButtons && slotButtons.forEach) {
-    slotButtons.forEach(btn => {
-      btn.addEventListener("click", () => {
-        const slot = btn.dataset.slot;
-        loadFromSlot(slot);
-      });
+  if (btnCloudSave)
+    btnCloudSave.addEventListener("click", saveCharacterToCloud);
+
+  if (btnCloudLoad)
+    btnCloudLoad.addEventListener("click", openLoadModal);
+
+  if (btnCloseLoad)
+    btnCloseLoad.addEventListener("click", closeLoadModal);
+
+  const btnLoadConfirm = document.getElementById("btn-load-confirm");
+  if (btnLoadConfirm)
+    btnLoadConfirm.addEventListener("click", confirmLoad);
+
+btnNext.addEventListener("click", () => {
+  updateCharFromPage1();     // 1. Werte aus der Seite holen
+  syncVitals();              // 2. HP, SP, Abwehr, Ressourcen, Armor, TC
+  fillLeavePopup();          // 3. Pop-up füllen
+  leaveModal.style.display = "flex"; // 4. Anzeigen
+});
+  
+
+  if (btnLeaveConfirm) {
+    btnLeaveConfirm.addEventListener("click", () => {
+      updateCharFromPage1();
+      syncVitals();
+      calculateExtendedVitals();
+      sealCharacter();
+      window.location.href = "https://djdrear.github.io/Seite-2/";
     });
   }
+
+  if (btnLeaveCancel)
+    btnLeaveCancel.addEventListener("click", () => {
+      if (leaveModal) leaveModal.style.display = "none";
+    });
 });
 </script>
 </body>
